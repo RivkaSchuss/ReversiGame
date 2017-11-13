@@ -1,3 +1,0 @@
-/home/yarin/CLionProjects/ReversiGame/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/yarin/CLionProjects/ReversiGame/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/yarin/CLionProjects/ReversiGame/cmake-build-debug/CMakeFiles/ReversiGame.dir
