@@ -4,6 +4,6 @@
 
 #include "AIPlayer.h"
 
-AIPlayer::AIPlayer(Type type) : AbstractPlayer(type) {
+AIPlayer::AIPlayer(Type type) : AbstractPlayer(type), type(type) {
 
 }

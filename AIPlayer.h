@@ -12,6 +12,9 @@ class AIPlayer : public AbstractPlayer {
 public:
     AIPlayer(Type type);
 
+private:
+    Type type;
+
 };
 
 
