@@ -44,9 +44,9 @@ void Game::run() {
             logic->setTurn(black);
         }
     }
-    if (logic->checkScore(board->getTable(), board->getSize()) == 1) {
+    if (logic->checkScore(board->getTable(), board->getSize()) >= 1) {
         cout << "X: Congrats, you win!" << endl;
-    } else if (logic->checkScore(board->getTable(), board->getSize()) == 2) {
+    } else if (logic->checkScore(board->getTable(), board->getSize()) <= -1) {
         cout << "O: Congrats, you win!" << endl;
     } else {
         cout << "It's a TIE!" << endl;

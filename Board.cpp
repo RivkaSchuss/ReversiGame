@@ -105,3 +105,19 @@ Cell** Board::getTable() {
 int Board::getSize() {
     return this->width;
 }
+
+/**
+ * This method copies the value of a board to a given table.
+ * @param table to have the values.
+ */
+
+void Board::copyValues(Cell** table) {
+    Cell* currentCell = new Cell();
+    for (int i = 1; i <= width; ++i) {
+        for (int j = 1; j <= height; ++j) {
+            (*(currentCell)).setSpot(i,j);
+            (*(currentCell)).updateStatus(this->table[i][j].getStatus());
+            table[i][j] = *currentCell;
+        }
+    }
+}

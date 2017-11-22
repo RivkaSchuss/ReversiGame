@@ -128,12 +128,7 @@ int AbstractGameLogic::checkScore(Cell **table, int size) {
             }
         }
     }
-    if (counterBlack > counterWhite) {
-        return 1;
-    } else if (counterWhite > counterBlack) {
-        return 2;
-    }
-    return 0;
+    return counterBlack - counterWhite;
 }
 
 /**

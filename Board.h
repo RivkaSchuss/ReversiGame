@@ -18,6 +18,7 @@ public:
     ~Board();
     Cell** getTable();
     int getSize();
+    void copyValues(Cell** table);
 
 private:
     //members of the class:
