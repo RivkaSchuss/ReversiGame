@@ -8,6 +8,7 @@
 using namespace std;
 
 int main() {
+    cout << "hi" << endl;
     //creating a new 8X8 board
     Board* board = new Board(8,8);
     GameLogic* logic = new DefaultGameLogic();
