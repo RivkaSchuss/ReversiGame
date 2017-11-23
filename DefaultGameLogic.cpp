@@ -69,7 +69,7 @@ void DefaultGameLogic::playOneTurn(Board* board) {
             while (moves[l].getRow() != 0) {
                 if (row == moves[l].getRow() && col == moves[l].getCol()) {
                     board->getTable()[row][col].updateStatus(black + 1);
-                    flipDeadCell(row,col,board);
+                    flipDeadCell(row, col, board);
                     moveCompleted = true;
                 }
                 l++;
@@ -78,10 +78,10 @@ void DefaultGameLogic::playOneTurn(Board* board) {
                 cout << "This isn't an option" << endl;
                 board->print();
 
-            } else {
-                secondPlayer->performMove(moves, board);
-                //cout << "O: It's your move." << endl;
             }
+        } else {
+            secondPlayer->performMove(moves, board);
+            //cout << "O: It's your move." << endl;
         }
     }
 }
