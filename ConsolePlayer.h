@@ -12,7 +12,7 @@ class ConsolePlayer: public AbstractPlayer {
 public:
     ConsolePlayer(Type type);
     ~ConsolePlayer();
-    void performMove(Location* moves, Board* board);
+    void performMove(Location* moves, Board* board, GameLogic* logic);
 
 private:
     //the members of the class:

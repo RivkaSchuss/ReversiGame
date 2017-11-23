@@ -13,7 +13,7 @@ class AIPlayer : public AbstractPlayer {
 public:
     AIPlayer(Type type);
     ~AIPlayer();
-    void performMove(Location* moves, Board* board);
+    void performMove(Location* moves, Board* board, GameLogic* logic);
 private:
     Type type;
 

@@ -198,7 +198,7 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
         int l = 0;
         int rowDif = 0, colDif = 0;
         Location *flipped;
-        while (killerOptions[l].getRow() != NULL) {
+        while (killerOptions[l].getRow() != 0) {
             rowDif = row - killerOptions[l].getRow();
             colDif = col - killerOptions[l].getCol();
             Place place = whichPlace(rowDif, colDif);

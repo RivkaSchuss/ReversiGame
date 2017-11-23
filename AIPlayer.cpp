@@ -12,7 +12,7 @@ AIPlayer::~AIPlayer() {
     delete this;
 }
 
-void AIPlayer::performMove(Location* moves, Board* board) {
+void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
 
 }
 

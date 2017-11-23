@@ -23,11 +23,12 @@ ConsolePlayer::~ConsolePlayer() {
     delete this;
 }
 
-void ConsolePlayer::performMove(Location* moves, Board* board) {
+void ConsolePlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     if (moves == NULL) {
         cout << "O: You have no possible moves!" << endl;
         return;
     }
+    bool moveCompleted = false;
     int row, col, l = 0;
     cout << "O: It's your move." << endl;
     cout << "Your possible moves: ";
@@ -49,7 +50,7 @@ void ConsolePlayer::performMove(Location* moves, Board* board) {
     while (moves[l].getRow() != 0) {
         if (row == moves[l].getRow() && col == moves[l].getCol()) {
             board->getTable()[row][col].updateStatus(white + 1);
-            flipDeadCell(row, col, board);
+            logic->flipDeadCell(row, col, board);
             moveCompleted = true;
         }
         l++;

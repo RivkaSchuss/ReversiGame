@@ -42,7 +42,7 @@ void DefaultGameLogic::playOneTurn(Board* board) {
                 cout << "X: You have no possible moves!" << endl;
                 return;
             } else {
-                secondPlayer->performMove(moves, board);
+                secondPlayer->performMove(moves, board, this);
                 //cout << "O: You have no possible moves!" << endl;
                 //return;
             }
@@ -80,7 +80,7 @@ void DefaultGameLogic::playOneTurn(Board* board) {
 
             }
         } else {
-            secondPlayer->performMove(moves, board);
+            secondPlayer->performMove(moves, board, this);
             //cout << "O: It's your move." << endl;
         }
     }
@@ -240,7 +240,7 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
         delete  currentOptions;
         return NULL;
     } else {
-        Location* option = new Location(NULL, 0);
+        Location* option = new Location(0, 0);
         currentOptions[l] = *option;
         return currentOptions;
     }

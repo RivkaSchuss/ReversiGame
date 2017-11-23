@@ -11,7 +11,7 @@ using namespace std;
 int main() {
     //creating a new 8X8 board
     Board* board = new Board(8,8);
-    cout << "Welcome to reversi!" << endl;
+    cout << "Welcome to Reversi!" << endl;
     cout << "Please choose a player type, a for AI, and c for console:" << endl;
     Player* blackPlayer = new ConsolePlayer(black);
     char choice;
@@ -19,12 +19,13 @@ int main() {
     Player* whitePlayer;
     switch (choice) {
         case 'a' :
-             whitePlayer =  new AIPlayer(white);
+            whitePlayer =  new AIPlayer(white);
             break;
         case 'c':
             whitePlayer = new ConsolePlayer(white);
             break;
         default:
+            cout << "Not an option." << endl;
             break;
     }
     GameLogic* logic = new DefaultGameLogic(whitePlayer);

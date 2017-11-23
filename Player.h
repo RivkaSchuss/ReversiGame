@@ -12,7 +12,7 @@
 class Player{
 
 public:
-    virtual void performMove(Location* moves, Board* board) = 0;
+    virtual void performMove(Location* moves, Board* board, GameLogic* logic) = 0;
 private:
     //the members of the class:
     Type type;
