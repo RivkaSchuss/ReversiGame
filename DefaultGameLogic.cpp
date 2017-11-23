@@ -11,7 +11,7 @@ using namespace std;
  * Constructor.
  */
 
-DefaultGameLogic::DefaultGameLogic(Player *secondPlayer) : AbstractGameLogic(){}
+DefaultGameLogic::DefaultGameLogic(Player* secondPlayer) : AbstractGameLogic(), secondPlayer(secondPlayer) {}
 
 /**
  * Destructor.
