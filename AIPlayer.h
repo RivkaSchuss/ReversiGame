@@ -6,7 +6,6 @@
 #define ASSIGNMENT1_AIPLAYER_H
 
 
-#include <MacTypes.h>
 #include "AbstractPlayer.h"
 
 class AIPlayer : public AbstractPlayer {

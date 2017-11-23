@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <limits>
 #include "ConsolePlayer.h"
 
 using namespace std;
