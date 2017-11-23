@@ -6,12 +6,14 @@
 #define ASSIGNMENT1_DEFAULTGAMELOGIC_H
 
 #include "AbstractGameLogic.h"
+#include "Player.h"
 
 class DefaultGameLogic : public AbstractGameLogic {
 
 public:
-    DefaultGameLogic();
+    DefaultGameLogic(Player *secondPlayer);
     ~DefaultGameLogic();
+    void playOneTurn(Board* board);
     Location* clearMoveArea(Cell** table, int size, int rowPos, int colPos, int status);
     Location* getFromUp(Cell** table, int size, int rowPos, int colPos, int status);
     Location* getFromUpRight(Cell** table, int size, int rowPos, int colPos, int status);
@@ -21,6 +23,8 @@ public:
     Location* getFromDownLeft(Cell** table, int size, int rowPos, int colPos, int status);
     Location* getFromLeft(Cell** table, int size, int rowPos, int colPos, int status);
     Location* getFromUpLeft(Cell** table, int size, int rowPos, int colPos, int status);
+private:
+    Player* secondPlayer;
 
 };
 

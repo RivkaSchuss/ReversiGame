@@ -6,12 +6,14 @@
 #define ASSIGNMENT1_AIPLAYER_H
 
 
+#include <MacTypes.h>
 #include "AbstractPlayer.h"
 
 class AIPlayer : public AbstractPlayer {
 public:
     AIPlayer(Type type);
-
+    ~AIPlayer();
+    void performMove(Location* moves, Board* board);
 private:
     Type type;
 
