@@ -82,6 +82,7 @@ void DefaultGameLogic::playOneTurn(Board* board) {
             }
         } else {
             secondPlayer->performMove(moves, board, this);
+            return;
             //cout << "O: It's your move." << endl;
         }
     }
