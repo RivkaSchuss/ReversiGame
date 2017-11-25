@@ -23,8 +23,10 @@ public:
     Location* getFromDownLeft(Cell** table, int size, int rowPos, int colPos, int status);
     Location* getFromLeft(Cell** table, int size, int rowPos, int colPos, int status);
     Location* getFromUpLeft(Cell** table, int size, int rowPos, int colPos, int status);
+    int getNotFirstTurn();
 private:
     Player* secondPlayer;
+    int notFirstTurn;
 
 };
 

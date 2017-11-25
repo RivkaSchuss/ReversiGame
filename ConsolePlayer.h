@@ -17,6 +17,7 @@ public:
 private:
     //the members of the class:
     Type type;
+    PlayerType pType;
 };
 
 

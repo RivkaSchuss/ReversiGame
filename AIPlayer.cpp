@@ -35,10 +35,14 @@ AIPlayer::~AIPlayer() {
  */
 
 void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
+    pType = AI;
+    if (moves == NULL) {
+        return;
+    }
     //worstMove will hold the index of the worst possible move
     //in the list of possible moves.
     //lowestScore will hold the score of the worst possible move.
-    int lowestScore = 0, currentScore = 0,worstMove = 0,l = 0;
+    int lowestScore = 0, currentScore = 0, worstMove = 0, l = 0;
     int size = board->getSize();
     //creating a new temporary board.
     Board* tempBoard = new Board(size, size);
@@ -51,7 +55,7 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
         board->copyValues(tempTable);
         //trying the move.
         tempTable[row][col].updateStatus(type + 1);
-        logic->flipDeadCell(row,col,tempBoard);
+        logic->flipDeadCell(row, col, tempBoard);
         //getting the result of the move.
         currentScore = logic->checkScore(tempTable, size);
         //"checkScore" calculates the result according to X.
@@ -65,10 +69,13 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
         }
         l++;
     }
-    //ultimately, we'll preform the worst move.
+    //ultimately, we'll perform the worst move.
     row = moves[worstMove].getRow();
     col = moves[worstMove].getCol();
     board->getTable()[row][col].updateStatus(type + 1);
+    logic->flipDeadCell(row, col, board);
+    board->print();
+    cout << "O played: " << row << "," << col << endl;
 }
 
 

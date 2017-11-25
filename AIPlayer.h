@@ -15,7 +15,7 @@ public:
     void performMove(Location* moves, Board* board, GameLogic* logic);
 private:
     Type type;
-
+    PlayerType pType;
 };
 
 

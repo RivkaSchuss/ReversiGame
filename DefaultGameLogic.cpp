@@ -12,7 +12,9 @@ using namespace std;
  * Constructor.
  */
 
-DefaultGameLogic::DefaultGameLogic(Player* secondPlayer) : AbstractGameLogic(), secondPlayer(secondPlayer) {}
+DefaultGameLogic::DefaultGameLogic(Player* secondPlayer) : AbstractGameLogic(), secondPlayer(secondPlayer) {
+    notFirstTurn = 0;
+}
 
 /**
  * Destructor.
@@ -41,7 +43,10 @@ void DefaultGameLogic::playOneTurn(Board* board) {
             running -= 1;
             if (turn == black) {
                 cout << "X: You have no possible moves!" << endl;
-                return;
+                if (secondPlayer->getPType() == AI) {
+                    running = 0;
+                }
+                //return;
             } else {
                 secondPlayer->performMove(moves, board, this);
                 //cout << "O: You have no possible moves!" << endl;
@@ -78,14 +83,21 @@ void DefaultGameLogic::playOneTurn(Board* board) {
             if (!moveCompleted) {
                 cout << "This isn't an option" << endl;
                 board->print();
-
+            }else {
+                board->print();
             }
+            notFirstTurn++;
         } else {
             secondPlayer->performMove(moves, board, this);
             return;
             //cout << "O: It's your move." << endl;
         }
+
     }
+}
+
+int DefaultGameLogic::getNotFirstTurn() {
+    return this->notFirstTurn;
 }
 
 Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, int colPos, int status) {

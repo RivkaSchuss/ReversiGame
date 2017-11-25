@@ -26,11 +26,13 @@ public:
     virtual Place whichPlace(int rowDif, int colDif) = 0;
     virtual Location* removeOneDead(Place place, int row, int col, Board* board) = 0;
     virtual bool moveExist(Location* options, Location location, int k) = 0;
+    virtual int getNotFirstTurn() = 0;
 
 private:
     //members of the class:
     Type turn;
     int running;
+    int notFirstTurn;
 };
 
 #endif //ASSIGNMENT1_GAMELOGIC_H

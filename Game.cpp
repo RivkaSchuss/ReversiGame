@@ -35,8 +35,12 @@ Game::~Game() {
  */
 
 void Game::run() {
-    while (logic->isRunning() != 0) {
+    if(logic->getNotFirstTurn() == 0) {
         board->print();
+    }
+    while (logic->isRunning() != 0) {
+        //board->print();
+        cout << endl;
         logic->playOneTurn(board);
         if (logic->getTurn() == black) {
             logic->setTurn(white);

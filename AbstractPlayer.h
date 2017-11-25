@@ -13,9 +13,11 @@ public:
     AbstractPlayer(Type type);
     ~AbstractPlayer();
     virtual void performMove(Location* moves, Board* board, GameLogic* logic) = 0;
+    PlayerType getPType();
 private:
     //the members of the class
     Type type;
+    PlayerType pType;
 };
 
 

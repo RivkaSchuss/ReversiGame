@@ -25,8 +25,10 @@ ConsolePlayer::~ConsolePlayer() {
 }
 
 void ConsolePlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
+    pType = Console;
     if (moves == NULL) {
         cout << "O: You have no possible moves!" << endl;
+        board->print();
         return;
     }
     bool moveCompleted = false;
@@ -58,6 +60,10 @@ void ConsolePlayer::performMove(Location* moves, Board* board, GameLogic* logic)
     }
     if (!moveCompleted) {
         cout << "This isn't an option" << endl;
+        board->print();
+        //return;
+    }
+    if (moveCompleted) {
         board->print();
     }
 }

@@ -21,3 +21,7 @@ AbstractPlayer::AbstractPlayer(Type type) : type(type) {}
 
 AbstractPlayer::~AbstractPlayer() {
 }
+
+PlayerType AbstractPlayer::getPType() {
+    return this->pType;
+}

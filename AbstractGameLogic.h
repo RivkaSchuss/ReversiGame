@@ -24,12 +24,14 @@ public:
     Place whichPlace(int rowDif, int colDif);
     Location* removeOneDead(Place place, int row, int col, Board* board);
     bool moveExist(Location* options, Location location, int k);
+    virtual int getNotFirstTurn() = 0;
 
 
 protected:
     //the members of the class
     Type turn;
     int running;
+    int notFirstTurn;
 
 };
 
