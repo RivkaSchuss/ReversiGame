@@ -45,8 +45,8 @@ void DefaultGameLogic::playOneTurn(Board* board) {
                 cout << "X: You have no possible moves!" << endl;
                 if (secondPlayer->getPType() == AI) {
                     running = 0;
+                    return;
                 }
-                //return;
             } else {
                 secondPlayer->performMove(moves, board, this);
                 //cout << "O: You have no possible moves!" << endl;

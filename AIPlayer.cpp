@@ -13,6 +13,7 @@ using namespace std;
  */
 
 AIPlayer::AIPlayer(Type type) : AbstractPlayer(type), type(type) {
+    pType = AI;
 }
 
 /**
@@ -35,7 +36,6 @@ AIPlayer::~AIPlayer() {
  */
 
 void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
-    pType = AI;
     if (moves == NULL) {
         return;
     }

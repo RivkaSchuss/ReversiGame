@@ -14,6 +14,7 @@ using namespace std;
  */
 
 ConsolePlayer::ConsolePlayer(Type type) : AbstractPlayer(type), type(type){
+    pType = Console;
 }
 
 /**
@@ -25,7 +26,7 @@ ConsolePlayer::~ConsolePlayer() {
 }
 
 void ConsolePlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
-    pType = Console;
+
     if (moves == NULL) {
         cout << "O: You have no possible moves!" << endl;
         board->print();
