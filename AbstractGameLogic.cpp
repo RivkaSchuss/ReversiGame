@@ -37,7 +37,7 @@ void AbstractGameLogic::setTurn(Type currentTurn) {
  * This method is in charge of the flow of the turn.
  * @param board the board of the game.
  */
-
+/*
 void AbstractGameLogic::playOneTurn(Board* board) {
     int row, col, l = 0;
     bool moveCompleted = false;
@@ -91,6 +91,7 @@ void AbstractGameLogic::playOneTurn(Board* board) {
         }
     }
 }
+ */
 
 /**
  * This method returns if the game isn't over yet.

@@ -13,7 +13,7 @@ class AbstractGameLogic : public GameLogic {
 public:
     AbstractGameLogic();
     ~AbstractGameLogic();
-    virtual void playOneTurn(Board* board);
+    virtual void playOneTurn(Board* board) = 0;
     int checkScore(Cell** table, int size);
     void setTurn(Type currentTurn);
     Type getTurn();
