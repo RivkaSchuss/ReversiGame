@@ -28,7 +28,6 @@ AbstractGameLogic::~AbstractGameLogic() {
  * Happens for example when no moves are possible for the player.
  * @param currentTurn the new player to play.
  */
-
 void AbstractGameLogic::setTurn(Type currentTurn) {
     this->turn = currentTurn;
 }

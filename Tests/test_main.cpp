@@ -2,7 +2,6 @@
 // Created by Rivka Schuss on 26/11/2017.
 //
 
-#include <gtest/gtest.h>
 #include "../lib/googletest/googletest/include/gtest/gtest.h"
 
 int main(int argc, char **argv) {
