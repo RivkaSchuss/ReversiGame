@@ -27,7 +27,7 @@ Game::~Game() {
     delete whitePlayer;
     delete board;
     delete logic;
-    delete this;
+    //delete this;
 }
 
 /**

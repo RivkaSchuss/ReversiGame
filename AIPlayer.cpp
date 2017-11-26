@@ -22,7 +22,7 @@ AIPlayer::AIPlayer(Type type) : AbstractPlayer(type), type(type) {
  */
 
 AIPlayer::~AIPlayer() {
-    delete this;
+    //delete this;
 }
 
 /**
@@ -62,7 +62,6 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
         if (type == white) {
             currentScore = currentScore * (-1);
         }
-        //cout << currentScore << endl;
         //we'll update our current lowest score if necessary.
         if (currentScore < lowestScore) {
             lowestScore = currentScore;

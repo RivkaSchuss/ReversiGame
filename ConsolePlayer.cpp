@@ -22,7 +22,7 @@ ConsolePlayer::ConsolePlayer(Type type) : AbstractPlayer(type), type(type){
  */
 
 ConsolePlayer::~ConsolePlayer() {
-    delete this;
+    //delete this;
 }
 
 void ConsolePlayer::performMove(Location* moves, Board* board, GameLogic* logic) {

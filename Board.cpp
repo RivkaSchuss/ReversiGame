@@ -115,9 +115,10 @@ void Board::copyValues(Cell** table) {
     Cell* currentCell = new Cell();
     for (int i = 1; i <= size; ++i) {
         for (int j = 1; j <= size; ++j) {
-            (*(currentCell)).setSpot(i,j);
+            (*(currentCell)).setSpot(i, j);
             (*(currentCell)).updateStatus(this->table[i][j].getStatus());
             table[i][j] = *currentCell;
         }
     }
+    delete currentCell;
 }

@@ -11,8 +11,6 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-
-    //creating a new 8X8 board
     Board* board = new Board(4);
     cout << "Welcome to Reversi!" << endl;
     cout << "Please choose a player type, a for AI, and c for console:" << endl;
@@ -34,5 +32,6 @@ int main(int argc, char* argv[]) {
     GameLogic* logic = new DefaultGameLogic(whitePlayer);
     Game* game = new Game(blackPlayer, whitePlayer, board, logic);
     game->run();
+    delete game;
     return 0;
 }
