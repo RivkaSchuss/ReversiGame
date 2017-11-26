@@ -10,10 +10,10 @@ include_directories(/Tests)
 set(SOURCE_FILES main.cpp Board.cpp Board.h Location.cpp Location.h Cell.cpp Cell.h Player.h AbstractPlayer.cpp
         AbstractPlayer.h ConsolePlayer.cpp ConsolePlayer.h Game.cpp Game.h AbstractGameLogic.cpp AbstractGameLogic.h
         DefaultGameLogic.cpp DefaultGameLogic.h GameLogic.h AIPlayer.cpp AIPlayer.h)
-add_executable(ReversiGame ${SOURCE_FILES})
+add_executable(ReversiGame ${SOURCE_FILES} main.cpp)
 
-set(SOURCE_FILES2 Tests/test_main.cpp Board.cpp Board.h Location.cpp Location.h Cell.cpp Cell.h Player.h
+set(SOURCE_FILES_TEST Tests/test_main.cpp Board.cpp Board.h Location.cpp Location.h Cell.cpp Cell.h Player.h
         AbstractPlayer.cpp AbstractPlayer.h ConsolePlayer.cpp ConsolePlayer.h Game.cpp Game.h AbstractGameLogic.cpp
         AbstractGameLogic.h DefaultGameLogic.cpp DefaultGameLogic.h GameLogic.h AIPlayer.cpp AIPlayer.h)
-add_executable(test_main.cpp ${SOURCE_FILES2})
+add_executable(test_main.cpp ${SOURCE_FILES_TEST} )
 target_link_libraries(ReversiGame gtest gtest_main)
