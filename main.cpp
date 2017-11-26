@@ -1,4 +1,6 @@
 #include <iostream>
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include "Board.h"
 #include "Player.h"
 #include "ConsolePlayer.h"
@@ -8,7 +10,9 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
+    testing::InitGoogleTest(&argc, argv);
+    RUN_ALL_TESTS();
     //creating a new 8X8 board
     Board* board = new Board(4,4);
     cout << "Welcome to Reversi!" << endl;

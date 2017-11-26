@@ -69,6 +69,7 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
         }
         l++;
     }
+    //delete tempBoard;
     //ultimately, we'll perform the worst move.
     row = moves[worstMove].getRow();
     col = moves[worstMove].getCol();
