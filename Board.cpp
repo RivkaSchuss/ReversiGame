@@ -16,21 +16,21 @@ using namespace std;
  * @param height the height of the table.
  */
 
-Board::Board(int width, int height) : width(width), height(height) {
+Board::Board(int size) : size(size) {
     //creating a 2-dimensional array as the table.
-    table = new Cell*[width + 1];
-    for (int i = 0; i < height + 1; ++i) {
-        table[i] = new Cell[height + 1];
+    table = new Cell*[size + 1];
+    for (int i = 0; i < size + 1; ++i) {
+        table[i] = new Cell[size + 1];
     }
-    for (int i = 0; i < width + 1; ++i) {
-        for (int j = 0; j < height + 1; ++j) {
+    for (int i = 0; i < size + 1; ++i) {
+        for (int j = 0; j < size + 1; ++j) {
             table[i][j].setSpot(i,j);
         }
     }
-    table[width / 2][width / 2].updateStatus(2);
-    table[width / 2][width / 2 + 1].updateStatus(1);
-    table[width / 2 + 1][width / 2].updateStatus(1);
-    table[width / 2 + 1][width / 2 + 1].updateStatus(2);
+    table[size / 2][size / 2].updateStatus(2);
+    table[size / 2][size / 2 + 1].updateStatus(1);
+    table[size / 2 + 1][size / 2].updateStatus(1);
+    table[size / 2 + 1][size / 2 + 1].updateStatus(2);
 }
 
 /**
@@ -38,7 +38,7 @@ Board::Board(int width, int height) : width(width), height(height) {
  */
 
 void Board::print() {
-    for (int i = 0; i < height * 2 + 2 ; ++i) {
+    for (int i = 0; i < size * 2 + 2 ; ++i) {
         if (i % 2 == 0) {
             if (i > 1 && i % 2 == 0) {
                 cout << (i - 2) / 2 + 1;
@@ -46,9 +46,9 @@ void Board::print() {
             if (i == 0) {
                 cout << " ";
             }
-            for (int j = 0; j < width + 1; ++j) {
+            for (int j = 0; j < size + 1; ++j) {
                 cout << "| ";
-                if (i == 0 && j != width) {
+                if (i == 0 && j != size) {
                     cout << j + 1 << " ";
                 } else if (i > 1 && i <= 16) {
                     if (table[i / 2][j + 1].getStatus() == 1
@@ -67,7 +67,7 @@ void Board::print() {
             }
         } else {
             cout << "-";
-            for (int j = 0; j < width * 4.125; ++j) {
+            for (int j = 0; j < size * 4.125; ++j) {
                 cout << "-";
             }
         }
@@ -81,7 +81,7 @@ void Board::print() {
  */
 
 Board:: ~Board() {
-    for (int i = 0; i < width; ++i) {
+    for (int i = 0; i < size; ++i) {
         delete[] table[i];
     }
     delete[] table;
@@ -103,7 +103,7 @@ Cell** Board::getTable() {
  */
 
 int Board::getSize() {
-    return this->width;
+    return this->size;
 }
 
 /**
@@ -113,8 +113,8 @@ int Board::getSize() {
 
 void Board::copyValues(Cell** table) {
     Cell* currentCell = new Cell();
-    for (int i = 1; i <= width; ++i) {
-        for (int j = 1; j <= height; ++j) {
+    for (int i = 1; i <= size; ++i) {
+        for (int j = 1; j <= size; ++j) {
             (*(currentCell)).setSpot(i,j);
             (*(currentCell)).updateStatus(this->table[i][j].getStatus());
             table[i][j] = *currentCell;

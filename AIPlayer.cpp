@@ -45,7 +45,7 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     int lowestScore = 0, currentScore = 0, worstMove = 0, l = 0;
     int size = board->getSize();
     //creating a new temporary board.
-    Board* tempBoard = new Board(size, size);
+    Board* tempBoard = new Board(size);
     Cell** tempTable = tempBoard->getTable();
     int row = moves[l].getRow();
     int col = moves[l].getCol();
@@ -62,6 +62,7 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
         if (type == white) {
             currentScore = currentScore * (-1);
         }
+        //cout << currentScore << endl;
         //we'll update our current lowest score if necessary.
         if (currentScore < lowestScore) {
             lowestScore = currentScore;

@@ -3,7 +3,6 @@
 //
 
 #include "DefaultGameLogic.h"
-#include "Player.h"
 #include <limits>
 #include <iostream>
 using namespace std;

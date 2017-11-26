@@ -11,10 +11,9 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    testing::InitGoogleTest(&argc, argv);
-    RUN_ALL_TESTS();
+
     //creating a new 8X8 board
-    Board* board = new Board(4,4);
+    Board* board = new Board(8);
     cout << "Welcome to Reversi!" << endl;
     cout << "Please choose a player type, a for AI, and c for console:" << endl;
     Player* blackPlayer = new ConsolePlayer(black);

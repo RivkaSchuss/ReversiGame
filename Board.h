@@ -11,7 +11,7 @@
 class Board {
 public:
     //constructor
-    Board(int width, int height);
+    Board(int size);
     //prints the current state
     void print();
     //deletes the table
@@ -23,8 +23,7 @@ public:
 private:
     //members of the class:
     Cell** table;
-    int width;
-    int height;
+    int size;
 };
 
 
