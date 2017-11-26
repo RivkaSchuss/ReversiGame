@@ -69,4 +69,8 @@ void ConsolePlayer::performMove(Location* moves, Board* board, GameLogic* logic)
     }
 }
 
+PlayerType ConsolePlayer::getPType() {
+    return this->pType;
+}
+
 

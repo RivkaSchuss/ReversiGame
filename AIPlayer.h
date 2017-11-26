@@ -13,6 +13,7 @@ public:
     AIPlayer(Type type);
     ~AIPlayer();
     void performMove(Location* moves, Board* board, GameLogic* logic);
+    PlayerType getPType();
 private:
     Type type;
     PlayerType pType;

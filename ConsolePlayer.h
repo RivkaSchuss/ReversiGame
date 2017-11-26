@@ -13,7 +13,7 @@ public:
     ConsolePlayer(Type type);
     ~ConsolePlayer();
     void performMove(Location* moves, Board* board, GameLogic* logic);
-
+    PlayerType getPType();
 private:
     //the members of the class:
     Type type;

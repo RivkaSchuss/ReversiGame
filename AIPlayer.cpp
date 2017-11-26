@@ -78,4 +78,8 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     cout << "O played: " << row << "," << col << endl;
 }
 
+PlayerType AIPlayer::getPType() {
+    return this->pType;
+}
+
 
