@@ -39,40 +39,67 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     if (moves == NULL) {
         return;
     }
-    //worstMove will hold the index of the worst possible move
-    //in the list of possible moves.
-    //lowestScore will hold the score of the worst possible move.
-    int lowestScore = 0, currentScore = 0, worstMove = 0, l = 0;
+    int currentScore = 0, bestWorstScore = 0, bestWorstIndex = 0, l = 0, k = 0, currentWorst = 0;
     int size = board->getSize();
     //creating a new temporary board.
     Board* tempBoard = new Board(size);
     Cell** tempTable = tempBoard->getTable();
-    int row = moves[l].getRow();
-    int col = moves[l].getCol();
+    Board* tempBoard1 = new Board(size);
+    Cell** tempTable1 = tempBoard->getTable();
+
+    int row,col;
     //we'll run through all of the moves.
     while (moves[l].getRow() != 0) {
+        row = moves[l].getRow();
+        col = moves[l].getCol();
         //first we'll set the tempTable to have the current state of our original board.
         board->copyValues(tempTable);
         //trying the move.
         tempTable[row][col].updateStatus(type + 1);
         logic->flipDeadCell(row, col, tempBoard);
-        //getting the result of the move.
-        currentScore = logic->checkScore(tempTable, size);
-        //"checkScore" calculates the result according to X.
-        if (type == white) {
-            currentScore = currentScore * (-1);
+        if (type == black) {
+            logic->setTurn(white);
+        } else {
+            logic->setTurn(black);
         }
-        //we'll update our current lowest score if necessary.
-        if (currentScore < lowestScore) {
-            lowestScore = currentScore;
-            worstMove = l;
+        Location* rivalMoves = logic->getPossibleMoves(tempTable, size);
+        k = 0;
+        while (rivalMoves[k].getRow() != 0) {
+            row = rivalMoves[k].getRow();
+            col = rivalMoves[k].getCol();
+            tempBoard->copyValues(tempTable1);
+            tempTable1[row][col].updateStatus(type + 1);
+            logic->flipDeadCell(row, col, tempBoard1);
+            currentScore = logic->checkScore(tempTable1, size);
+            if (type == white) {
+                currentScore = (-1) * currentScore;
+            }
+            if (currentScore < currentWorst) {
+                currentWorst = currentScore;
+            }
+            //cout << currentScore << endl;
+            k++;
+        }
+        if (type == black) {
+            logic->setTurn(white);
+        } else {
+            logic->setTurn(black);
+        }
+        if (currentWorst > bestWorstScore) {
+            bestWorstScore = currentWorst;
+            bestWorstIndex = l;
         }
         l++;
     }
     delete tempBoard;
+    if (type == black) {
+        logic->setTurn(white);
+    } else {
+        logic->setTurn(black);
+    }
     //ultimately, we'll perform the worst move.
-    row = moves[worstMove].getRow();
-    col = moves[worstMove].getCol();
+    row = moves[bestWorstIndex].getRow();
+    col = moves[bestWorstIndex].getCol();
     //update status of the new cells
     board->getTable()[row][col].updateStatus(type + 1);
     logic->flipDeadCell(row, col, board);
