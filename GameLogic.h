@@ -10,8 +10,6 @@
 
 enum Type {black, white};
 
-enum Place {up, upRight, east, downRight, down, downLeft, west, upLeft};
-
 class GameLogic{
 
 public:
@@ -27,6 +25,7 @@ public:
     virtual Location* removeOneDead(Place place, int row, int col, Board* board) = 0;
     virtual bool moveExist(Location* options, Location location, int k) = 0;
     virtual int getNotFirstTurn() = 0;
+    virtual Place eatenFrom(Board* board,int rowOrigin, int colOrigin, int rowNew, int colNew) = 0;
 
 private:
     //members of the class:

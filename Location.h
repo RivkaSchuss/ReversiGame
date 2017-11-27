@@ -6,6 +6,8 @@
 #define ASSIGNMENT1_LOCATION_H
 
 
+enum Place {up, upRight, east, downRight, down, downLeft, west, upLeft, none};
+
 class Location {
 
 public:

@@ -26,7 +26,7 @@ TEST(logic_possibleMoves_Test, logic_test) {
     Location* firstMove = logic->getPossibleMoves(board.getTable(), 8);
     EXPECT_EQ(firstMove->getRow(), 6);
     EXPECT_EQ(firstMove->getCol(), 5);
-    delete secondPlayer;
-    delete logic;
-    delete firstMove;
+    //delete secondPlayer;
+    //delete logic;
+    //delete firstMove;
 }

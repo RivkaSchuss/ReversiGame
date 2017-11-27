@@ -186,7 +186,7 @@ Location* AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
 void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
     Location* killerOptions;
     killerOptions = clearMoveArea(board->getTable(), board->getSize(),
-                                         row, col, turn + 1);
+                                  row, col, turn + 1);
     if (killerOptions == NULL) {
         return;
     } else {
@@ -204,6 +204,110 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
         }
     }
 }
+
+Place AbstractGameLogic::eatenFrom(Board* board,int rowOrigin, int colOrigin, int rowNew, int colNew) {
+    Cell** table = board->getTable();
+    int size = board->getSize();
+    if (rowOrigin - 2 > 0 || rowOrigin + 2 <= size) {
+        //checking the upper side
+        if (rowOrigin - 2 > 0) {
+            if (table[rowOrigin - 1][colOrigin].getStatus() != this->turn + 1
+                && table[rowOrigin - 1][colOrigin].getStatus() > 0) {
+                if (table[rowOrigin - 2][colOrigin].getStatus() == turn + 1) {
+                    if (rowOrigin - 2 == rowNew && colOrigin == colNew) {
+                        return down;
+                    }
+                }
+            }
+        }
+        //checking the lower side
+        if (rowOrigin + 2 <= size){
+            if (table[rowOrigin + 1][colOrigin].getStatus() != this->turn + 1
+                && table[rowOrigin + 1][colOrigin].getStatus() > 0) {
+                if (table[rowOrigin + 2][colOrigin].getStatus() == turn + 1) {
+                    if (rowOrigin + 2 == rowNew && colOrigin == colNew) {
+                        return up;
+                    }
+                }
+            }
+        }
+    }
+    if (rowOrigin - 2 > 0 || rowOrigin + 2 <= size
+        || colOrigin - 2 > 0 || colOrigin + 2 <= size) {
+        //checking the upper left side
+        if (rowOrigin - 2 > 0 && colOrigin - 2 > 0) {
+            if (table[rowOrigin - 1][colOrigin - 1].getStatus() != this->turn + 1
+                && table[rowOrigin - 1][colOrigin - 1].getStatus() > 0) {
+                if (table[rowOrigin - 2][colOrigin - 2].getStatus() == turn + 1) {
+                    if (rowOrigin - 2 == rowNew && colOrigin - 2 == colNew) {
+                        return downRight;
+                    }
+                }
+            }
+        }
+        //checking the upper right side
+        if (rowOrigin - 2 > 0 && colOrigin + 2 <= size) {
+            if (table[rowOrigin - 1][colOrigin + 1].getStatus() != this->turn + 1
+                && table[rowOrigin - 1][colOrigin + 1].getStatus() > 0) {
+                if (table[rowOrigin - 2][colOrigin + 2].getStatus() == turn + 1) {
+                    if (rowOrigin - 2 == rowNew && colOrigin + 2 == colNew) {
+                        return downLeft;
+                    }
+                }
+            }
+        }
+        //checking the lower left side
+        if (rowOrigin + 2 <= size && colOrigin - 2 > 0) {
+            if (table[rowOrigin + 1][colOrigin - 1].getStatus() != this->turn + 1
+                && table[rowOrigin + 1][colOrigin - 1].getStatus() > 0) {
+                if (table[rowOrigin + 2][colOrigin - 2].getStatus() == turn + 1) {
+                    if (rowOrigin + 2 == rowNew && colOrigin - 2 == colNew) {
+                        if (rowOrigin + 2 == rowNew && colOrigin - 2 == colNew) {
+                            return upRight;
+                        }
+                    }
+                }
+            }
+        }
+        //checking the lower right side
+        if (rowOrigin + 2 <= size && colOrigin + 2 <= size) {
+            if (table[rowOrigin + 1][colOrigin + 1].getStatus() != this->turn + 1
+                && table[rowOrigin + 1][colOrigin + 1].getStatus() > 0) {
+                if (table[rowOrigin + 2][colOrigin + 2].getStatus() == turn + 1) {
+                    if (rowOrigin + 2 == rowNew && colOrigin + 2 == colNew) {
+                        return upLeft;
+                    }
+                }
+            }
+        }
+    }
+    if (colOrigin - 2 > 0 || colOrigin + 2 <= size) {
+        //checking the left side
+        if (colOrigin - 2 > 0) {
+            if (table[rowOrigin][colOrigin - 1].getStatus() != this->turn + 1
+                && table[rowOrigin][colOrigin - 1].getStatus() > 0) {
+                if (table[rowOrigin][colOrigin - 2].getStatus() == turn + 1) {
+                    if (rowOrigin == rowNew && colOrigin - 2 == colNew) {
+                        return east;
+                    }
+                }
+            }
+        }
+        //checking the right side
+        if (colOrigin + 2 <= size) {
+            if (table[rowOrigin][colOrigin + 1].getStatus() != this->turn + 1
+                && table[rowOrigin][colOrigin + 1].getStatus() > 0) {
+                if (table[rowOrigin][colOrigin + 2].getStatus() == turn + 1) {
+                    if (rowOrigin == rowNew && colOrigin + 2 == colNew) {
+                        return west;
+                    }
+                }
+            }
+        }
+    }
+    return none;
+}
+
 
 /**
  * This method the direction of which the flip happens.

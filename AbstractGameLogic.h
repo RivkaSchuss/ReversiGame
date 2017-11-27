@@ -25,6 +25,7 @@ public:
     Location* removeOneDead(Place place, int row, int col, Board* board);
     bool moveExist(Location* options, Location location, int k);
     virtual int getNotFirstTurn() = 0;
+    Place eatenFrom(Board* board,int rowOrigin, int colOrigin, int rowNew, int colNew);
 
 
 protected:

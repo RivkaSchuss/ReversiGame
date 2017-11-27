@@ -24,7 +24,6 @@ Cell::Cell(): spot(0) {
 
 Cell::~Cell() {
     delete spot;
-    //delete this;
 }
 
 /**
