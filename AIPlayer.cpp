@@ -73,6 +73,7 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     //ultimately, we'll perform the worst move.
     row = moves[worstMove].getRow();
     col = moves[worstMove].getCol();
+    //update status of the new cells
     board->getTable()[row][col].updateStatus(type + 1);
     logic->flipDeadCell(row, col, board);
     board->print();
