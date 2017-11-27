@@ -76,7 +76,7 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     board->getTable()[row][col].updateStatus(type + 1);
     logic->flipDeadCell(row, col, board);
     board->print();
-    cout << "O played: " << row << "," << col << endl;
+    cout << "O played " << row << "," << col << endl;
 }
 
 PlayerType AIPlayer::getPType() {
