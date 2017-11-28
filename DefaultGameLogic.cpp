@@ -46,8 +46,10 @@ void DefaultGameLogic::playOneTurn(Board* board) {
                     running = 0;
                     return;
                 }
+                return;
             } else {
                 secondPlayer->performMove(moves, board, this);
+                return;
                 //cout << "O: You have no possible moves!" << endl;
                 //return;
             }
@@ -112,11 +114,13 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
                 if (table[rowPos - 2][colPos].getStatus() == status) {
                     Location *option = new Location(rowPos - 2, colPos);
                     currentOptions[l] = *option;
+                    delete option;
                     l++;
                 } else {
                     option = getFromUp(table, size, rowPos - 1, colPos, status);
                     if (option != NULL) {
                         currentOptions[l] = *option;
+                        delete option;
                         l++;
                     }
                 }
@@ -129,11 +133,13 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
                 if (table[rowPos + 2][colPos].getStatus() == status) {
                     Location *option = new Location(rowPos + 2, colPos);
                     currentOptions[l] = *option;
+                    delete option;
                     l++;
                 } else {
                     option = getFromDown(table, size, rowPos + 1, colPos, status);
                     if (option != NULL) {
                         currentOptions[l] = *option;
+                        delete option;
                         l++;
                     }
                 }
@@ -150,11 +156,13 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
                 if (table[rowPos - 2][colPos - 2].getStatus() == status) {
                     Location *option = new Location(rowPos - 2, colPos - 2);
                     currentOptions[l] = *option;
+                    delete option;
                     l++;
                 } else {
                     option = getFromUpLeft(table, size, rowPos - 1, colPos - 1, status);
                     if (option != NULL) {
                         currentOptions[l] = *option;
+                        delete option;
                         l++;
                     }
                 }
@@ -167,11 +175,13 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
                 if (table[rowPos - 2][colPos + 2].getStatus() == status) {
                     Location *option = new Location(rowPos - 2, colPos + 2);
                     currentOptions[l] = *option;
+                    delete option;
                     l++;
                 } else {
                     option = getFromUpRight(table, size, rowPos - 1, colPos + 1, status);
                     if (option != NULL) {
                         currentOptions[l] = *option;
+                        delete option;
                         l++;
                     }
                 }
@@ -184,11 +194,13 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
                 if (table[rowPos + 2][colPos - 2].getStatus() == status) {
                     Location *option = new Location(rowPos + 2, colPos - 2);
                     currentOptions[l] = *option;
+                    delete option;
                     l++;
                 } else {
                     option = getFromDownLeft(table, size, rowPos + 1, colPos - 1, status);
                     if (option != NULL) {
                         currentOptions[l] = *option;
+                        delete option;
                         l++;
                     }
                 }
@@ -201,11 +213,13 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
                 if (table[rowPos + 2][colPos + 2].getStatus() == status) {
                     Location *option = new Location(rowPos + 2, colPos + 2);
                     currentOptions[l] = *option;
+                    delete option;
                     l++;
                 } else {
                     option = getFromDownRight(table, size, rowPos + 1, colPos + 1, status);
                     if (option != NULL) {
                         currentOptions[l] = *option;
+                        delete option;
                         l++;
                     }
                 }
@@ -221,11 +235,13 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
                 if (table[rowPos][colPos - 2].getStatus() == status) {
                     Location *option = new Location(rowPos, colPos - 2);
                     currentOptions[l] = *option;
+                    delete option;
                     l++;
                 } else {
                     option = getFromLeft(table, size, rowPos, colPos - 1, status);
                     if (option != NULL) {
                         currentOptions[l] = *option;
+                        delete option;
                         l++;
                     }
                 }
@@ -238,11 +254,13 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
                 if (table[rowPos][colPos + 2].getStatus() == status) {
                     Location *option = new Location(rowPos, colPos + 2);
                     currentOptions[l] = *option;
+                    delete option;
                     l++;
                 } else {
                     option = getFromRight(table, size, rowPos, colPos + 1, status);
                     if (option != NULL) {
                         currentOptions[l] = *option;
+                        delete option;
                         l++;
                     }
                 }

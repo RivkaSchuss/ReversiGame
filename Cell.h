@@ -11,14 +11,14 @@ class Cell {
 public:
     Cell();
     ~Cell();
-    Location* getSpot();
+    Location getSpot();
     int getStatus();
     void updateStatus(int status);
     void setSpot(int row, int col);
 
 private:
     //members
-    Location* spot;
+    Location spot;
     int status;
     //status = 0 means empty
     //status = 1 means the cell is marked X

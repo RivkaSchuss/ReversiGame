@@ -82,12 +82,25 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
         }
         //now we'll get the moves for the rival.
         rivalMoves = logic->getPossibleMoves(tempTable,size);
+        if (rivalMoves == NULL) {
+            board->getTable()[row][col].updateStatus(type + 1);
+            logic->flipDeadCell(row,col,board);
+            if (type == black) {
+                cout << "X played (" << row << "," << col << ")" << endl;
+            } else {
+                cout << "O played (" << row << "," << col << ")" << endl;
+            }
+            board->print();
+            //delete tempTable;
+            //delete tempBoardRival;
+            return;
+        }
         //reset the index of the list
         k = 0;
         //reset the current worst score.
         currentWorst = size * size;
         //we'll go through each of the rivals move for our current AI move.
-        cout << "move:" << row << " " << col << endl;
+        //cout << "move:" << row << " " << col << endl;
         while (rivalMoves[k].getRow() != 0) {
             //resetting the temporary "rival" table.
             tempBoard->copyValues(tempTableRival);
@@ -100,8 +113,8 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
             //getting the current result. we multiply it by -1 because it's the score for the rival.
             currentScore = (-1) * logic->checkScore(tempTableRival, size);
             //if this score is lower than our current worst score we'll update our current worst score.
-            cout << row << " " << col << " " << currentScore << endl;
-            tempBoardRival->print();
+            //cout << row << " " << col << " " << currentScore << endl;
+            //tempBoardRival->print();
             if (currentScore < currentWorst) {
                 currentWorst = currentScore;
             }
@@ -134,6 +147,8 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     } else {
         cout << "O played (" << row << "," << col << ")" << endl;
     }
+    //delete tempTable;
+    //delete tempBoardRival;
 }
 
 PlayerType AIPlayer::getPType() {

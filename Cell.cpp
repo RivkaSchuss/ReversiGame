@@ -13,7 +13,7 @@ using namespace std;
  * This method builds the cell.
  */
 
-Cell::Cell(): spot(0) {
+Cell::Cell(): spot(0, 0) {
     this->status = 0;
 }
 
@@ -23,7 +23,7 @@ Cell::Cell(): spot(0) {
  */
 
 Cell::~Cell() {
-    delete spot;
+    //delete spot;
 }
 
 /**
@@ -31,7 +31,7 @@ Cell::~Cell() {
  * @return the location of the cell.
  */
 
-Location* Cell::getSpot() {
+Location Cell::getSpot() {
     return this->spot;
 }
 
@@ -60,5 +60,5 @@ void Cell::updateStatus(int status) {
  */
 
 void Cell::setSpot(int row, int col) {
-    this->spot = new Location(row, col);
+    this->spot = Location(row, col);
 }

@@ -24,7 +24,7 @@ Board::Board(int size) : size(size) {
     }
     for (int i = 0; i < size + 1; ++i) {
         for (int j = 0; j < size + 1; ++j) {
-            table[i][j].setSpot(i,j);
+            table[i][j].setSpot(i, j);
         }
     }
     table[size / 2][size / 2].updateStatus(2);
@@ -83,6 +83,11 @@ void Board::print() {
 Board:: ~Board() {
     for (int i = 0; i < size; i++) {
         delete[] table[i];
+        /*
+        for (int j = 0; j < size; j++) {
+            delete table[i][j].getSpot();
+        }
+         */
     }
     delete[] table;
     //delete this;

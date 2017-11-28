@@ -33,66 +33,6 @@ void AbstractGameLogic::setTurn(Type currentTurn) {
 }
 
 /**
- * This method is in charge of the flow of the turn.
- * @param board the board of the game.
- */
-/*
-void AbstractGameLogic::playOneTurn(Board* board) {
-    int row, col, l = 0;
-    bool moveCompleted = false;
-    while (!moveCompleted) {
-        l = 0;
-        Location *moves;
-        moves = getPossibleMoves(board->getTable(), board->getSize());
-        if (moves == NULL) {
-            running -= 1;
-            if (turn == black) {
-                cout << "X: You have no possible moves!" << endl;
-                return;
-            } else {
-                cout << "O: You have no possible moves!" << endl;
-                return;
-            }
-        }
-        running = 2;
-        if (turn == black) {
-            cout << "X: It's your move." << endl;
-        } else {
-            cout << "O: It's your move." << endl;
-        }
-        cout << "Your possible moves: ";
-        while (moves[l].getRow() != 0) {
-            cout << "(" << moves[l].getRow() << "," << moves[l].getCol() << ") ";
-            l++;
-        }
-        cout << endl;
-        cout << "Please enter your move row,col:" << endl;
-        cin >> row >> col;
-        //validating the input.
-        while (!cin) {
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cout << "Input isn't valid. Please enter your move row,col:" << endl;
-            cin >> row >> col;
-        }
-        l = 0;
-        while (moves[l].getRow() != 0) {
-            if (row == moves[l].getRow() && col == moves[l].getCol()) {
-                board->getTable()[row][col].updateStatus(this->turn + 1);
-                flipDeadCell(row,col,board);
-                moveCompleted = true;
-            }
-            l++;
-        }
-        if (!moveCompleted) {
-            cout << "This isn't an option" << endl;
-            board->print();
-        }
-    }
-}
- */
-
-/**
  * This method returns if the game isn't over yet.
  * @return this method returns whether the game ends.
  */
@@ -205,7 +145,7 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
     }
 }
 
-Place AbstractGameLogic::eatenFrom(Board* board,int rowOrigin, int colOrigin, int rowNew, int colNew) {
+Place AbstractGameLogic::eatenFrom(Board* board, int rowOrigin, int colOrigin, int rowNew, int colNew) {
     Cell** table = board->getTable();
     int size = board->getSize();
     if (rowOrigin - 2 > 0 || rowOrigin + 2 <= size) {
