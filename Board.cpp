@@ -24,7 +24,7 @@ Board::Board(int size) : size(size) {
     }
     for (int i = 0; i < size + 1; ++i) {
         for (int j = 0; j < size + 1; ++j) {
-            table[i][j].setSpot(i,j);
+            table[i][j].setSpot(i, j);
         }
     }
     table[size / 2][size / 2].updateStatus(2);
@@ -81,7 +81,7 @@ void Board::print() {
  */
 
 Board:: ~Board() {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size + 1; i++) {
         delete[] table[i];
     }
     delete[] table;
@@ -113,8 +113,8 @@ int Board::getSize() {
 
 void Board::copyValues(Cell** table) {
     Cell* currentCell = new Cell();
-    for (int i = 1; i <= size; ++i) {
-        for (int j = 1; j <= size; ++j) {
+    for (int i = 1; i < size + 1; i++) {
+        for (int j = 1; j < size + 1; j++) {
             (*(currentCell)).setSpot(i, j);
             (*(currentCell)).updateStatus(this->table[i][j].getStatus());
             table[i][j] = *currentCell;

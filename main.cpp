@@ -11,19 +11,20 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    Board* board = new Board(8);
+    Board* board = new Board(4);
     cout << "Welcome to Reversi!" << endl;
-    cout << "Please choose a player type, a for AI, and c for console:" << endl;
+    cout << "Please choose a player type: " << endl;
+    cout << "1. Console Player " << endl; cout << "2. AI Player " << endl;
     Player* blackPlayer = new ConsolePlayer(black);
-    char choice;
+    int choice;
     cin >> choice;
     Player* whitePlayer;
     switch (choice) {
-        case 'a' :
-            whitePlayer =  new AIPlayer(white);
+        case 1:
+            whitePlayer =  new ConsolePlayer(white);
             break;
-        case 'c':
-            whitePlayer = new ConsolePlayer(white);
+        case 2:
+            whitePlayer = new AIPlayer(white);
             break;
         default:
             cout << "Not an option." << endl;
