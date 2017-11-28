@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/c++  -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names    -o test_main.cpp lib/googletest/googlemock/gtest/libgtestd.a lib/googletest/googlemock/gtest/libgtest_maind.a lib/googletest/googlemock/gtest/libgtestd.a 
