@@ -37,6 +37,7 @@ AIPlayer::~AIPlayer() {
 
 void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     if (moves == NULL) {
+        //delete moves;
         return;
     }
     //the size of the board.
@@ -93,6 +94,9 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
             board->print();
             //delete tempTable;
             //delete tempBoardRival;
+            //delete tempBoard;
+            //delete tempBoardRival;
+            //delete moves;
             return;
         }
         //reset the index of the list
@@ -149,6 +153,10 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     }
     //delete tempTable;
     //delete tempBoardRival;
+    //delete tempBoard;
+    //delete tempBoardRival;
+    //delete moves;
+    //delete rivalMoves;
 }
 
 PlayerType AIPlayer::getPType() {

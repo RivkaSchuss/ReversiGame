@@ -59,8 +59,8 @@ Type AbstractGameLogic::getTurn() {
 
 int AbstractGameLogic::checkScore(Cell **table, int size) {
     int counterBlack = 0, counterWhite = 0;
-    for (int i = 0; i <= size; ++i) {
-        for (int j = 0; j <= size; ++j) {
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
             if (table[i][j].getStatus() == 1) {
                 counterBlack++;
             } else if (table[i][j].getStatus() == 2){
@@ -87,8 +87,8 @@ Location* AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
     //ultimately will store all of the options for moves.
     Location* options = new Location(2, 2);
     int k = 0, l = 0;
-    for (int i = 0; i <= size; ++i) {
-        for (int j = 0; j <= size; ++j) {
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size + 1; j++) {
             if (table[i][j].getStatus() == turn + 1) {
                 subOptions = this->clearMoveArea(table, size, i, j, 0);
                 if (subOptions != NULL) {
@@ -101,15 +101,18 @@ Location* AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
                         l++;
                     }
                 }
+                //delete subOptions;
             }
         }
     }
     //if there are no possible moves we'll return NULL.
     if (k == 0) {
+        //delete subOptions;
         delete options;
         return NULL;
     } else {
         Location* option = new Location(0, 0);
+        //delete subOptions;
         options[k] = *option;
         delete option;
         return options;
@@ -128,6 +131,7 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
     killerOptions = clearMoveArea(board->getTable(), board->getSize(),
                                   row, col, turn + 1);
     if (killerOptions == NULL) {
+        delete killerOptions;
         return;
     } else {
         int l = 0;
@@ -142,7 +146,10 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
             l++;
             delete flipped;
         }
+        delete killerOptions;
+        //delete flipped;
     }
+    //delete killerOptions;
 }
 
 Place AbstractGameLogic::eatenFrom(Board* board, int rowOrigin, int colOrigin, int rowNew, int colNew) {

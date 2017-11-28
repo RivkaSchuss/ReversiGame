@@ -11,7 +11,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    Board* board = new Board(8);
+    Board* board = new Board(4);
     cout << "Welcome to Reversi!" << endl;
     cout << "Please choose a player type: " << endl;
     cout << "1. Console Player " << endl; cout << "2. AI Player " << endl;

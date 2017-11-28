@@ -26,7 +26,6 @@ ConsolePlayer::~ConsolePlayer() {
 }
 
 void ConsolePlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
-
     if (moves == NULL) {
         cout << "O: You have no possible moves!" << endl;
         board->print();

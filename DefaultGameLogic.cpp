@@ -39,9 +39,12 @@ void DefaultGameLogic::playOneTurn(Board* board) {
         Location *moves;
         moves = getPossibleMoves(board->getTable(), board->getSize());
         if (moves == NULL) {
+            delete moves;
             running -= 1;
             if (turn == black) {
-                cout << "X: You have no possible moves!" << endl;
+                if (secondPlayer->getPType() == Console) {
+                    cout << "X: You have no possible moves!" << endl;
+                }
                 if (secondPlayer->getPType() == AI) {
                     running = 0;
                     return;
@@ -93,7 +96,7 @@ void DefaultGameLogic::playOneTurn(Board* board) {
             return;
             //cout << "O: It's your move." << endl;
         }
-
+        //delete moves;
     }
 }
 
@@ -273,6 +276,7 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
     } else {
         Location* option = new Location(0, 0);
         currentOptions[l] = *option;
+        //delete option;
         return currentOptions;
     }
 }
