@@ -81,14 +81,19 @@ void AIPlayer::performMove(vector<Location> moves, Board* board, GameLogic* logi
         //now we'll get the moves for the rival.
         rivalMoves = logic->getPossibleMoves(tempTable,size);
         if (rivalMoves.empty()) {
+            if (logic->getTurn() == black) {
+                logic->setTurn(white);
+            } else {
+                logic->setTurn(black);
+            }
             board->getTable()[row][col].updateStatus(type + 1);
             logic->flipDeadCell(row,col,board);
+            board->print();
             if (type == black) {
                 cout << "X played (" << row << "," << col << ")" << endl;
             } else {
                 cout << "O played (" << row << "," << col << ")" << endl;
             }
-            board->print();
             delete tempBoard;
             delete tempBoardRival;
             moves.clear();

@@ -28,7 +28,6 @@ public:
     virtual Location* removeOneDead(Place place, int row, int col, Board* board) = 0;
     virtual bool moveExist(vector<Location> options, Location location) = 0;
     virtual int getNotFirstTurn() = 0;
-    virtual Place eatenFrom(Board* board,int rowOrigin, int colOrigin, int rowNew, int colNew) = 0;
 
 private:
     //members of the class:

@@ -123,143 +123,75 @@ vector<Location> AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
  */
 
 void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
-    vector<Location> killerOptions;
-    killerOptions = clearMoveArea(board->getTable(), board->getSize(),
-                                  row, col, turn + 1);
-    if (killerOptions.empty()) {
-        killerOptions.clear();
-        return;
-    } else {
-        int l = 0;
-        int rowDif = 0, colDif = 0;
-        Location *flipped;
-        for (int i = 0; i < killerOptions.size(); i++) {
-            rowDif = row - killerOptions[i].getRow();
-            colDif = col - killerOptions[i].getCol();
-            Place place = whichPlace(rowDif, colDif);
-            flipped = removeOneDead(place, row, col, board);
-            flipDeadCell(flipped->getRow(), flipped->getCol(), board);
-            l++;
-            delete flipped;
-        }
-        killerOptions.clear();
-        //delete flipped;
+    int player1 = -1, player2 = -1;
+    if (turn  == 0) {
+        player1 = 1;
+        player2 = 2;
+    } else if (turn == 1){
+        player1 = 2;
+        player2 = 1;
     }
-    //delete killerOptions;
+    int currentSign;
+    int currentRow = row;
+    int currentCol = col;
+    int tempRow = 0;
+    int tempCol = 0;
+    for (int rowDirection = -1; rowDirection <= 1; rowDirection++) {
+        for (int colDirection =-1; colDirection <= 1; colDirection++) {
+            tempRow = currentRow + rowDirection;
+            tempCol = currentCol + colDirection;
+            if (currentRow >= 0 && currentRow < 8 && currentCol >= 0 && currentCol < 8) {
+                currentSign = board->getTable()[tempRow][tempCol].getStatus();
+                bool flag = true;
+                if (rowDirection == 0 && colDirection == 0) {
+
+                } else {
+                    while (currentSign == player2 && flag) {
+                        tempRow += rowDirection;
+                        tempCol += colDirection;
+                        if (tempRow >= 0 && tempRow < 8 && tempCol >= 0 && tempCol < 8) {
+                            if (board->getTable()[tempRow][tempCol].getStatus() == player1) {
+                                flipChosenCell(tempRow, tempCol, row, col, (-1) * rowDirection, (-1) * colDirection,
+                                               player1, board);
+                                flag = false;
+                            }
+                            currentSign = board->getTable()[tempRow][tempCol].getStatus();
+                        } else {
+                            flag = false;
+                        }
+                        //3 4 3 2 1 2 4 3 2 3 1 4 2 4 4 2 3 1 6 6 6 4
+                    }
+                }
+            }
+
+        }
+    }
 }
 
 /**
- *
- * @param board
- * @param rowOrigin
- * @param colOrigin
- * @param rowNew
- * @param colNew
- * @return
+ * This method flips a streak of locked cells.
+ * @param rowOrigin the destination row.
+ * @param colOrigin the destination col.
+ * @param rowNew the chosen row.
+ * @param colNew the chosen col.
+ * @param rowDirection the direction of the row.
+ * @param colDirection the direction of the column.
+ * @param player1 player of the turn.
+ * @param board board of the game.
  */
-Place AbstractGameLogic::eatenFrom(Board* board, int rowOrigin, int colOrigin, int rowNew, int colNew) {
-    Cell** table = board->getTable();
-    int size = board->getSize();
-    if (rowOrigin - 2 > 0 || rowOrigin + 2 <= size) {
-        //checking the upper side
-        if (rowOrigin - 2 > 0) {
-            if (table[rowOrigin - 1][colOrigin].getStatus() != this->turn + 1
-                && table[rowOrigin - 1][colOrigin].getStatus() > 0) {
-                if (table[rowOrigin - 2][colOrigin].getStatus() == turn + 1) {
-                    if (rowOrigin - 2 == rowNew && colOrigin == colNew) {
-                        return down;
-                    }
-                }
-            }
-        }
-        //checking the lower side
-        if (rowOrigin + 2 <= size){
-            if (table[rowOrigin + 1][colOrigin].getStatus() != this->turn + 1
-                && table[rowOrigin + 1][colOrigin].getStatus() > 0) {
-                if (table[rowOrigin + 2][colOrigin].getStatus() == turn + 1) {
-                    if (rowOrigin + 2 == rowNew && colOrigin == colNew) {
-                        return up;
-                    }
-                }
-            }
-        }
-    }
-    if (rowOrigin - 2 > 0 || rowOrigin + 2 <= size
-        || colOrigin - 2 > 0 || colOrigin + 2 <= size) {
-        //checking the upper left side
-        if (rowOrigin - 2 > 0 && colOrigin - 2 > 0) {
-            if (table[rowOrigin - 1][colOrigin - 1].getStatus() != this->turn + 1
-                && table[rowOrigin - 1][colOrigin - 1].getStatus() > 0) {
-                if (table[rowOrigin - 2][colOrigin - 2].getStatus() == turn + 1) {
-                    if (rowOrigin - 2 == rowNew && colOrigin - 2 == colNew) {
-                        return downRight;
-                    }
-                }
-            }
-        }
-        //checking the upper right side
-        if (rowOrigin - 2 > 0 && colOrigin + 2 <= size) {
-            if (table[rowOrigin - 1][colOrigin + 1].getStatus() != this->turn + 1
-                && table[rowOrigin - 1][colOrigin + 1].getStatus() > 0) {
-                if (table[rowOrigin - 2][colOrigin + 2].getStatus() == turn + 1) {
-                    if (rowOrigin - 2 == rowNew && colOrigin + 2 == colNew) {
-                        return downLeft;
-                    }
-                }
-            }
-        }
-        //checking the lower left side
-        if (rowOrigin + 2 <= size && colOrigin - 2 > 0) {
-            if (table[rowOrigin + 1][colOrigin - 1].getStatus() != this->turn + 1
-                && table[rowOrigin + 1][colOrigin - 1].getStatus() > 0) {
-                if (table[rowOrigin + 2][colOrigin - 2].getStatus() == turn + 1) {
-                    if (rowOrigin + 2 == rowNew && colOrigin - 2 == colNew) {
-                        if (rowOrigin + 2 == rowNew && colOrigin - 2 == colNew) {
-                            return upRight;
-                        }
-                    }
-                }
-            }
-        }
-        //checking the lower right side
-        if (rowOrigin + 2 <= size && colOrigin + 2 <= size) {
-            if (table[rowOrigin + 1][colOrigin + 1].getStatus() != this->turn + 1
-                && table[rowOrigin + 1][colOrigin + 1].getStatus() > 0) {
-                if (table[rowOrigin + 2][colOrigin + 2].getStatus() == turn + 1) {
-                    if (rowOrigin + 2 == rowNew && colOrigin + 2 == colNew) {
-                        return upLeft;
-                    }
-                }
-            }
-        }
-    }
-    if (colOrigin - 2 > 0 || colOrigin + 2 <= size) {
-        //checking the left side
-        if (colOrigin - 2 > 0) {
-            if (table[rowOrigin][colOrigin - 1].getStatus() != this->turn + 1
-                && table[rowOrigin][colOrigin - 1].getStatus() > 0) {
-                if (table[rowOrigin][colOrigin - 2].getStatus() == turn + 1) {
-                    if (rowOrigin == rowNew && colOrigin - 2 == colNew) {
-                        return east;
-                    }
-                }
-            }
-        }
-        //checking the right side
-        if (colOrigin + 2 <= size) {
-            if (table[rowOrigin][colOrigin + 1].getStatus() != this->turn + 1
-                && table[rowOrigin][colOrigin + 1].getStatus() > 0) {
-                if (table[rowOrigin][colOrigin + 2].getStatus() == turn + 1) {
-                    if (rowOrigin == rowNew && colOrigin + 2 == colNew) {
-                        return west;
-                    }
-                }
-            }
-        }
-    }
-    return none;
-}
 
+void AbstractGameLogic:: flipChosenCell(int rowOrigin,int colOrigin, int rowNew, int colNew,
+int rowDirection, int colDirection,int player1, Board* board) {
+    int currentRow = rowOrigin;
+    int currentCol = colOrigin;
+    currentRow += rowDirection;
+    currentCol += colDirection;
+    while (currentRow != rowNew || currentCol != colNew) {
+        board->getTable()[currentRow][currentCol].updateStatus(player1);
+        currentRow += rowDirection;
+        currentCol += colDirection;
+    }
+}
 
 /**
  * This method the direction of which the flip happens.
