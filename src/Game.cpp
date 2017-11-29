@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "Game.h"
+#include "../include/Game.h"
 using namespace std;
 
 /**
@@ -13,7 +13,6 @@ using namespace std;
  * @param board the board of the game.
  * @param logic the game logic of the game.
  */
-
 Game::Game(Player* blackPlayer, Player* whitePlayer, Board* board, GameLogic* logic) :
         blackPlayer(blackPlayer), whitePlayer(whitePlayer), board(board), logic(logic) {
 }
@@ -21,7 +20,6 @@ Game::Game(Player* blackPlayer, Player* whitePlayer, Board* board, GameLogic* lo
 /**
  * The destructor.
  */
-
 Game::~Game() {
     delete blackPlayer;
     delete whitePlayer;
@@ -33,7 +31,6 @@ Game::~Game() {
 /**
  * This method runs the game loop.
  */
-
 void Game::run() {
     if(logic->getNotFirstTurn() == 0) {
         board->print();

@@ -7,12 +7,15 @@
 
 
 #include "AbstractPlayer.h"
+#include <vector>
+
+using namespace std;
 
 class AIPlayer : public AbstractPlayer {
 public:
     AIPlayer(Type type);
     ~AIPlayer();
-    void performMove(Location* moves, Board* board, GameLogic* logic);
+    void performMove(vector<Location> moves, Board* board, GameLogic* logic);
     PlayerType getPType();
 private:
     Type type;

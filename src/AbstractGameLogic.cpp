@@ -4,7 +4,8 @@
 
 #include <iostream>
 #include <limits>
-#include "AbstractGameLogic.h"
+#include "../include/AbstractGameLogic.h"
+#include <vector>
 
 using namespace std;
 
@@ -12,14 +13,12 @@ using namespace std;
  * Constructor.
  * This method build a new object of this kind.
  */
-
 AbstractGameLogic::AbstractGameLogic() : turn(black), running(2) {}
 
 /**
  * Destructor.
  * This method deletes an object of this kind.
  */
-
 AbstractGameLogic::~AbstractGameLogic() {
 }
 
@@ -36,7 +35,6 @@ void AbstractGameLogic::setTurn(Type currentTurn) {
  * This method returns if the game isn't over yet.
  * @return this method returns whether the game ends.
  */
-
 bool AbstractGameLogic::isRunning() {
     return this->running;
 }
@@ -45,7 +43,6 @@ bool AbstractGameLogic::isRunning() {
  * This method returns the current turn.
  * @return the current turn.
  */
-
 Type AbstractGameLogic::getTurn() {
     return this->turn;
 }
@@ -56,7 +53,6 @@ Type AbstractGameLogic::getTurn() {
  * @param size the size of the table.
  * @return the player who won.
  */
-
 int AbstractGameLogic::checkScore(Cell **table, int size) {
     int counterBlack = 0, counterWhite = 0;
     for (int i = 0; i < size; i++) {
@@ -79,26 +75,26 @@ int AbstractGameLogic::checkScore(Cell **table, int size) {
  * @param size the size of the board.
  * @return the possible moves for this player.
  */
-
-Location* AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
+vector<Location> AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
     //changed dynamically to be the options for the current
     // player's cell in the for loop.
-    Location* subOptions;
+    vector<Location> subOptions;
     //ultimately will store all of the options for moves.
-    Location* options = new Location(2, 2);
-    int k = 0, l = 0;
+    vector<Location> options;
+    //int k = 0, l = 0;
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size + 1; j++) {
             if (table[i][j].getStatus() == turn + 1) {
                 subOptions = this->clearMoveArea(table, size, i, j, 0);
-                if (subOptions != NULL) {
-                    l = 0;
-                    while (subOptions[l].getRow() != 0) {
-                        if (!moveExist(options, subOptions[l], k)) {
-                            options[k] = subOptions[l];
-                            k++;
+                if (!subOptions.empty()) {
+                    //l = 0;
+                    for (int l = 0; l < subOptions.size(); l++) {
+                        if (!moveExist(options, subOptions[l])) {
+                            options.push_back(subOptions[l]);
+                            //options[k] = subOptions[l];
+                            //k++;
                         }
-                        l++;
+                        //l++;
                     }
                 }
                 //delete subOptions;
@@ -106,15 +102,15 @@ Location* AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
         }
     }
     //if there are no possible moves we'll return NULL.
-    if (k == 0) {
+    if (options.empty()) {
         //delete subOptions;
-        delete options;
-        return NULL;
+        options.clear();
+        return options;
     } else {
-        Location* option = new Location(0, 0);
+        Location option = Location(0, 0);
         //delete subOptions;
-        options[k] = *option;
-        delete option;
+        options.push_back(option);
+        //delete option;
         return options;
     }
 }
@@ -127,31 +123,40 @@ Location* AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
  */
 
 void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
-    Location* killerOptions;
+    vector<Location> killerOptions;
     killerOptions = clearMoveArea(board->getTable(), board->getSize(),
                                   row, col, turn + 1);
-    if (killerOptions == NULL) {
-        delete killerOptions;
+    if (killerOptions.empty()) {
+        killerOptions.clear();
         return;
     } else {
         int l = 0;
         int rowDif = 0, colDif = 0;
         Location *flipped;
-        while (killerOptions[l].getRow() != 0) {
-            rowDif = row - killerOptions[l].getRow();
-            colDif = col - killerOptions[l].getCol();
+        for (int i = 0; i < killerOptions.size(); i++) {
+            rowDif = row - killerOptions[i].getRow();
+            colDif = col - killerOptions[i].getCol();
             Place place = whichPlace(rowDif, colDif);
             flipped = removeOneDead(place, row, col, board);
             flipDeadCell(flipped->getRow(), flipped->getCol(), board);
             l++;
             delete flipped;
         }
-        delete killerOptions;
+        killerOptions.clear();
         //delete flipped;
     }
     //delete killerOptions;
 }
 
+/**
+ *
+ * @param board
+ * @param rowOrigin
+ * @param colOrigin
+ * @param rowNew
+ * @param colNew
+ * @return
+ */
 Place AbstractGameLogic::eatenFrom(Board* board, int rowOrigin, int colOrigin, int rowNew, int colNew) {
     Cell** table = board->getTable();
     int size = board->getSize();
@@ -262,7 +267,6 @@ Place AbstractGameLogic::eatenFrom(Board* board, int rowOrigin, int colOrigin, i
  * @param colDif col of the new cell.
  * @return returns the direction of the move.
  */
-
 Place AbstractGameLogic::whichPlace(int rowDif, int colDif) {
     if (rowDif > 0) {
         if (colDif > 0) {
@@ -297,7 +301,6 @@ Place AbstractGameLogic::whichPlace(int rowDif, int colDif) {
  * @param board the board of the game.
  * @return the new flipped cell.
  */
-
 Location* AbstractGameLogic::removeOneDead(Place place, int row, int col, Board* board) {
     int rowDead = 0, colDead = 0;
     switch(place) {
@@ -349,6 +352,8 @@ Location* AbstractGameLogic::removeOneDead(Place place, int row, int col, Board*
             board->getTable()[rowDead][colDead].
                     updateStatus(turn + 1);
             break;
+        default:
+            break;
     }
     Location* location = new Location(rowDead, colDead);
     return location;
@@ -361,12 +366,11 @@ Location* AbstractGameLogic::removeOneDead(Place place, int row, int col, Board*
  * @param k the number of possibilities for now.
  * @return wetheer the move is already exists.
  */
-
-bool AbstractGameLogic::moveExist(Location *options, Location location, int k) {
+bool AbstractGameLogic::moveExist(vector<Location> options, Location location) {
     int l = 0;
-    while (l <= k) {
-        if (options[l].getRow() == location.getRow() &&
-                options[l].getCol() == location.getCol()) {
+    for (int i = 0; i < options.size(); i++) {
+        if (options[i].getRow() == location.getRow() &&
+                options[i].getCol() == location.getCol()) {
             return true;
         }
         l++;

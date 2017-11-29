@@ -3,9 +3,9 @@
 //
 
 #include <iostream>
-#include "Board.h"
-#include "Cell.h"
-#include "GameLogic.h"
+#include "../include/Board.h"
+#include "../include/Cell.h"
+#include "../include/GameLogic.h"
 
 using namespace std;
 
@@ -15,7 +15,6 @@ using namespace std;
  * @param width  the width of the table.
  * @param height the height of the table.
  */
-
 Board::Board(int size) : size(size) {
     //creating a 2-dimensional array as the table.
     table = new Cell*[size + 1];
@@ -36,7 +35,6 @@ Board::Board(int size) : size(size) {
 /**
  * This method print the table at its current state.
  */
-
 void Board::print() {
     for (int i = 0; i < size * 2 + 2 ; ++i) {
         if (i % 2 == 0) {
@@ -79,7 +77,6 @@ void Board::print() {
 /**
  * This method delete the table.
  */
-
 Board:: ~Board() {
     for (int i = 0; i < size + 1; i++) {
         delete[] table[i];
@@ -97,7 +94,6 @@ Board:: ~Board() {
  * This method returns the table.
  * @return the table.
  */
-
 Cell** Board::getTable() {
     return this->table;
 }
@@ -106,7 +102,6 @@ Cell** Board::getTable() {
  * This method returns the size of the table.
  * @return the size of the table.
  */
-
 int Board::getSize() {
     return this->size;
 }
@@ -115,7 +110,6 @@ int Board::getSize() {
  * This method copies the value of a board to a given table.
  * @param table to have the values.
  */
-
 void Board::copyValues(Cell** table) {
     Cell* currentCell = new Cell();
     for (int i = 1; i < size + 1; i++) {

@@ -7,6 +7,9 @@
 
 
 #include "GameLogic.h"
+#include <vector>
+
+using namespace std;
 
 class AbstractGameLogic : public GameLogic {
 
@@ -18,12 +21,12 @@ public:
     void setTurn(Type currentTurn);
     Type getTurn();
     bool isRunning();
-    Location* getPossibleMoves(Cell** table, int size);
-    virtual Location* clearMoveArea(Cell** table, int size, int rowPos, int colPos, int status) = 0;
+    vector<Location> getPossibleMoves(Cell** table, int size);
+    virtual vector<Location> clearMoveArea(Cell** table, int size, int rowPos, int colPos, int status) = 0;
     void flipDeadCell(int row, int col, Board* board);
     Place whichPlace(int rowDif, int colDif);
     Location* removeOneDead(Place place, int row, int col, Board* board);
-    bool moveExist(Location* options, Location location, int k);
+    bool moveExist(vector<Location> options, Location location);
     virtual int getNotFirstTurn() = 0;
     Place eatenFrom(Board* board,int rowOrigin, int colOrigin, int rowNew, int colNew);
 

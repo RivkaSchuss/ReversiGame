@@ -6,7 +6,7 @@
 #define REVERSIGAME_BOARDCREATOR_H
 
 
-#include "../Board.h"
+#include "../include/Board.h"
 
 class BoardCreator {
 public:

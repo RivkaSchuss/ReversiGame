@@ -7,12 +7,15 @@
 
 #include "Location.h"
 #include "Player.h"
+#include <vector>
+
+using namespace std;
 
 class AbstractPlayer : public Player {
 public:
     AbstractPlayer(Type type);
     ~AbstractPlayer();
-    virtual void performMove(Location* moves, Board* board, GameLogic* logic) = 0;
+    virtual void performMove(vector<Location> moves, Board* board, GameLogic* logic) = 0;
     virtual PlayerType getPType() = 0;
 private:
     //the members of the class

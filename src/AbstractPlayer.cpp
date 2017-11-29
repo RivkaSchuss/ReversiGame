@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include "AbstractPlayer.h"
-#include "GameLogic.h"
+#include "../include/AbstractPlayer.h"
+#include "../include/GameLogic.h"
 
 using namespace std;
 
@@ -12,13 +12,11 @@ using namespace std;
  * Constructor.
  * @param type the type of the player.
  */
-
 AbstractPlayer::AbstractPlayer(Type type) : type(type) {}
 
 /**
  * Destructor.
  */
-
 AbstractPlayer::~AbstractPlayer() {
 }
 

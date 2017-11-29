@@ -3,8 +3,11 @@
 //
 
 #include <gtest/gtest.h>
-#include "../Board.h"
+#include "../include/Board.h"
 
+/**
+ * checks if the board size is correct.
+ */
 TEST(board__Test, board_Test) {
     Board board(8);
     EXPECT_EQ(8, board.getSize());

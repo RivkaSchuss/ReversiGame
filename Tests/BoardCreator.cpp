@@ -4,6 +4,10 @@
 
 #include "BoardCreator.h"
 
+/**
+ * creates a board.
+ * @return a board with specific moves already played.
+ */
 Board* BoardCreator::board1() {
     Board* board = new Board(8);
     Cell** table = board->getTable();
@@ -21,6 +25,10 @@ Board* BoardCreator::board1() {
     return board;
 }
 
+/**
+ * creates a board.
+ * @return a board with specific moves already played.
+ */
 Board* BoardCreator::board2() {
     Board* board = new Board(8);
     Cell** table = board->getTable();

@@ -6,13 +6,14 @@
 #define ASSIGNMENT1_CONSOLEPLAYER_H
 
 #include "AbstractPlayer.h"
+#include <vector>
 
 class ConsolePlayer: public AbstractPlayer {
 
 public:
     ConsolePlayer(Type type);
     ~ConsolePlayer();
-    void performMove(Location* moves, Board* board, GameLogic* logic);
+    void performMove(vector<Location> moves, Board* board, GameLogic* logic);
     PlayerType getPType();
 private:
     //the members of the class:

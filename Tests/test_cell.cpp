@@ -3,8 +3,11 @@
 //
 
 #include <gtest/gtest.h>
-#include "../Board.h"
+#include "../include/Board.h"
 
+/**
+ * checks if the empty cells are empty.
+ */
 TEST(cell_emptiness_Test, cell_Test) {
     Board board(8);
     int i;

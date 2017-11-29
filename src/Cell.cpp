@@ -2,8 +2,8 @@
 // Created by yarin on 01/11/17.
 //
 
-#include "Cell.h"
-#include "Location.h"
+#include "../include/Cell.h"
+#include "../include/Location.h"
 #include <iostream>
 
 using namespace std;
@@ -12,7 +12,6 @@ using namespace std;
  * Constructor.
  * This method builds the cell.
  */
-
 Cell::Cell(): spot(0, 0) {
     this->status = 0;
 }
@@ -21,7 +20,6 @@ Cell::Cell(): spot(0, 0) {
  * destructor.
  * This method deletes the cell.
  */
-
 Cell::~Cell() {
     //delete spot;
 }
@@ -30,7 +28,6 @@ Cell::~Cell() {
  * This method returns the location of the cell.
  * @return the location of the cell.
  */
-
 Location Cell::getSpot() {
     return this->spot;
 }
@@ -39,7 +36,6 @@ Location Cell::getSpot() {
  * This method returns the status of the cell.
  * @return the status of the cell.
  */
-
 int Cell::getStatus() {
     return this->status;
 }
@@ -48,7 +44,6 @@ int Cell::getStatus() {
  * This method updates the status.
  * @param status the status of the cell.
  */
-
 void Cell::updateStatus(int status) {
     this->status = status;
 }
@@ -58,7 +53,6 @@ void Cell::updateStatus(int status) {
  * @param row the row of the cell.
  * @param col the column of the cell.
  */
-
 void Cell::setSpot(int row, int col) {
     this->spot = Location(row, col);
 }

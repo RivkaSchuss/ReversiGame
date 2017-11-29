@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "AIPlayer.h"
+#include "../include/AIPlayer.h"
 using namespace std;
 
 /**
@@ -11,7 +11,6 @@ using namespace std;
  * This method builds a new AI Player.
  * @param type the type(X/O) of the player
  */
-
 AIPlayer::AIPlayer(Type type) : AbstractPlayer(type), type(type) {
     pType = AI;
 }
@@ -20,7 +19,6 @@ AIPlayer::AIPlayer(Type type) : AbstractPlayer(type), type(type) {
  * Destructor.
  * This method deletes the player.
  */
-
 AIPlayer::~AIPlayer() {
     //delete this;
 }
@@ -34,9 +32,8 @@ AIPlayer::~AIPlayer() {
  * @param board the original board.
  * @param logic the current logic of our game.
  */
-
-void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
-    if (moves == NULL) {
+void AIPlayer::performMove(vector<Location> moves, Board* board, GameLogic* logic) {
+    if (moves.empty()) {
         //delete moves;
         return;
     }
@@ -63,7 +60,7 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     //row and col of the move.
     int row = 0, col = 0;
     //will hold the rival moves.
-    Location* rivalMoves;
+    vector<Location> rivalMoves;
     //we'll go through all of the AI moves.
     while (moves[l].getRow() != 0) {
         //resetting the temporary table.
@@ -83,7 +80,7 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
         }
         //now we'll get the moves for the rival.
         rivalMoves = logic->getPossibleMoves(tempTable,size);
-        if (rivalMoves == NULL) {
+        if (rivalMoves.empty()) {
             board->getTable()[row][col].updateStatus(type + 1);
             logic->flipDeadCell(row,col,board);
             if (type == black) {
@@ -92,11 +89,9 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
                 cout << "O played (" << row << "," << col << ")" << endl;
             }
             board->print();
-            //delete tempTable;
-            //delete tempBoardRival;
-            //delete tempBoard;
-            //delete tempBoardRival;
-            //delete moves;
+            delete tempBoard;
+            delete tempBoardRival;
+            moves.clear();
             return;
         }
         //reset the index of the list
@@ -151,14 +146,16 @@ void AIPlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
     } else {
         cout << "O played (" << row << "," << col << ")" << endl;
     }
-    //delete tempTable;
-    //delete tempBoardRival;
-    //delete tempBoard;
-    //delete tempBoardRival;
-    //delete moves;
-    //delete rivalMoves;
+    moves.clear();
+    rivalMoves.clear();
+    delete tempBoard;
+    delete tempBoardRival;
 }
 
+/**
+ * gets the player type of the current player.
+ * @return an enum with the name of the current player.
+ */
 PlayerType AIPlayer::getPType() {
     return this->pType;
 }

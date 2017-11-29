@@ -1,9 +1,23 @@
 #shakedy6 schussr1
 #207234196 340903129
 
-a.out: compileAll
-	g++ *.o
-	rm -f *.o
+CXX = g++
+#CXXFLAGS = -std=c++0x
+RM = rm -f
+#LIBS = -pthread -lboost_serialization -I.
 
-compileAll: *.h *.cpp
-	g++ -c *.cpp
+a.out: core.o makeO
+	$(CXX) $(CXXFLAGS) @compile.txt
+
+core.o:
+	find src -name "*.cpp" > sources.txt
+	$(CXX) $(CXXFLAGS) -c @sources.txt
+
+makeO:
+	find -name "*.o" > compile.txt
+	sed -i '/cmake-build-debug/d' ./compile.txt
+
+clean:
+	$(RM) *.o
+	$(RM) sources.txt
+	$(RM) compile.txt

@@ -2,15 +2,16 @@
 // Created by yarin on 06/11/17.
 //
 
-#include "DefaultGameLogic.h"
+#include "../include/DefaultGameLogic.h"
 #include <limits>
 #include <iostream>
+#include <vector>
+
 using namespace std;
 
 /**
  * Constructor.
  */
-
 DefaultGameLogic::DefaultGameLogic(Player* secondPlayer) : AbstractGameLogic(), secondPlayer(secondPlayer) {
     notFirstTurn = 0;
 }
@@ -18,9 +19,8 @@ DefaultGameLogic::DefaultGameLogic(Player* secondPlayer) : AbstractGameLogic(), 
 /**
  * Destructor.
  */
-
 DefaultGameLogic::~DefaultGameLogic() {
-    delete this;
+    //delete this;
 }
 
 /**
@@ -36,10 +36,9 @@ void DefaultGameLogic::playOneTurn(Board* board) {
     bool moveCompleted = false;
     while (!moveCompleted) {
         l = 0;
-        Location *moves;
+        vector<Location> moves;
         moves = getPossibleMoves(board->getTable(), board->getSize());
-        if (moves == NULL) {
-            delete moves;
+        if (moves.empty()) {
             running -= 1;
             if (turn == black) {
                 if (secondPlayer->getPType() == Console) {
@@ -76,8 +75,8 @@ void DefaultGameLogic::playOneTurn(Board* board) {
                 cin >> row >> col;
             }
             l = 0;
-            while (moves[l].getRow() != 0) {
-                if (row == moves[l].getRow() && col == moves[l].getCol()) {
+            for (int i = 0; i < moves.size(); i++) {
+                if (row == moves[i].getRow() && col == moves[i].getCol()) {
                     board->getTable()[row][col].updateStatus(black + 1);
                     flipDeadCell(row, col, board);
                     moveCompleted = true;
@@ -100,14 +99,28 @@ void DefaultGameLogic::playOneTurn(Board* board) {
     }
 }
 
+/**
+ * returns the boolean.
+ * @return whether or not its the first turn.
+ */
 int DefaultGameLogic::getNotFirstTurn() {
     return this->notFirstTurn;
 }
 
-Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, int colPos, int status) {
+/**
+ * gets the move area surrounding the move we want to play.
+ * @param table the board.
+ * @param size the board size.
+ * @param rowPos the row position.
+ * @param colPos the col position.
+ * @param status the status of the player.
+ * @return a list of moves.
+ */
+vector<Location> DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, int colPos, int status) {
     int l = 0;
-    Location* currentOptions = new Location(1,1);
-    Location* option;
+    vector<Location> currentOptions;
+    //Location* currentOptions = new Location(1,1);
+    Location option = Location(0, 0);
     //checking whether the vertical moves are possible.
     if (rowPos - 2 > 0 || rowPos + 2 <= size) {
         //checking the upper side
@@ -115,15 +128,15 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
             if (table[rowPos - 1][colPos].getStatus() != this->turn + 1
                 && table[rowPos - 1][colPos].getStatus() > 0) {
                 if (table[rowPos - 2][colPos].getStatus() == status) {
-                    Location *option = new Location(rowPos - 2, colPos);
-                    currentOptions[l] = *option;
-                    delete option;
+                    Location option = Location(rowPos - 2, colPos);
+                    currentOptions.push_back(option);
+                    //delete option;
                     l++;
                 } else {
                     option = getFromUp(table, size, rowPos - 1, colPos, status);
-                    if (option != NULL) {
-                        currentOptions[l] = *option;
-                        delete option;
+                    if (option.getRow() != 0) {
+                        currentOptions.push_back(option);
+                        //delete option;
                         l++;
                     }
                 }
@@ -134,15 +147,15 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
             if (table[rowPos + 1][colPos].getStatus() != this->turn + 1
                 && table[rowPos + 1][colPos].getStatus() > 0) {
                 if (table[rowPos + 2][colPos].getStatus() == status) {
-                    Location *option = new Location(rowPos + 2, colPos);
-                    currentOptions[l] = *option;
-                    delete option;
+                    Location option = Location(rowPos + 2, colPos);
+                    currentOptions.push_back(option);
+                    //delete option;
                     l++;
                 } else {
                     option = getFromDown(table, size, rowPos + 1, colPos, status);
-                    if (option != NULL) {
-                        currentOptions[l] = *option;
-                        delete option;
+                    if (option.getRow() != 0) {
+                        currentOptions.push_back(option);
+                        //delete option;
                         l++;
                     }
                 }
@@ -157,15 +170,15 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
             if (table[rowPos - 1][colPos - 1].getStatus() != this->turn + 1
                 && table[rowPos - 1][colPos - 1].getStatus() > 0) {
                 if (table[rowPos - 2][colPos - 2].getStatus() == status) {
-                    Location *option = new Location(rowPos - 2, colPos - 2);
-                    currentOptions[l] = *option;
-                    delete option;
+                    Location option = Location(rowPos - 2, colPos - 2);
+                    currentOptions.push_back(option);
+                    //delete option;
                     l++;
                 } else {
                     option = getFromUpLeft(table, size, rowPos - 1, colPos - 1, status);
-                    if (option != NULL) {
-                        currentOptions[l] = *option;
-                        delete option;
+                    if (option.getRow() != 0) {
+                        currentOptions.push_back(option);
+                        //delete option;
                         l++;
                     }
                 }
@@ -176,15 +189,15 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
             if (table[rowPos - 1][colPos + 1].getStatus() != this->turn + 1
                 && table[rowPos - 1][colPos + 1].getStatus() > 0) {
                 if (table[rowPos - 2][colPos + 2].getStatus() == status) {
-                    Location *option = new Location(rowPos - 2, colPos + 2);
-                    currentOptions[l] = *option;
-                    delete option;
+                    Location option = Location(rowPos - 2, colPos + 2);
+                    currentOptions.push_back(option);
+                    //delete option;
                     l++;
                 } else {
                     option = getFromUpRight(table, size, rowPos - 1, colPos + 1, status);
-                    if (option != NULL) {
-                        currentOptions[l] = *option;
-                        delete option;
+                    if (option.getRow() != 0) {
+                        currentOptions.push_back(option);
+                        //delete option;
                         l++;
                     }
                 }
@@ -195,15 +208,15 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
             if (table[rowPos + 1][colPos - 1].getStatus() != this->turn + 1
                 && table[rowPos + 1][colPos - 1].getStatus() > 0) {
                 if (table[rowPos + 2][colPos - 2].getStatus() == status) {
-                    Location *option = new Location(rowPos + 2, colPos - 2);
-                    currentOptions[l] = *option;
-                    delete option;
+                    Location option = Location(rowPos + 2, colPos - 2);
+                    currentOptions.push_back(option);
+                    //delete option;
                     l++;
                 } else {
                     option = getFromDownLeft(table, size, rowPos + 1, colPos - 1, status);
-                    if (option != NULL) {
-                        currentOptions[l] = *option;
-                        delete option;
+                    if (option.getRow() != 0) {
+                        currentOptions.push_back(option);
+                        //delete option;
                         l++;
                     }
                 }
@@ -214,15 +227,15 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
             if (table[rowPos + 1][colPos + 1].getStatus() != this->turn + 1
                 && table[rowPos + 1][colPos + 1].getStatus() > 0) {
                 if (table[rowPos + 2][colPos + 2].getStatus() == status) {
-                    Location *option = new Location(rowPos + 2, colPos + 2);
-                    currentOptions[l] = *option;
-                    delete option;
+                    Location option = Location(rowPos + 2, colPos + 2);
+                    currentOptions.push_back(option);
+                    //delete option;
                     l++;
                 } else {
                     option = getFromDownRight(table, size, rowPos + 1, colPos + 1, status);
-                    if (option != NULL) {
-                        currentOptions[l] = *option;
-                        delete option;
+                    if (option.getRow() != 0) {
+                        currentOptions.push_back(option);
+                        //delete option;
                         l++;
                     }
                 }
@@ -236,15 +249,15 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
             if (table[rowPos][colPos - 1].getStatus() != this->turn + 1
                 && table[rowPos][colPos - 1].getStatus() > 0) {
                 if (table[rowPos][colPos - 2].getStatus() == status) {
-                    Location *option = new Location(rowPos, colPos - 2);
-                    currentOptions[l] = *option;
-                    delete option;
+                    Location option = Location(rowPos, colPos - 2);
+                    currentOptions.push_back(option);
+                    //delete option;
                     l++;
                 } else {
                     option = getFromLeft(table, size, rowPos, colPos - 1, status);
-                    if (option != NULL) {
-                        currentOptions[l] = *option;
-                        delete option;
+                    if (option.getRow() != 0) {
+                        currentOptions.push_back(option);
+                        //delete option;
                         l++;
                     }
                 }
@@ -255,15 +268,15 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
             if (table[rowPos][colPos + 1].getStatus() != this->turn + 1
                 && table[rowPos][colPos + 1].getStatus() > 0) {
                 if (table[rowPos][colPos + 2].getStatus() == status) {
-                    Location *option = new Location(rowPos, colPos + 2);
-                    currentOptions[l] = *option;
-                    delete option;
+                    Location option = Location(rowPos, colPos + 2);
+                    currentOptions.push_back(option);
+                    //delete option;
                     l++;
                 } else {
                     option = getFromRight(table, size, rowPos, colPos + 1, status);
-                    if (option != NULL) {
-                        currentOptions[l] = *option;
-                        delete option;
+                    if (option.getRow() != 0) {
+                        currentOptions.push_back(option);
+                        //delete option;
                         l++;
                     }
                 }
@@ -271,11 +284,11 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
         }
     }
     if (l == 0) {
-        delete  currentOptions;
-        return NULL;
+        currentOptions.clear();
+        return currentOptions;
     } else {
-        Location* option = new Location(0, 0);
-        currentOptions[l] = *option;
+        //Location option = Location(0, 0);
+        //currentOptions.push_back(option);
         //delete option;
         return currentOptions;
     }
@@ -290,18 +303,17 @@ Location* DefaultGameLogic::clearMoveArea(Cell **table, int size, int rowPos, in
  * @param status the wanted status to complete the move/flip.
  * @return the possible move.
  */
-
-Location* DefaultGameLogic::getFromUp(Cell **table, int size, int rowPos, int colPos, int status) {
+Location DefaultGameLogic::getFromUp(Cell **table, int size, int rowPos, int colPos, int status) {
     if(rowPos - 1 == 0) {
-        return NULL;
+        return Location(0, 0);
     }
     int value = table[rowPos - 1][colPos].getStatus();
     if (value == status) {
-        Location* option = new Location(rowPos - 1, colPos);
+        Location option = Location(rowPos - 1, colPos);
         return option;
     }
     if (value == turn + 1) {
-        return NULL;
+        return Location(0, 0);
     }
     return getFromUp(table, size, rowPos - 1, colPos, status);
 }
@@ -315,18 +327,17 @@ Location* DefaultGameLogic::getFromUp(Cell **table, int size, int rowPos, int co
  * @param status the wanted status to complete the move/flip.
  * @return the possible move.
  */
-
-Location* DefaultGameLogic::getFromUpRight(Cell **table, int size, int rowPos, int colPos, int status) {
+Location DefaultGameLogic::getFromUpRight(Cell **table, int size, int rowPos, int colPos, int status) {
     if(rowPos - 1 == 0 || colPos + 1 > size) {
-        return NULL;
+        return Location(0, 0);
     }
     int value = table[rowPos - 1][colPos + 1].getStatus();
     if (value == status) {
-        Location* option = new Location(rowPos - 1, colPos + 1);
+        Location option = Location(rowPos - 1, colPos + 1);
         return option;
     }
     if (value == turn + 1) {
-        return NULL;
+        return Location(0, 0);
     }
     return getFromUpRight(table, size, rowPos - 1, colPos + 1, status);
 }
@@ -340,18 +351,17 @@ Location* DefaultGameLogic::getFromUpRight(Cell **table, int size, int rowPos, i
  * @param status the wanted status to complete the move/flip.
  * @return the possible move.
  */
-
-Location* DefaultGameLogic::getFromRight(Cell **table, int size, int rowPos, int colPos, int status) {
+Location DefaultGameLogic::getFromRight(Cell **table, int size, int rowPos, int colPos, int status) {
     if(colPos + 1 > size) {
-        return NULL;
+        return Location(0, 0);
     }
     int value = table[rowPos][colPos + 1].getStatus();
     if (value == status) {
-        Location* option = new Location(rowPos, colPos + 1);
+        Location option = Location(rowPos, colPos + 1);
         return option;
     }
     if (value == turn + 1) {
-        return NULL;
+        return Location(0, 0);
     }
     return getFromRight(table, size, rowPos, colPos + 1, status);
 }
@@ -365,18 +375,17 @@ Location* DefaultGameLogic::getFromRight(Cell **table, int size, int rowPos, int
  * @param status the wanted status to complete the move/flip.
  * @return the possible move.
  */
-
-Location* DefaultGameLogic::getFromDownRight(Cell **table, int size, int rowPos, int colPos, int status) {
+Location DefaultGameLogic::getFromDownRight(Cell **table, int size, int rowPos, int colPos, int status) {
     if(rowPos + 1 > size || colPos + 1 > size) {
-        return NULL;
+        return Location(0, 0);
     }
     int value = table[rowPos + 1][colPos + 1].getStatus();
     if (value == status) {
-        Location* option = new Location(rowPos + 1, colPos + 1);
+        Location option = Location(rowPos + 1, colPos + 1);
         return option;
     }
     if (value == turn + 1) {
-        return NULL;
+        return Location(0, 0);
     }
     return getFromDownRight(table, size, rowPos + 1, colPos + 1, status);
 }
@@ -390,18 +399,17 @@ Location* DefaultGameLogic::getFromDownRight(Cell **table, int size, int rowPos,
  * @param status the wanted status to complete the move/flip.
  * @return the possible move.
  */
-
-Location* DefaultGameLogic::getFromDown(Cell **table, int size, int rowPos, int colPos, int status) {
+Location DefaultGameLogic::getFromDown(Cell **table, int size, int rowPos, int colPos, int status) {
     if(rowPos + 1 > size) {
-        return NULL;
+        return Location(0, 0);
     }
     int value = table[rowPos + 1][colPos].getStatus();
     if (value == status) {
-        Location* option = new Location(rowPos + 1, colPos);
+        Location option = Location(rowPos + 1, colPos);
         return option;
     }
     if (value == turn + 1) {
-        return NULL;
+        return Location(0, 0);
     }
     return getFromDown(table, size, rowPos + 1, colPos, status);
 }
@@ -415,18 +423,17 @@ Location* DefaultGameLogic::getFromDown(Cell **table, int size, int rowPos, int 
  * @param status the wanted status to complete the move/flip.
  * @return the possible move.
  */
-
-Location* DefaultGameLogic::getFromDownLeft(Cell **table, int size, int rowPos, int colPos, int status) {
+Location DefaultGameLogic::getFromDownLeft(Cell **table, int size, int rowPos, int colPos, int status) {
     if(rowPos + 1 > size || colPos - 1 == 0) {
-        return NULL;
+        return Location(0, 0);
     }
     int value = table[rowPos + 1][colPos - 1].getStatus();
     if (value == status) {
-        Location* option = new Location(rowPos + 1, colPos - 1);
+        Location option = Location(rowPos + 1, colPos - 1);
         return option;
     }
     if (value == turn + 1) {
-        return NULL;
+        return Location(0, 0);
     }
     return getFromDownLeft(table, size, rowPos + 1, colPos - 1, status);
 }
@@ -440,18 +447,17 @@ Location* DefaultGameLogic::getFromDownLeft(Cell **table, int size, int rowPos, 
  * @param status the wanted status to complete the move/flip.
  * @return the possible move.
  */
-
-Location* DefaultGameLogic::getFromLeft(Cell **table, int size, int rowPos, int colPos, int status) {
+Location DefaultGameLogic::getFromLeft(Cell **table, int size, int rowPos, int colPos, int status) {
     if(colPos - 1 == 0) {
-        return NULL;
+        return Location(0, 0);
     }
     int value = table[rowPos][colPos - 1].getStatus();
     if (value == status) {
-        Location* option = new Location(rowPos, colPos - 1);
+        Location option = Location(rowPos, colPos - 1);
         return option;
     }
     if (value == turn + 1) {
-        return NULL;
+        return Location(0, 0);
     }
     return getFromLeft(table, size, rowPos, colPos - 1, status);
 }
@@ -465,18 +471,17 @@ Location* DefaultGameLogic::getFromLeft(Cell **table, int size, int rowPos, int 
  * @param status the wanted status to complete the move/flip.
  * @return the possible move.
  */
-
-Location* DefaultGameLogic::getFromUpLeft(Cell **table, int size, int rowPos, int colPos, int status) {
+Location DefaultGameLogic::getFromUpLeft(Cell **table, int size, int rowPos, int colPos, int status) {
     if(rowPos - 1 == 0 || colPos - 1 == 0) {
-        return NULL;
+        return Location(0, 0);
     }
     int value = table[rowPos - 1][colPos - 1].getStatus();
     if (value == status) {
-        Location* option = new Location(rowPos - 1, colPos - 1);
+        Location option = Location(rowPos - 1, colPos - 1);
         return option;
     }
     if (value == turn + 1) {
-        return NULL;
+        return Location(0, 0);
     }
     return getFromUpLeft(table, size, rowPos - 1, colPos - 1, status);
 }

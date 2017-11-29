@@ -7,6 +7,9 @@
 
 #include "Cell.h"
 #include "Board.h"
+#include <vector>
+
+using namespace std;
 
 enum Type {black, white};
 
@@ -18,12 +21,12 @@ public:
     virtual void setTurn(Type currentTurn) = 0;
     virtual Type getTurn() = 0;
     virtual bool isRunning() = 0;
-    virtual Location* getPossibleMoves(Cell** table, int size) = 0;
-    virtual Location* clearMoveArea(Cell** table, int size, int rowPos, int colPos, int status) = 0;
+    virtual vector<Location> getPossibleMoves(Cell** table, int size) = 0;
+    virtual vector<Location> clearMoveArea(Cell** table, int size, int rowPos, int colPos, int status) = 0;
     virtual void flipDeadCell(int row, int col, Board* board) = 0;
     virtual Place whichPlace(int rowDif, int colDif) = 0;
     virtual Location* removeOneDead(Place place, int row, int col, Board* board) = 0;
-    virtual bool moveExist(Location* options, Location location, int k) = 0;
+    virtual bool moveExist(vector<Location> options, Location location) = 0;
     virtual int getNotFirstTurn() = 0;
     virtual Place eatenFrom(Board* board,int rowOrigin, int colOrigin, int rowNew, int colNew) = 0;
 

@@ -4,7 +4,8 @@
 
 #include <iostream>
 #include <limits>
-#include "ConsolePlayer.h"
+#include "../include/ConsolePlayer.h"
+#include <vector>
 
 using namespace std;
 
@@ -12,7 +13,6 @@ using namespace std;
  * Constructor.
  * @param type the type of the player.
  */
-
 ConsolePlayer::ConsolePlayer(Type type) : AbstractPlayer(type), type(type){
     pType = Console;
 }
@@ -20,13 +20,18 @@ ConsolePlayer::ConsolePlayer(Type type) : AbstractPlayer(type), type(type){
 /**
  * Destructor.
  */
-
 ConsolePlayer::~ConsolePlayer() {
     //delete this;
 }
 
-void ConsolePlayer::performMove(Location* moves, Board* board, GameLogic* logic) {
-    if (moves == NULL) {
+/**
+ * performs a move for the player.
+ * @param moves the list of possible moves.
+ * @param board the game board.
+ * @param logic the game logic.
+ */
+void ConsolePlayer::performMove(vector<Location> moves, Board* board, GameLogic* logic) {
+    if (moves.empty()) {
         cout << "O: You have no possible moves!" << endl;
         board->print();
         return;
@@ -68,6 +73,10 @@ void ConsolePlayer::performMove(Location* moves, Board* board, GameLogic* logic)
     }
 }
 
+/**
+ * returns the current player type.
+ * @return an enum with the current player type.
+ */
 PlayerType ConsolePlayer::getPType() {
     return this->pType;
 }
