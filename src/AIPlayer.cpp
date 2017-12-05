@@ -113,7 +113,7 @@ void AIPlayer::performMove(vector<Location> moves, Board* board, GameLogic* logi
             col = rivalMoves[k].getCol();
             //operating the move on the temporary "rival" board.
             tempTableRival[row][col].updateStatus(logic->getTurn() + 1);
-            logic->flipDeadCell(row,col,tempBoardRival);
+            logic->flipDeadCell(row, col, tempBoardRival);
             //getting the current result. we multiply it by -1 because it's the score for the rival.
             currentScore = (-1) * logic->checkScore(tempTableRival, size);
             //if this score is lower than our current worst score we'll update our current worst score.

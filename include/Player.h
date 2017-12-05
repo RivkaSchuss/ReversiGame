@@ -11,7 +11,7 @@
 
 using namespace std;
 
-enum PlayerType {Console, AI};
+enum PlayerType {Console, AI, Remote};
 
 class Player{
 

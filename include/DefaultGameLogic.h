@@ -14,7 +14,7 @@ class DefaultGameLogic : public AbstractGameLogic {
 public:
     DefaultGameLogic(Player *secondPlayer);
     ~DefaultGameLogic();
-    void playOneTurn(Board* board);
+    virtual void playOneTurn(Board* board);
     vector<Location> clearMoveArea(Cell** table, int size, int rowPos, int colPos, int status);
     Location getFromUp(Cell** table, int size, int rowPos, int colPos, int status);
     Location getFromUpRight(Cell** table, int size, int rowPos, int colPos, int status);

@@ -34,9 +34,9 @@ DefaultGameLogic::~DefaultGameLogic() {
 void DefaultGameLogic::playOneTurn(Board* board) {
     int row, col, l = 0;
     bool moveCompleted = false;
+    vector<Location> moves;
     while (!moveCompleted) {
         l = 0;
-        vector<Location> moves;
         moves = getPossibleMoves(board->getTable(), board->getSize());
         if (moves.empty()) {
             running -= 1;

@@ -7,21 +7,19 @@
 
 #include "GameLogic.h"
 #include "Player.h"
+#include "Server.h"
+#include "Client.h"
 
 class Game {
-
 public:
-    Game(Player* blackPlayer, Player* whitePlayer, Board* board, GameLogic* logic);
+    Game();
     ~Game();
-    void run();
-
+    void runMenu();
+    void runGame(Board* board, GameLogic* logic);
+    void initConnection();
 private:
-    //members of the class:
-    GameLogic* logic;
-    Board* board;
-    Player* blackPlayer;
-    Player* whitePlayer;
-
+    Server* server;
+    Client* client;
 };
 
 
