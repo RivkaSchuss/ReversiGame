@@ -16,6 +16,7 @@ public:
     AbstractPlayer(Type type);
     ~AbstractPlayer();
     virtual void performMove(vector<Location> moves, Board* board, GameLogic* logic) = 0;
+    //virtual Server* getServer();
     virtual PlayerType getPType() = 0;
 private:
     //the members of the class

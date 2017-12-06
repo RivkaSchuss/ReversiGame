@@ -65,9 +65,9 @@ void Game::runMenu() {
                 break;
             case 3:
                 initConnection();
-                whitePlayer = new RemotePlayer(white, server);
+                whitePlayer = new RemotePlayer(white);
                 chosen = 1;
-                logic = new RemoteLogic(whitePlayer);
+                logic = new RemoteLogic(whitePlayer, server);
                 break;
             default:
                 cout << "Not an option." << endl;
@@ -107,11 +107,11 @@ void Game::runGame(Board* board, GameLogic* logic) {
 }
 
 void Game::initConnection() {
-    server = new Server(1500);
+    client = new Client("127.0.0.1", 8000);
     try {
-        server->start();
-    } catch(const char* msg) {
-        cout << "Cannot start server." << msg <<  endl;
+        client->connectToServer();
+    } catch (const char* msg) {
+        cout << "Failed to connect to server." << msg << endl;
         exit(-1);
     }
 }

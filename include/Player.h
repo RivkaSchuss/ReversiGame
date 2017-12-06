@@ -7,6 +7,7 @@
 
 #include "Board.h"
 #include "GameLogic.h"
+#include "Server.h"
 #include <vector>
 
 using namespace std;
@@ -18,6 +19,7 @@ class Player{
 public:
     virtual void performMove(vector<Location> moves, Board* board, GameLogic* logic) = 0;
     virtual PlayerType getPType() = 0;
+    //virtual Server* getServer() = 0;
 private:
     //the members of the class:
     Type type;

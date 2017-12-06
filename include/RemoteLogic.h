@@ -11,12 +11,13 @@
 
 class RemoteLogic : public DefaultGameLogic {
 public:
-    RemoteLogic(Player *secondPlayer);
+    RemoteLogic(Player *secondPlayer, Server* server);
     ~RemoteLogic();
     void playOneTurn(Board* board);
 private:
     Player* secondPlayer;
     int notFirstTurn;
+    Server* server;
 };
 
 

@@ -13,14 +13,13 @@
 
 class RemotePlayer : public AbstractPlayer {
 public:
-    RemotePlayer(Type type, Server* server);
+    RemotePlayer(Type type);
     ~RemotePlayer();
     PlayerType getPType();
     void performMove(vector<Location> moves, Board* board, GameLogic* logic);
 private:
     Type type;
     PlayerType pType;
-    Server* server;
 };
 
 

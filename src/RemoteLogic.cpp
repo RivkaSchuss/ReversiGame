@@ -2,11 +2,18 @@
 // Created by Rivka Schuss on 05/12/2017.
 //
 #include <iostream>
+#include <sys/socket.h>
+#include <stdio.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
 #include "../include/RemoteLogic.h"
 
 using namespace std;
 
-RemoteLogic::RemoteLogic(Player *secondPlayer) : secondPlayer(secondPlayer), DefaultGameLogic(secondPlayer) {
+RemoteLogic::RemoteLogic(Player *secondPlayer, Server* server) : secondPlayer(secondPlayer),
+                                                                 DefaultGameLogic(secondPlayer), server(server){
     notFirstTurn = 0;
 }
 
@@ -24,13 +31,7 @@ void RemoteLogic::playOneTurn(Board *board) {
         if (moves.empty()) {
             running -= 1;
             if (turn == black) {
-                if (secondPlayer->getPType() == Console) {
-                    cout << "X: You have no possible moves!" << endl;
-                }
-                if (secondPlayer->getPType() == AI) {
-                    running = 0;
-                    return;
-                }
+                cout << "X: You have no possible moves!" << endl;
                 return;
             } else {
                 secondPlayer->performMove(moves, board, this);
@@ -74,6 +75,7 @@ void RemoteLogic::playOneTurn(Board *board) {
             }
             notFirstTurn++;
         } else {
+            cout << "Waiting for the other player's move.." << endl;
             secondPlayer->performMove(moves, board, this);
             return;
             //cout << "O: It's your move." << endl;

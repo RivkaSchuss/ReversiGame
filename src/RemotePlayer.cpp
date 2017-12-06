@@ -14,7 +14,7 @@
 
 using namespace std;
 
-RemotePlayer::RemotePlayer(Type type, Server* server) : AbstractPlayer(type), type(type), server(server) {
+RemotePlayer::RemotePlayer(Type type) : AbstractPlayer(type), type(type) {
     pType = Remote;
 }
 
@@ -28,5 +28,6 @@ PlayerType RemotePlayer::getPType() {
 
 
 void RemotePlayer::performMove(vector<Location> moves, Board* board, GameLogic* logic) {
-
+    cout << "O: It's your move." << endl;
 }
+
