@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <string>
 #include <fstream>
+#include <unistd.h>
 #include "../include/Game.h"
 #include "../include/DefaultGameLogic.h"
 #include "../include/RemotePlayer.h"
@@ -95,6 +96,7 @@ void Game::runGame(Board* board, GameLogic* logic) {
     }
     if (logic->checkScore(board->getTable(), board->getSize()) >= 1) {
         cout << "X: Congrats, you win!" << endl;
+
     } else if (logic->checkScore(board->getTable(), board->getSize()) <= -1) {
         cout << "O: Congrats, you win!" << endl;
     } else {

@@ -82,8 +82,8 @@ vector<Location> AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
     //ultimately will store all of the options for moves.
     vector<Location> options;
     //int k = 0, l = 0;
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size + 1; j++) {
+    for (int i = 0; i <= size; i++) {
+        for (int j = 0; j <= size + 1; j++) {
             if (table[i][j].getStatus() == turn + 1) {
                 subOptions = this->clearMoveArea(table, size, i, j, 0);
                 if (!subOptions.empty()) {
@@ -125,7 +125,6 @@ vector<Location> AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
 void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
     int boardSize = board->getSize();
     int player1 = -1, player2 = -1;
-    //cout << turn << endl;
     if (turn  == 0) {
         player1 = 1;
         player2 = 2;
@@ -142,16 +141,16 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
         for (int colDirection = -1; colDirection <= 1; colDirection++) {
             tempRow = currentRow + rowDirection;
             tempCol = currentCol + colDirection;
-            if (currentRow >= 0 && currentRow < boardSize && currentCol >= 0 && currentCol < boardSize) {
+            if (currentRow >= 0 && currentRow <= boardSize && currentCol >= 0 && currentCol <= boardSize
+                    && tempCol > 0 && tempCol <= boardSize && tempRow > 0 && tempRow <= boardSize) {
                 currentSign = board->getTable()[tempRow][tempCol].getStatus();
                 bool flag = true;
                 if (rowDirection == 0 && colDirection == 0) {
-
                 } else {
                     while (currentSign == player2 && flag) {
                         tempRow += rowDirection;
                         tempCol += colDirection;
-                        if (tempRow >= 0 && tempRow < board->getSize() && tempCol >= 0 && tempCol < board->getSize()) {
+                        if (tempRow >= 0 && tempRow <= board->getSize() && tempCol >= 0 && tempCol <= board->getSize()) {
                             if (board->getTable()[tempRow][tempCol].getStatus() == player1) {
                                 flipChosenCell(tempRow, tempCol, row, col, (-1) * rowDirection, (-1) * colDirection,
                                                player1, board);

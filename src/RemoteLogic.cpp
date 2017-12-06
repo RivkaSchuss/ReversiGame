@@ -8,7 +8,11 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string>
+#include <sstream>
+//#include "string.h
+//#include <string.h>
 #include <cstring>
+#include <limits>
 #include "../include/RemoteLogic.h"
 
 using namespace std;
@@ -47,20 +51,29 @@ void RemoteLogic::playOneTurn(Board *board) {
             moves = getPossibleMoves(board->getTable(), board->getSize());
             if (moves.empty()) {
                 running -= 1;
-                char nomove[20] = "NoMove";
                 if (client->getType() == first) {
                     cout << "X: You have no possible moves!" << endl;
-                    write(client->getSocket(), nomove, sizeof(nomove));
-                    turn = white;
-                    //return;
+                    if (running == 0) {
+                        char nomove[4096] = "End";
+                        write(client->getSocket(), nomove, sizeof(nomove));
+                    } else {
+                        char nomove[4096] = "NoMove";
+                        write(client->getSocket(), nomove, sizeof(nomove));
+                    }
+                    return;
                 } else {
                     cout << "O: You have no possible moves!" << endl;
-                    write(client->getSocket(), nomove, sizeof(nomove));
-                    turn = black;
-                    //return;
-                    //cout << "O: You have no possible moves!" << endl;
-                    //return;
+                    if (running == 0) {
+                        char nomove[4096] = "End";
+                        write(client->getSocket(), nomove, sizeof(nomove));
+                    } else {
+                        char nomove[4096] = "NoMove";
+                        write(client->getSocket(), nomove, sizeof(nomove));
+                    }
+                    return;
                 }
+                    //x: 8 3 3 4 3 2 1 2 4 3 2 3 1 4 2 4 4 2 3 1 6 6 6 4
+                    //o: 8 3 3 3 2 2 1 1 1 3 5 6 5 3 1 5 4 1 2 1 7 7 7 4
             }
             running = 2;
             if (client->getType() == first) {
@@ -112,7 +125,6 @@ void RemoteLogic::playOneTurn(Board *board) {
             string move = "0 played: " + sRow + ", "+ sCol;
             strcpy(player, move.c_str());
         }
-        //cout << player << endl;
         int send_bytes = write(client->getSocket(), player, sizeof(player));
         if (send_bytes < 0) {
             cout << "Error writing to client." << endl;
@@ -128,24 +140,19 @@ void RemoteLogic::playOneTurn(Board *board) {
             cout << "Error reading from server." << endl;
             return;
         }
-        cout << buffer << endl;
         int iRow = (int) buffer[10] - 48;
         int iCol = (int) buffer[13] - 48;
         //cout << iRow << " " << iCol << endl;
-        board->getTable()[iRow][iCol].updateStatus(opponent + 1);
-        if (status == black) {
-            turn = white;
-        } else {
-            turn = black;
+        if (iRow != 0) {
+            cout << buffer << endl;
+            board->getTable()[iRow][iCol].updateStatus(opponent + 1);
+            if (status == black) {
+                turn = white;
+            } else {
+                turn = black;
+            }
+            flipDeadCell(iRow, iCol, board);
         }
-        flipDeadCell(iRow, iCol, board);
-        /*
-        if (turn == black) {
-            turn = white;
-        } else {
-            turn = black;
-        }
-         */
         client->updateTurn(true);
     }
 }
