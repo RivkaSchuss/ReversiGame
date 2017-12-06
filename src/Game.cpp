@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <cstdlib>
 #include "../include/Game.h"
 #include "../include/DefaultGameLogic.h"
 #include "../include/RemotePlayer.h"

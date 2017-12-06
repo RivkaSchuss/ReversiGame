@@ -159,7 +159,6 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
                         } else {
                             flag = false;
                         }
-                        //3 4 3 2 1 2 4 3 2 3 1 4 2 4 4 2 3 1 6 6 6 4
                     }
                 }
             }

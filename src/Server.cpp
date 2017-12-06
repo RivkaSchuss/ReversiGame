@@ -78,7 +78,6 @@ void Server::handleClient(int clientSocket) {
         cout << buffer;
     }
 
-    //TELL CLIENT TO DO THE MOVE
 
     int sent_bytes = write(clientSocket, buffer, read_bytes);
 
