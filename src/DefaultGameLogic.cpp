@@ -32,6 +32,9 @@ DefaultGameLogic::~DefaultGameLogic() {
  * @return an array of possible moves for the cell.
  */
 void DefaultGameLogic::playOneTurn(Board* board) {
+    if (notFirstTurn == 0) {
+        board->print();
+    }
     int row, col, l = 0;
     bool moveCompleted = false;
     vector<Location> moves;

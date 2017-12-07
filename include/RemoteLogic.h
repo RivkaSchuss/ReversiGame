@@ -8,16 +8,17 @@
 
 #include "AbstractGameLogic.h"
 #include "DefaultGameLogic.h"
+#include "Client.h"
 
 class RemoteLogic : public DefaultGameLogic {
 public:
-    RemoteLogic(Player *secondPlayer, Server* server);
+    RemoteLogic(Player* player, Client* client);
     ~RemoteLogic();
     void playOneTurn(Board* board);
 private:
     Player* secondPlayer;
+    Client* client;
     int notFirstTurn;
-    Server* server;
 };
 
 

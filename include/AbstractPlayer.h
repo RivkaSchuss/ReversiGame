@@ -18,9 +18,10 @@ public:
     virtual void performMove(vector<Location> moves, Board* board, GameLogic* logic) = 0;
     //virtual Server* getServer();
     virtual PlayerType getPType() = 0;
+protected:
+    Type type;
 private:
     //the members of the class
-    Type type;
     PlayerType pType;
 };
 

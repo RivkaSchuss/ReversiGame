@@ -25,7 +25,7 @@ public:
     Location getFromLeft(Cell** table, int size, int rowPos, int colPos, int status);
     Location getFromUpLeft(Cell** table, int size, int rowPos, int colPos, int status);
     int getNotFirstTurn();
-private:
+protected:
     Player* secondPlayer;
     int notFirstTurn;
 

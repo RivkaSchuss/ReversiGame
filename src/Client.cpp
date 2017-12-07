@@ -12,7 +12,8 @@
 
 using namespace std;
 
-Client::Client(const char *serverIP, int serverPort) : serverIP(serverIP), serverPort(serverPort) {
+Client::Client(const char *serverIP, int serverPort) : serverIP(serverIP),
+                                                       serverPort(serverPort) {
     clientSocket = 0;
 }
 
@@ -21,6 +22,7 @@ Client::~Client() {
 }
 
 void Client::connectToServer() {
+    char turn[2];
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (clientSocket < 0) {
         cout << "Error opening socket." << endl;
@@ -47,9 +49,43 @@ void Client::connectToServer() {
         throw "Error connecting to server.";
     }
     cout << "Connected to server." << endl;
+    int bytes_received = read(clientSocket, turn, sizeof(turn));
+    if (bytes_received < 0) {
+        cout << "Error reading from server." << endl;
+    }
+    if (strcmp(turn, "1") == 0) {
+        cout << "Waiting for the other player to join..." << endl;
+        bytes_received = read(clientSocket, turn, sizeof(turn));
+        if (bytes_received < 0) {
+            cout << "Error reading from server." << endl;
+        }
+        type = first;
+        available = true;
+    } else if (strcmp(turn, "2") == 0){
+        type = second;
+        available = false;
+    }
+
+
 }
 
 void Client::sendMove(int row, int col) {
     //char* move =
     cout << "hi" << endl;
+}
+
+ClientType Client::getType() {
+    return this->type;
+}
+
+bool Client::getAvailable() {
+    return this->available;
+}
+
+void Client::updateTurn(bool update) {
+    this->available = update;
+}
+
+int Client::getSocket() {
+    return this->clientSocket;
 }

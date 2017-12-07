@@ -124,6 +124,7 @@ vector<Location> AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
 
 void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
     int player1 = -1, player2 = -1;
+    //cout << turn << endl;
     if (turn  == 0) {
         player1 = 1;
         player2 = 2;

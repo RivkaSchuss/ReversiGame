@@ -5,6 +5,7 @@
 #ifndef REVERSIGAME_CLIENT_H
 #define REVERSIGAME_CLIENT_H
 
+enum ClientType {first, second};
 
 class Client {
 public:
@@ -12,10 +13,16 @@ public:
     ~Client();
     void connectToServer();
     void sendMove(int row, int col);
+    ClientType getType();
+    bool getAvailable();
+    void updateTurn(bool update);
+    int getSocket();
 private:
     const char* serverIP;
     int serverPort;
     int clientSocket;
+    ClientType type;
+    bool available;
 };
 
 

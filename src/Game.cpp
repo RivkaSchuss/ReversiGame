@@ -4,12 +4,15 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <string>
+#include <fstream>
 #include "../include/Game.h"
 #include "../include/DefaultGameLogic.h"
 #include "../include/RemotePlayer.h"
 #include "../include/ConsolePlayer.h"
 #include "../include/RemoteLogic.h"
 #include "../include/Server.h"
+
 
 using namespace std;
 
@@ -67,7 +70,7 @@ void Game::runMenu() {
                 initConnection();
                 whitePlayer = new RemotePlayer(white);
                 chosen = 1;
-                logic = new RemoteLogic(whitePlayer, server);
+                logic = new RemoteLogic(whitePlayer, client);
                 break;
             default:
                 cout << "Not an option." << endl;
@@ -82,12 +85,7 @@ void Game::runMenu() {
  * This method runs the game loop.
  */
 void Game::runGame(Board* board, GameLogic* logic) {
-    if(logic->getNotFirstTurn() == 0) {
-        board->print();
-    }
     while (logic->isRunning() != 0) {
-        //board->print();
-        cout << endl;
         logic->playOneTurn(board);
         if (logic->getTurn() == black) {
             logic->setTurn(white);
@@ -107,7 +105,21 @@ void Game::runGame(Board* board, GameLogic* logic) {
 }
 
 void Game::initConnection() {
-    client = new Client("127.0.0.1", 8000);
+    string buffer[2];
+    string line;
+    int i = 0, port = 0;
+    ifstream file;
+    file.open("../connecInfo");
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            buffer[i] = line;
+            i++;
+        }
+        file.close();
+    }
+    const char* IP = buffer[0].c_str();
+    sscanf(buffer[1].c_str(), "%d", &port);
+    client = new Client(IP, port);
     try {
         client->connectToServer();
     } catch (const char* msg) {
