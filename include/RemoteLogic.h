@@ -15,6 +15,7 @@ public:
     RemoteLogic(Player* player, Client* client);
     ~RemoteLogic();
     void playOneTurn(Board* board);
+    string intToString(int num);
 private:
     Player* secondPlayer;
     Client* client;

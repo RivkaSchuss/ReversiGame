@@ -123,6 +123,7 @@ vector<Location> AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
  */
 
 void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
+    int boardSize = board->getSize();
     int player1 = -1, player2 = -1;
     //cout << turn << endl;
     if (turn  == 0) {
@@ -138,10 +139,10 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
     int tempRow = 0;
     int tempCol = 0;
     for (int rowDirection = -1; rowDirection <= 1; rowDirection++) {
-        for (int colDirection =-1; colDirection <= 1; colDirection++) {
+        for (int colDirection = -1; colDirection <= 1; colDirection++) {
             tempRow = currentRow + rowDirection;
             tempCol = currentCol + colDirection;
-            if (currentRow >= 0 && currentRow < 8 && currentCol >= 0 && currentCol < 8) {
+            if (currentRow >= 0 && currentRow < boardSize && currentCol >= 0 && currentCol < boardSize) {
                 currentSign = board->getTable()[tempRow][tempCol].getStatus();
                 bool flag = true;
                 if (rowDirection == 0 && colDirection == 0) {
@@ -150,7 +151,7 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
                     while (currentSign == player2 && flag) {
                         tempRow += rowDirection;
                         tempCol += colDirection;
-                        if (tempRow >= 0 && tempRow < 8 && tempCol >= 0 && tempCol < 8) {
+                        if (tempRow >= 0 && tempRow < board->getSize() && tempCol >= 0 && tempCol < board->getSize()) {
                             if (board->getTable()[tempRow][tempCol].getStatus() == player1) {
                                 flipChosenCell(tempRow, tempCol, row, col, (-1) * rowDirection, (-1) * colDirection,
                                                player1, board);
