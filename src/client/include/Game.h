@@ -7,7 +7,6 @@
 
 #include "GameLogic.h"
 #include "Player.h"
-#include "Server.h"
 #include "Client.h"
 
 class Game {
@@ -18,7 +17,6 @@ public:
     void runGame(Board* board, GameLogic* logic);
     void initConnection();
 private:
-    Server* server;
     Client* client;
 };
 

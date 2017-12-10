@@ -12,7 +12,6 @@ public:
     Client(const char *serverIP, int serverPort);
     ~Client();
     void connectToServer();
-    void sendMove(int row, int col);
     ClientType getType();
     bool getAvailable();
     void updateTurn(bool update);

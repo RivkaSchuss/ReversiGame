@@ -65,13 +65,6 @@ void Client::connectToServer() {
         type = second;
         available = false;
     }
-
-
-}
-
-void Client::sendMove(int row, int col) {
-    //char* move =
-    cout << "hi" << endl;
 }
 
 ClientType Client::getType() {

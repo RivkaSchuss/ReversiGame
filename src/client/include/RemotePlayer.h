@@ -9,7 +9,6 @@
 #include "GameLogic.h"
 #include "AbstractPlayer.h"
 #include "AIPlayer.h"
-#include "Server.h"
 
 class RemotePlayer : public AbstractPlayer {
 public:

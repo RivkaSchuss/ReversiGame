@@ -12,7 +12,6 @@
 #include "../include/RemotePlayer.h"
 #include "../include/ConsolePlayer.h"
 #include "../include/RemoteLogic.h"
-#include "../include/Server.h"
 
 
 using namespace std;
@@ -107,11 +106,10 @@ void Game::runGame(Board* board, GameLogic* logic) {
 }
 
 void Game::initConnection() {
-    string buffer[2];
-    string line;
-    int i = 0, port = 0;
+    string buffer[2], line;
+    int port = 0, i = 0;
     ifstream file;
-    file.open("../connecInfo");
+    file.open("../exe/clientInfo");
     if (file.is_open()) {
         while (getline(file, line)) {
             buffer[i] = line;
@@ -125,7 +123,7 @@ void Game::initConnection() {
     try {
         client->connectToServer();
     } catch (const char* msg) {
-        cout << "Failed to connect to server." << msg << endl;
+        cout << "Failed to connect to server. Reason: " << msg << endl;
         exit(-1);
     }
 }

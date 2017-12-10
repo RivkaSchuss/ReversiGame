@@ -4,8 +4,8 @@
 
 #include <iostream>
 #include <limits>
-#include "../include/AbstractGameLogic.h"
 #include <vector>
+#include "../include/AbstractGameLogic.h"
 
 using namespace std;
 
