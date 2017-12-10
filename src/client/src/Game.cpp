@@ -103,6 +103,7 @@ void Game::runGame(Board* board, GameLogic* logic) {
     }
     delete board;
     delete logic;
+    delete client;
 }
 
 void Game::initConnection() {

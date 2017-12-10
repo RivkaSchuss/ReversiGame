@@ -1,6 +1,6 @@
 #schussr1
 #340903129
-a.out: Server.o main.o
+server.out: Server.o main.o
 	g++ main.o Server.o
 
 Board.o: Server Server.h

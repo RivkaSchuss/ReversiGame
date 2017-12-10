@@ -1,4 +1,4 @@
-a.out: compileAll
+client.out: compileAll
 	g++ *.o 
 	rm -f *.o
 

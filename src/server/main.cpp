@@ -20,6 +20,6 @@ int main() {
     Server server(port);
     //while (true) {
     server.start();
-    //}
+    server.stop();
     return 0;
 }
