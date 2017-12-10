@@ -1,0 +1,390 @@
+commit cd1c66e478b752598c80f34d6f351aa19d781959
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Dec 10 17:55:27 2017 +0200
+
+    final
+
+commit 5087522227acb88d9a284c4b274b52f40d42b90f
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Dec 10 17:54:56 2017 +0200
+
+    final changes
+
+commit ec573d59eef2ec6250c4ed37cff18315616d24ea
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Dec 10 16:21:10 2017 +0200
+
+    organizing files
+
+commit 280b4b6efbb9857c683d6e5d938f1366fb045cb6
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Wed Dec 6 17:44:16 2017 +0200
+
+    fixed ending game issue
+
+commit ac81726d4ba60afde241c14478614475c88ce7af
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Fri Dec 8 13:59:18 2017 +0200
+
+    parsing
+
+commit 8564a669242e2900c2192096b861b54bc01e99d0
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Dec 7 19:37:41 2017 +0200
+
+    remote player
+
+commit d0e9f46862291a43b547cd24c13da6d29cc711b7
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Wed Dec 6 19:24:42 2017 +0200
+
+    Changing client
+
+commit 69ec145a7b478913d9b68a10f4733aefa7b62d3b
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Wed Dec 6 13:41:58 2017 +0200
+
+    Server update
+
+commit a0c97376a5850392624a6742dc2e489e6faf7f46
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Tue Dec 5 20:25:12 2017 +0200
+
+    adding remote player
+
+commit e8d4452797c65f48b179934c7d9ec177d03c1414
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Wed Nov 29 20:05:03 2017 +0200
+
+    fixing flip
+
+commit 3fcd2c32d108d54afeca266d80a4f5f149bc276e
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Wed Nov 29 15:06:26 2017 +0200
+
+    final changes.
+
+commit 0bb1c5e78b5c7a73cb74a291ec6839a2c2e36a6c
+Merge: 32c9046 baf0ff2
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Tue Nov 28 23:12:03 2017 +0200
+
+    test
+
+commit 32c9046d67a3ece04b3b599948eb180f004b5856
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Tue Nov 28 23:09:49 2017 +0200
+
+    memory leaks
+
+commit baf0ff2bb2bfed32111b4176823a103623c5dc4a
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Tue Nov 28 22:26:34 2017 +0200
+
+    finish ai
+
+commit 48e09c28c5381943b697cf3cb4e2e17b25ac6e6a
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Tue Nov 28 22:26:10 2017 +0200
+
+    finishing ai
+
+commit e37450bcb3c4aa56edaa17a4d90b72c9c1e101fe
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Mon Nov 27 21:58:13 2017 +0200
+
+    AI move
+
+commit 4b680fc3c9723f121bbe968c503cc310e6af3897
+Merge: cf60a30 bf7f7a6
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Mon Nov 27 13:44:21 2017 +0200
+
+    Merge branch 'master' of https://github.com/RivkaSchuss/ReversiGame
+    
+    # Conflicts:
+    #       Tests/test_main.cpp
+
+commit bf7f7a6b08a691400847c2a1c5b9b3ca6e7eacf5
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Nov 27 16:27:59 2017 +0200
+
+    added logic test
+
+commit cf60a30a39663da0ba78390bc41e4a4ee7aef0b9
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Mon Nov 27 13:43:32 2017 +0200
+
+    changed main
+
+commit deaaf874762716dbaae25517f90c3b8b7e36f172
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Nov 27 13:26:55 2017 +0200
+
+    delete files
+
+commit 0e78dc7d83be9a5c07bc7f6984e850b98dbd7a90
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Nov 27 13:20:46 2017 +0200
+
+    changing organization
+
+commit 9c0dcd6f58ba70ae6098cb53217dbb355a8696d6
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Nov 27 12:11:19 2017 +0200
+
+    comments
+
+commit aa4a14d5bb949b2e3ffc067f4737e87b7a857f85
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Nov 27 11:07:04 2017 +0200
+
+    fix
+
+commit 0ee53160290c68905f9b1a0bba9fd768f6028c8b
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Nov 26 19:58:18 2017 +0200
+
+    freeing memory
+
+commit e2da21895c5a87d0f8e8ab6a5699b96578dbf2c4
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Nov 26 19:05:14 2017 +0200
+
+    deleting memory leaks
+
+commit 89537c685d51cefd38c203f90b3cd63192f23891
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Nov 26 18:38:39 2017 +0200
+
+    changed cmake to work for the tests
+
+commit ae477d1af3af3528b9a721f197def94bf50be35f
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Nov 26 17:15:44 2017 +0200
+
+    fixing tests attempts
+
+commit 209655861c5559befca8c0a221f7e3883d00aa20
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Nov 26 16:28:43 2017 +0200
+
+    fixing includes
+
+commit 75cc53144ec59563c568ad610d64d07e8d404c67
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Nov 26 15:30:49 2017 +0200
+
+    sorting out testing
+
+commit 5c7192954f82716326af670e64a2efff506febef
+Merge: 7d970e6 dceea98
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Nov 26 15:29:24 2017 +0200
+
+    fix merge
+
+commit 7d970e665353c1ec5abee1cc01372cf2026fac09
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Nov 26 14:55:05 2017 +0200
+
+    testing
+
+commit 52b9246de499a3f8e8c5bce889c5f3ec917c0527
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sun Nov 26 12:49:07 2017 +0200
+
+    finishing aiPlayer
+
+commit 0e21e5c87ac82fa5da0fc9e2c135a684a672c370
+Merge: 6891219 5c1f6fb
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sat Nov 25 23:21:21 2017 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 6891219a477dbe89e7f92b3f525e7a9e91b06d07
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sat Nov 25 23:21:03 2017 +0200
+
+    added enum
+
+commit 37c860fe08d0e5a6e1362b721bd41a7e5d505530
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sat Nov 25 22:57:05 2017 +0200
+
+    Fix printing issues
+
+commit a6892f1803119999786d3e7c62194c6a9225b1cf
+Merge: 4c5224f fa6b720
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sat Nov 25 21:24:03 2017 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 4c5224f8b6f4f58efd1ffc791437b7e30cf1735e
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sat Nov 25 21:23:29 2017 +0200
+
+    fixed game logic
+
+commit 203b73a2f2f81b3a6562c339e70e98e6243c34ce
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Sat Nov 25 17:52:18 2017 +0200
+
+    changed logic header file
+
+commit cc0d6636145c7a46a9c2dbae7117c83811a1a29f
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Thu Nov 23 01:59:11 2017 +0200
+
+    preform move for AI Player
+
+commit b5d3eeaa2548ded51f1ab255f179cf122742569a
+Merge: 02fc0fa c607612
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Nov 23 23:35:45 2017 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 02fc0fa853d446ca88b190986165c81ac806d30d
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Nov 23 23:34:01 2017 +0200
+
+    updated constructor
+
+commit ade867c231c6325eefbfdea17d6fe826446b998a
+Merge: 6f4e7fe 9f60163
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Nov 23 12:51:45 2017 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 6f4e7feadba3b6fe7de04415f266826018494ae6
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Nov 23 12:51:32 2017 +0200
+
+    fixing linking error
+
+commit 1d8daf46615d06d84ceb9e2ddf8e66a899d3e200
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Nov 23 12:45:31 2017 +0200
+
+    rearranging classes
+
+commit 281ccedc596f0b73f9e387a819f2acb4dd312527
+Merge: 89a644a e98d12c
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Nov 23 12:32:04 2017 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 89a644a0ab5d84df9f3e1f16e6612dfcca5e6bc6
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Nov 23 12:31:32 2017 +0200
+
+    updated logic
+
+commit 372d9ae0c4c8249f024b5c4224b11e2b1837c101
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Nov 23 12:25:55 2017 +0200
+
+    arranging the ai player class
+
+commit 396cb36d3f5879339dfde2233856b8700853b0ae
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Wed Nov 22 22:28:46 2017 +0200
+
+    edit includes
+
+commit cbdb10dffb01cebed95f738f5050ea0b2ab3b6c1
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Wed Nov 22 19:32:27 2017 +0200
+
+    changed ai plater
+
+commit 239adc072bb6325e5d60f8528d85c96cf54ecc8d
+Merge: cf6829a 8b9b841
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Wed Nov 22 19:22:30 2017 +0200
+
+    Merge branch 'master' of https://github.com/RivkaSchuss/ReversiGame
+    
+    # Conflicts:
+    #       .idea/workspace.xml
+
+commit cf6829a53450e41f3a3b5f79ac07b7034020a5f4
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Wed Nov 22 19:20:05 2017 +0200
+
+    bug
+
+commit 76c1226f88cf5d6dc4f06f0f559787473aae056e
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Wed Nov 22 19:15:47 2017 +0200
+
+    add AIPlayer
+
+commit 3cd33b47bb936c54c064466dcddbb7156a24fe42
+Merge: 800e265 6daad29
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Wed Nov 22 19:14:44 2017 +0200
+
+    Merge branch 'master' of https://github.com/RivkaSchuss/ReversiGame
+    
+    # Conflicts:
+    #       .DS_Store
+    #       .idea/workspace.xml
+
+commit 800e265ab8a16f3d862cba50e12790d69788b8d1
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Wed Nov 22 19:09:56 2017 +0200
+
+    added AIPlayer
+
+commit 81feea7293546b0f0e4e3cd8f7bdb0809f6f9002
+Merge: 82b0ba6 8e3b097
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Nov 20 23:02:04 2017 +0200
+
+    Merge branch 'master' of https://github.com/RivkaSchuss/ReversiGame
+    
+    # Conflicts:
+    #       .idea/workspace.xml
+
+commit 82b0ba6c27932fe80a5bb30b9665fa4f8244de5b
+Merge: 4adcd1b bd5dcee
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Nov 20 23:01:19 2017 +0200
+
+    fix bugs
+
+commit 4adcd1bae75115c971bf6e595661b9fdf1fb5cdd
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Nov 20 22:40:50 2017 +0200
+
+    bug
+
+commit 2f47f6aa1ae4c1d8d680128940d2b5d2b68d4a2e
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Nov 20 22:07:27 2017 +0200
+
+    First commit
+
+commit 8e3b097bd15cb25bcbb5f754df9e6941c7d33dd8
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Mon Nov 13 23:48:32 2017 +0200
+
+    fix
+
+commit bd5dcee5b237d267d51a1bc1ec3af087b4f0f830
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Mon Nov 13 23:14:32 2017 +0200
+
+    bug fix
+
+commit bdb322c23408df52cd27ea53580960b2f8e10c07
+Author: Yarin Shaked <yarin.shaked7@gmail.com>
+Date:   Mon Nov 13 23:04:36 2017 +0200
+
+    printed hi

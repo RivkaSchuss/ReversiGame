@@ -5,6 +5,9 @@ using namespace std;
 #include "Server.h"
 #include <fstream>
 
+/**
+ * the main for the server.
+ **/
 int main() {
     string sPort, line;
     int port = 0;
@@ -20,6 +23,5 @@ int main() {
     Server server(port);
     //while (true) {
     server.start();
-    server.stop();
     return 0;
 }

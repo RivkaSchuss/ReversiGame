@@ -37,6 +37,7 @@ void Game::runMenu() {
     cout << "Please choose your board size: 4 or 8." << endl;
     cin >> choiceSize;
     Board* board;
+    //choosing the board size.
     switch(choiceSize) {
         case 4:
             board = new Board(4);
@@ -51,6 +52,7 @@ void Game::runMenu() {
     Player* whitePlayer;
     GameLogic* logic;
     int chosen = 0;
+    //choosing the type of player
     while (chosen != 1) {
         cout << "Please choose a player type: " << endl;
         cout << "1. Console Player " << endl; cout << "2. AI Player " << endl;cout << "3. Remote Player " << endl;
@@ -106,11 +108,16 @@ void Game::runGame(Board* board, GameLogic* logic) {
     delete client;
 }
 
+/**
+ * initializes the connection for the game.
+ */
 void Game::initConnection() {
     string buffer[2], line;
     int port = 0, i = 0;
     ifstream file;
+    //reads the client info from a file
     file.open("../exe/clientInfo");
+    //creates an array of the information we've read
     if (file.is_open()) {
         while (getline(file, line)) {
             buffer[i] = line;
@@ -118,6 +125,7 @@ void Game::initConnection() {
         }
         file.close();
     }
+    //converts the strings we've read to the appropriate types
     const char* IP = buffer[0].c_str();
     sscanf(buffer[1].c_str(), "%d", &port);
     client = new Client(IP, port);

@@ -14,19 +14,35 @@
 
 using namespace std;
 
+/**
+ * constructor.
+ * @param type the type of player.
+ */
 RemotePlayer::RemotePlayer(Type type) : AbstractPlayer(type), type(type) {
     pType = Remote;
 }
 
+/**
+ * destructor.
+ */
 RemotePlayer::~RemotePlayer() {
 
 }
 
+/**
+ * gets the type of the player.
+ * @return the player type.
+ */
 PlayerType RemotePlayer::getPType() {
     return pType;
 }
 
-
+/**
+ * performs a move.
+ * @param moves the list of possible moves.
+ * @param board the game board.
+ * @param logic the game logic.
+ */
 void RemotePlayer::performMove(vector<Location> moves, Board* board, GameLogic* logic) {
     cout << "O: It's your move." << endl;
 }

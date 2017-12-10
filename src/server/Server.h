@@ -11,7 +11,6 @@ public:
     Server(int portNum);
     ~Server();
     void start();
-    void stop();
     void handleClient(int clientSocket);
 private:
     int sock;
