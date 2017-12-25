@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 project(ReversiGame)
 
 set(CMAKE_CXX_STANDARD 98)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98 -pthread")
 add_subdirectory(src/client/lib/googletest)
 include_directories(src/client/lib/googletest/googletest/include)
 include_directories(src/client/lib/googletest/googlemock/include)
@@ -41,7 +42,17 @@ set(SERVER_FILES
         src/server/main.cpp
         src/server/Server.cpp
         src/server/Server.h
-        )
+        src/server/Command.h
+        src/server/Play.cpp
+        src/server/Play.h
+        src/server/Start.cpp
+        src/server/Start.h
+        src/server/Join.cpp
+        src/server/Join.h
+        src/server/ListGames.cpp
+        src/server/ListGames.h
+        src/server/Close.cpp
+        src/server/Close.h src/server/CommandsManager.cpp src/server/CommandsManager.h src/server/GameID.cpp src/server/GameID.h)
 add_executable(RunServer ${SERVER_FILES} src/server/main.cpp)
 
 set(SOURCE_FILES_TEST

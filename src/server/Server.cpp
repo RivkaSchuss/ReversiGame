@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include "Server.h"
+#include "GameID.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ using namespace std;
  */
 Server::Server(int portNum) : portNum(portNum) {
     exit = false;
+    gameList = new vector<GameID>;
 }
 
 /**
@@ -177,4 +179,8 @@ void Server::handleClient(int clientSocket) {
             }
         }
     }
+}
+
+vector<GameID> *Server::getGameList() {
+    return this->gameList;
 }
