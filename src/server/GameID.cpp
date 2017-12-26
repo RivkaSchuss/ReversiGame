@@ -5,7 +5,7 @@
 #include "GameID.h"
 
 GameID::GameID(string name) : name(name) {
-
+    status = noPlayers;
 }
 
 

@@ -52,7 +52,10 @@ set(SERVER_FILES
         src/server/ListGames.cpp
         src/server/ListGames.h
         src/server/Close.cpp
-        src/server/Close.h src/server/CommandsManager.cpp src/server/CommandsManager.h src/server/GameID.cpp src/server/GameID.h)
+        src/server/Close.h src/server/CommandsManager.cpp
+        src/server/CommandsManager.h
+        src/server/GameID.cpp
+        src/server/GameID.h src/server/GameManager.cpp src/server/GameManager.h src/server/GameCollection.cpp src/server/GameCollection.h)
 add_executable(RunServer ${SERVER_FILES} src/server/main.cpp)
 
 set(SOURCE_FILES_TEST

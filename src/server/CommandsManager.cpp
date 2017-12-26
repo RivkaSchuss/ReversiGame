@@ -6,17 +6,15 @@
 #include "Join.h"
 #include "Start.h"
 #include "Close.h"
-#include "Play.h"
 #include "ListGames.h"
 
 
 CommandsManager::CommandsManager(int clientSock, vector<GameID> &gameList) : clientSock(clientSock),
                                                                              gameList(gameList) {
-    commandsMap["join"] = new Join(clientSock, gameList);
-    commandsMap["start"] = new Start(clientSock, gameList);
-    commandsMap["close"] = new Close(clientSock, gameList);
-    commandsMap["play"] = new Play(clientSock);
-    commandsMap["list"] = new ListGames(clientSock, gameList);
+    commandsMap["join"] = new Join(clientSock);
+    commandsMap["start"] = new Start(clientSock);
+    commandsMap["close"] = new Close(clientSock);
+    commandsMap["list_games"] = new ListGames(clientSock);
 }
 
 CommandsManager::~CommandsManager() {

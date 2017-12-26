@@ -9,7 +9,7 @@
 
 using namespace std;
 
-enum Available {onePlayer, twoPlayers};
+enum Available {noPlayers, onePlayer, twoPlayers};
 
 class GameID {
 public:

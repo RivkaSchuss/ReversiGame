@@ -13,14 +13,15 @@
 using namespace std;
 
 
-ListGames::ListGames(int clientSock, vector<GameID> &gameList) : clientSock(clientSock), gameList(gameList) {
+ListGames::ListGames(int clientSock) : clientSock(clientSock) {
 
 }
 
 void ListGames::execute(vector<string> args) {
+    vector<GameID> *list = GameCollection::getInstance()->getList();
     string names;
-    for (int i = 0; i < gameList.size(); i++) {
-        names += gameList[i].getName();
+    for (int i = 0; i < list->size(); i++) {
+        names += list->at(i).getName();
         names += '\n';
     }
     char buffer[names.length()];

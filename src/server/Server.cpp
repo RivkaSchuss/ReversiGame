@@ -21,7 +21,7 @@ using namespace std;
  */
 Server::Server(int portNum) : portNum(portNum) {
     exit = false;
-    gameList = new vector<GameID>;
+    gameManager = new GameManager();
 }
 
 /**
@@ -59,12 +59,10 @@ void Server::start() {
     struct sockaddr_in client2_sin;
     unsigned int addr_len1 = sizeof(client1_sin);
     unsigned int addr_len2 = sizeof(client2_sin);
-    char first[2] = "1";
-    char second[2] = "2";
     //endless loop so that the server is always waiting for new clients to connect
     while (true) {
         cout << "Waiting for client connections.." << endl;
-        //accepting the first client
+
         client_sock1 = accept(sock, (struct sockaddr *) &client1_sin, &addr_len1);
         if (client_sock1 < 0) {
             cout << "Error accepting client." << endl;
@@ -72,11 +70,6 @@ void Server::start() {
         }
         cout << "Client 1 connected." << endl;
         //writing to the first client that he is the first player
-        int sent_bytes1 = write(client_sock1, first, sizeof(first));
-        if (sent_bytes1 < 0) {
-            cout << "Error sending to client." << endl;
-            return;
-        }
         //accepting the second player
         client_sock2 = accept(sock, (struct sockaddr *) &client2_sin, &addr_len2);
         if (client_sock2 < 0) {
@@ -84,18 +77,6 @@ void Server::start() {
             return;
         }
         //writing to the first client
-        sent_bytes1 = write(client_sock1, first, sizeof(first));
-        if (sent_bytes1 < 0) {
-            cout << "Error sending to client." << endl;
-            return;
-        }
-        //writing to the second client that hes the second player
-        int sent_bytes2 = write(client_sock2, second, sizeof(second));
-        if (sent_bytes2 < 0) {
-            cout << "Error sending to client." << endl;
-            return;
-        }
-        cout << "Client 2 connected." << endl;
         //handling the clients.
         while (!exit) {
             handleClient(client_sock1);
@@ -181,6 +162,3 @@ void Server::handleClient(int clientSocket) {
     }
 }
 
-vector<GameID> *Server::getGameList() {
-    return this->gameList;
-}

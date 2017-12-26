@@ -11,11 +11,10 @@
 
 class Join: public Command {
 public:
-    Join(int clientSock, vector<GameID> &gameList);
+    Join(int clientSock);
     void execute(vector<string> args);
 private:
     int clientSock;
-    vector<GameID> &gameList;
 };
 
 #endif //REVERSIGAME_JOIN_H

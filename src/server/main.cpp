@@ -3,12 +3,14 @@
 using namespace std;
 
 #include "Server.h"
+#include "GameCollection.h"
 #include <fstream>
 
 /**
  * the main for the server.
  **/
 int main() {
+    GameCollection* g = GameCollection::getInstance();
     string sPort, line;
     int port = 0;
     ifstream file;
@@ -21,7 +23,6 @@ int main() {
     }
     sscanf(sPort.c_str(), "%d", &port);
     Server server(port);
-    //while (true) {
     server.start();
     return 0;
 }

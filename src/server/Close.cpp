@@ -9,7 +9,7 @@
 using namespace std;
 
 
-Close::Close(int clientSock, vector<GameID> &gameList) : clientSock(clientSock), gameList(gameList) {
+Close::Close(int clientSock) : clientSock(clientSock) {
 
 }
 

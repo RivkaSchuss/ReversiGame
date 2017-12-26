@@ -8,6 +8,9 @@
 #include <pthread.h>
 #include <vector>
 #include "GameID.h"
+#include "GameManager.h"
+#include "CommandsManager.h"
+#include "GameCollection.h"
 
 using namespace std;
 
@@ -17,9 +20,8 @@ public:
     ~Server();
     void start();
     void handleClient(int clientSocket);
-    vector<GameID> *getGameList();
 private:
-    vector<GameID> *gameList;
+    GameManager* gameManager;
     int portNum;
     int client_sock1;
     int client_sock2;

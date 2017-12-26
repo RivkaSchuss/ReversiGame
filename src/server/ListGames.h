@@ -12,11 +12,10 @@
 
 class ListGames: public Command {
 public:
-    ListGames(int clientSock, vector<GameID> &gameList);
+    ListGames(int clientSock);
     void execute(vector<string> args);
 private:
     int clientSock;
-    vector<GameID> &gameList;
 };
 
 

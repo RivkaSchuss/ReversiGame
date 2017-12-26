@@ -10,11 +10,10 @@
 
 class Close: public Command {
 public:
-    Close(int clientSock, vector<GameID> &gameList);
+    Close(int clientSock);
     void execute(vector<string> args);
 private:
     int clientSock;
-    vector<GameID> &gameList;
 };
 
 
