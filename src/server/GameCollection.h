@@ -16,12 +16,12 @@ class GameCollection
 {
 public:
     static GameCollection *getInstance();
-    void add(GameID game);
-    vector<GameID> *getList();
+    void add(GameID* game);
+    vector<GameID*> *getList();
 private:
     GameCollection() {};
     static GameCollection *instance;
-    vector<GameID> *list;
+    vector<GameID*> *list;
 };
 
 #endif //REVERSIGAME_GAMECOLLECTION_H

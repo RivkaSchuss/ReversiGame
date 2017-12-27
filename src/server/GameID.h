@@ -20,6 +20,7 @@ public:
     string getName();
     void setFirstSock(int firstSock);
     void setSecondSock(int secSock);
+    int getFirstSock();
 private:
     string name;
     Available status;

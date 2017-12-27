@@ -36,7 +36,7 @@ set(SOURCE_FILES
         src/client/include/Client.h
         src/client/src/Client.cpp
         )
-add_executable(ReversiGame ${SOURCE_FILES} src/client/src/main.cpp)
+add_executable(client ${SOURCE_FILES} src/client/src/main.cpp)
 
 set(SERVER_FILES
         src/server/main.cpp
@@ -55,8 +55,8 @@ set(SERVER_FILES
         src/server/Close.h src/server/CommandsManager.cpp
         src/server/CommandsManager.h
         src/server/GameID.cpp
-        src/server/GameID.h src/server/GameManager.cpp src/server/GameManager.h src/server/GameCollection.cpp src/server/GameCollection.h)
-add_executable(RunServer ${SERVER_FILES} src/server/main.cpp)
+        src/server/GameID.h src/server/GameManager.cpp src/server/GameManager.h src/server/GameCollection.cpp src/server/GameCollection.h src/server/Handler.cpp src/server/Handler.h src/server/ServerListener.cpp src/server/ServerListener.h src/server/ThreadList.cpp src/server/ThreadList.h)
+add_executable(server ${SERVER_FILES} src/server/main.cpp)
 
 set(SOURCE_FILES_TEST
         src/client/Tests/test_main.cpp

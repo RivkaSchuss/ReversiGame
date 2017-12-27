@@ -11,20 +11,28 @@
 using namespace std;
 
 
-Join::Join(int clientSock) : clientSock(clientSock) {
+Join::Join(vector<GameID*> &gameList) :  gameList(gameList) {
 
 }
 
 void Join::execute(vector<string> args) {
-    vector<GameID> *list = GameCollection::getInstance()->getList();
+    //vector<GameID*> *list = GameCollection::getInstance()->getList();
     char second[2] = "2";
-    for (int i = 0; i < list->size(); i++) {
-        if (strcmp(args[0].c_str(), list->at(i).getName().c_str()) == 0) {
-            if (list->at(i).getAvailability() == onePlayer) {
-                list->at(i).setSecondSock(clientSock);
-                list->at(i).updateAvailability(twoPlayers);
+    int sock;
+    sscanf(args[1].c_str(), "%d", &sock);
+    for (int i = 0; i < gameList.size(); i++) {
+        if (strcmp(args[0].c_str(), gameList.at(i)->getName().c_str()) == 0) {
+            if (gameList.at(i)->getAvailability() == onePlayer) {
+                gameList.at(i)->setSecondSock(sock);
+                gameList.at(i)->updateAvailability(twoPlayers);
                 //writing to the second client that hes the second player
-                int sent_bytes2 = write(clientSock, second, sizeof(second));
+                int sent_bytes2 = write(sock, second, sizeof(second));
+                int sockFirst = gameList.at(i)->getFirstSock();
+                int sent_p1Bytes = write(sockFirst, second, sizeof(second));
+                if (sent_p1Bytes < 0) {
+                    cout << "Error sending to client." << endl;
+                    return;
+                }
                 if (sent_bytes2 < 0) {
                     cout << "Error sending to client." << endl;
                     return;

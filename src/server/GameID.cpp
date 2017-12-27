@@ -33,3 +33,7 @@ Available GameID::getAvailability() {
     return this->status;
 }
 
+int GameID::getFirstSock() {
+    return this->player1Sock;
+}
+

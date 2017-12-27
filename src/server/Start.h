@@ -11,9 +11,9 @@
 
 class Start: public Command {
 public:
-    Start(int clientSock);
+    Start(vector<GameID*> &gameList);
     void execute(vector<string> args);
 private:
-    int clientSock;
+    vector<GameID*> &gameList;
 };
 #endif //REVERSIGAME_START_H

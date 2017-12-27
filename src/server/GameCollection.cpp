@@ -18,11 +18,11 @@ GameCollection *GameCollection::getInstance() {
     }
 }
 
-void GameCollection::add(GameID game) {
+void GameCollection::add(GameID* game) {
     list->push_back(game);
 }
 
-vector<GameID> *GameCollection::getList() {
+vector<GameID*> *GameCollection::getList() {
     return this->list;
 }
 

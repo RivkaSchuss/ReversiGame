@@ -8,10 +8,13 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <pthread.h>
 #include <string.h>
+#include <cstdlib>
 
 #include "Server.h"
 #include "GameID.h"
+#include "ThreadList.h"
 
 using namespace std;
 
@@ -22,6 +25,7 @@ using namespace std;
 Server::Server(int portNum) : portNum(portNum) {
     exit = false;
     gameManager = new GameManager();
+    sock = socket(AF_INET, SOCK_STREAM, 0);
 }
 
 /**
@@ -33,10 +37,7 @@ Server::~Server() {}
  * starts the server.
  */
 void Server::start() {
-    int sock;
     struct sockaddr_in sin;
-    //creating the socket.
-    sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
         cout << "Error establishing connection..." << endl;
         return;
@@ -55,110 +56,21 @@ void Server::start() {
         cout << "Error listening to socket." << endl;
         return;
     }
-    struct sockaddr_in client1_sin;
-    struct sockaddr_in client2_sin;
-    unsigned int addr_len1 = sizeof(client1_sin);
-    unsigned int addr_len2 = sizeof(client2_sin);
     //endless loop so that the server is always waiting for new clients to connect
-    while (true) {
-        cout << "Waiting for client connections.." << endl;
-
-        client_sock1 = accept(sock, (struct sockaddr *) &client1_sin, &addr_len1);
-        if (client_sock1 < 0) {
-            cout << "Error accepting client." << endl;
-            return;
-        }
-        cout << "Client 1 connected." << endl;
-        //writing to the first client that he is the first player
-        //accepting the second player
-        client_sock2 = accept(sock, (struct sockaddr *) &client2_sin, &addr_len2);
-        if (client_sock2 < 0) {
-            cout << "Error accepting client." << endl;
-            return;
-        }
-        //writing to the first client
-        //handling the clients.
-        while (!exit) {
-            handleClient(client_sock1);
-            handleClient(client_sock2);
-        }
-        //closing the client sockets.
-        close(client_sock1);
-        close(client_sock2);
-        exit = false;
+    pthread_t main;
+    //sleep(5);
+    int mainThread = pthread_create(&main, NULL, handleClient, (void*) sock);
+    if (mainThread) {
+        cout << "Error: unable to create thread, " << mainThread << endl;
     }
-    //stop();
+    pthread_exit(NULL);
+    //ThreadList::getInstance()->add(mainThread);
 }
 
-void Server::handleClient(int clientSocket) {
-    char buffer[4096];
-    int expected_data_len = sizeof(buffer);
-    //if we are the first client
-    if (clientSocket == client_sock1) {
-        //reading
-        int read_bytes = read(clientSocket, buffer, expected_data_len);
-        //if the connection has been closed
-        if (read_bytes == 0) {
-            cout << "Connection is closed." << endl;
-            exit = true;
-            return;
-            //if the read has returned the string "end", the game ends
-        } else if (strcmp(buffer, "End") == 0) {
-            handleClient(client_sock2);
-            exit = true;
-            return;
-        } else if (read_bytes < 0) {
-            cout << "Error reading." << endl;
-            return;
-        } else {
-            //if the read has returned the string "nomove", there are no more moves
-            if (strcmp(buffer, "NoMove") == 0) {
-                char noChange[4096] = "X played: 0, 0";
-                //writing
-                int sent_bytes = write(client_sock2, noChange, read_bytes);
-                if (sent_bytes < 0) {
-                    cout << "Error sending to client." << endl;
-                    return;
-                }
-                return;
-            }
-            //writing to the client dependent on what was read.
-            int sent_bytes = write(client_sock2, buffer, read_bytes);
-            if (sent_bytes < 0) {
-                cout << "Error sending to client." << endl;
-                return;
-            }
-        }
-        //if we are the second client
-    } else {
-        int read_bytes = read(clientSocket, buffer, expected_data_len);
-        if (read_bytes == 0) {
-            cout << "Connection is closed." << endl;
-            exit = true;
-            return;
-        } else if (strcmp(buffer, "End") == 0) {
-            handleClient(client_sock1);
-            exit = true;
-            return;
-        } else if (read_bytes < 0) {
-            cout << "Error reading." << endl;
-            return;
-        } else {
-            if (strcmp(buffer, "NoMove") == 0) {
-                char noChange[4096] = "O played: 0, 0";
-                int sent_bytes = write(client_sock1, noChange, read_bytes);
-                if (sent_bytes < 0) {
-                    cout << "Error sending to client." << endl;
-                    return;
-                }
-                return;
-            }
-            int sent_bytes = write(client_sock1, buffer, read_bytes);
-            if (sent_bytes < 0) {
-                cout << "Error sending to client." << endl;
-                return;
-            }
-        }
-    }
+void* Server::handleClient(void* sock) {
+    ServerListener* listener = new ServerListener((long) sock);
+    listener->listeningLoop();
+    delete listener;
 }
+
 

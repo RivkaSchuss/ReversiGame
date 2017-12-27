@@ -4,6 +4,7 @@ using namespace std;
 
 #include "Server.h"
 #include "GameCollection.h"
+#include "ThreadList.h"
 #include <fstream>
 
 /**
@@ -11,6 +12,7 @@ using namespace std;
  **/
 int main() {
     GameCollection* g = GameCollection::getInstance();
+    ThreadList* t = ThreadList::getInstance();
     string sPort, line;
     int port = 0;
     ifstream file;

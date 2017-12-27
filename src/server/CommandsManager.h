@@ -12,13 +12,14 @@
 
 class CommandsManager {
 public:
-    CommandsManager(int clientSock, vector<GameID> &gameList);
+    CommandsManager(int sock);
     ~CommandsManager();
     void executeCommand(string command, vector<string> args);
+    int getSock();
 private:
     map<string, Command*> commandsMap;
-    vector<GameID> &gameList;
-    int clientSock;
+    vector<GameID*> gameList;
+    int sock;
 };
 
 

@@ -9,12 +9,11 @@
 #include "ListGames.h"
 
 
-CommandsManager::CommandsManager(int clientSock, vector<GameID> &gameList) : clientSock(clientSock),
-                                                                             gameList(gameList) {
-    commandsMap["join"] = new Join(clientSock);
-    commandsMap["start"] = new Start(clientSock);
-    commandsMap["close"] = new Close(clientSock);
-    commandsMap["list_games"] = new ListGames(clientSock);
+CommandsManager::CommandsManager(int sock) : sock(sock) {
+    commandsMap["join"] = new Join(gameList);
+    commandsMap["start"] = new Start(gameList);
+    commandsMap["close"] = new Close(gameList);
+    commandsMap["list_games"] = new ListGames(gameList);
 }
 
 CommandsManager::~CommandsManager() {
@@ -27,4 +26,9 @@ CommandsManager::~CommandsManager() {
 void CommandsManager::executeCommand(string command, vector<string> args) {
     Command* commandObj = commandsMap[command];
     commandObj->execute(args);
+    cout << gameList[0]->getAvailability() << endl;
+}
+
+int CommandsManager::getSock() {
+    return this->sock;
 }

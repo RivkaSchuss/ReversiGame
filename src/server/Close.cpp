@@ -9,8 +9,7 @@
 using namespace std;
 
 
-Close::Close(int clientSock) : clientSock(clientSock) {
-
+Close::Close(vector<GameID*> &gameList) :  gameList(gameList) {
 }
 
 void Close::execute(vector<string> args) {
