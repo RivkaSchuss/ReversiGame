@@ -10,7 +10,6 @@
 #include "GameID.h"
 #include "GameManager.h"
 #include "CommandsManager.h"
-#include "GameCollection.h"
 #include "ServerListener.h"
 
 using namespace std;
@@ -20,14 +19,13 @@ public:
     Server(int portNum);
     ~Server();
     void start();
-    static void* handleClient(void* info);
+    void close();
+    static void* handleClient(void* threadArgs);
 private:
-    GameManager* gameManager;
+    CommandsManager* manager;
+    vector<pthread_t> threadList;
     int portNum;
     int sock;
-    int client_sock1;
-    int client_sock2;
-    bool exit;
 };
 
 

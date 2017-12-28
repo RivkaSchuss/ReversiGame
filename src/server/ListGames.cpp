@@ -18,11 +18,11 @@ ListGames::ListGames(vector<GameID*> &gameList) :  gameList(gameList) {
 }
 
 void ListGames::execute(vector<string> args) {
-    int sock = atoi(args[2].c_str());
-    vector<GameID*> *list = GameCollection::getInstance()->getList();
+    int sock;
+    sscanf(args[1].c_str(), "%d", &sock);
     string names;
-    for (int i = 0; i < list->size(); i++) {
-        names += list->at(i)->getName();
+    for (int i = 0; i < gameList.size(); i++) {
+        names += gameList.at(i)->getName();
         names += '\n';
     }
     char buffer[names.length()];

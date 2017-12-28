@@ -102,7 +102,8 @@ void RemoteLogic::playOneTurn(Board *board) {
             }
             cout << endl;
             cout << "Please enter your move row,col:" << endl;
-            cin >> row >> col;
+            char dummy[20];
+            cin >> dummy >> row >> col;
             l = 0;
             for (int i = 0; i < moves.size(); i++) {
                 if (row == moves[i].getRow() && col == moves[i].getCol()) {
@@ -133,7 +134,10 @@ void RemoteLogic::playOneTurn(Board *board) {
         }
         //we write to the other client what we've played
         int send_bytes = write(client->getSocket(), player, sizeof(player));
-        if (send_bytes < 0) {
+        if (notFirstTurn  == 1) {
+            send_bytes = write(client->getSocket(), player, sizeof(player));
+        }
+        if (send_bytes < 0) { 
             cout << "Error writing to client." << endl;
             return;
         }

@@ -11,10 +11,12 @@
 
 class Join: public Command {
 public:
-    Join(vector<GameID*> &gameList);
+    Join(vector<GameID*> &gameList, vector<pthread_t> &threadList);
+    static void* sendToGameManager(void* game);
     void execute(vector<string> args);
 private:
     vector<GameID*> &gameList;
+    vector<pthread_t> &threadList;
 };
 
 #endif //REVERSIGAME_JOIN_H

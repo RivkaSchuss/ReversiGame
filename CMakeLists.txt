@@ -43,19 +43,16 @@ set(SERVER_FILES
         src/server/Server.cpp
         src/server/Server.h
         src/server/Command.h
-        src/server/Play.cpp
-        src/server/Play.h
         src/server/Start.cpp
         src/server/Start.h
         src/server/Join.cpp
         src/server/Join.h
         src/server/ListGames.cpp
         src/server/ListGames.h
-        src/server/Close.cpp
-        src/server/Close.h src/server/CommandsManager.cpp
+        src/server/CommandsManager.cpp
         src/server/CommandsManager.h
         src/server/GameID.cpp
-        src/server/GameID.h src/server/GameManager.cpp src/server/GameManager.h src/server/GameCollection.cpp src/server/GameCollection.h src/server/Handler.cpp src/server/Handler.h src/server/ServerListener.cpp src/server/ServerListener.h src/server/ThreadList.cpp src/server/ThreadList.h)
+        src/server/GameID.h src/server/GameManager.cpp src/server/GameManager.h src/server/Handler.cpp src/server/Handler.h src/server/ServerListener.cpp src/server/ServerListener.h src/server/ThreadManager.h)
 add_executable(server ${SERVER_FILES} src/server/main.cpp)
 
 set(SOURCE_FILES_TEST

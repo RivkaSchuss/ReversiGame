@@ -6,17 +6,29 @@
 #define REVERSIGAME_GAMEMANAGER_H
 
 #include <iostream>
+#include <pthread.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <vector>
+#include <cstdlib>
+#include <unistd.h>
 #include "GameID.h"
 
 using namespace std;
 
 class GameManager {
 public:
-    GameManager();
+    GameManager(GameID* game);
+    void startGame();
+    void handlePlayer(int playerSock);
+    void manage(int playerSock, int otherSock);
     ~GameManager();
 private:
-
+    GameID* game;
+    int sock1;
+    int sock2;
+    bool exit;
 };
 
 

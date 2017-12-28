@@ -8,12 +8,11 @@
 #include <pthread.h>
 #include "ServerListener.h"
 #include "Handler.h"
-#include "ThreadList.h"
 
 using namespace std;
 
-ServerListener::ServerListener(int sock) : sock(sock) {
-    manager = new CommandsManager(sock);
+ServerListener::ServerListener(int sock, vector<pthread_t> &threadList, CommandsManager* manager) : sock(sock), 
+                                                                     threadList(threadList), manager(manager)  {
 }
 
 struct args {
@@ -37,6 +36,7 @@ void ServerListener::listeningLoop() {
         toSend.cSock = clientSock;
         pthread_t threadHandler;
         int handleThread = pthread_create(&threadHandler, NULL, sendToHandler, &toSend);
+        threadList.push_back(threadHandler);
         if (handleThread) {
             cout << "Error: unable to create thread, " << handleThread << endl;
             exit(-1);

@@ -3,16 +3,12 @@
 using namespace std;
 
 #include "Server.h"
-#include "GameCollection.h"
-#include "ThreadList.h"
 #include <fstream>
 
 /**
  * the main for the server.
  **/
 int main() {
-    GameCollection* g = GameCollection::getInstance();
-    ThreadList* t = ThreadList::getInstance();
     string sPort, line;
     int port = 0;
     ifstream file;

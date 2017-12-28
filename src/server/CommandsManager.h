@@ -12,13 +12,15 @@
 
 class CommandsManager {
 public:
-    CommandsManager(int sock);
+    CommandsManager(int sock, vector<pthread_t> &threadList);
     ~CommandsManager();
     void executeCommand(string command, vector<string> args);
+    void closeSockets();
     int getSock();
 private:
     map<string, Command*> commandsMap;
     vector<GameID*> gameList;
+    vector<pthread_t> &threadList;
     int sock;
 };
 

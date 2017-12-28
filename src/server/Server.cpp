@@ -4,18 +4,12 @@
 
 #include <iostream>
 #include <sys/socket.h>
-#include <stdio.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <string.h>
-#include <cstdlib>
-
 #include "Server.h"
-#include "GameID.h"
-#include "ThreadList.h"
 
+
+#define MAX_NUM_OF_GAMES 10
 using namespace std;
 
 /**
@@ -23,15 +17,20 @@ using namespace std;
  * @param portNum the port number for the connection.
  */
 Server::Server(int portNum) : portNum(portNum) {
-    exit = false;
-    gameManager = new GameManager();
     sock = socket(AF_INET, SOCK_STREAM, 0);
+    manager = new CommandsManager(sock, threadList);
 }
 
 /**
  * destructor.
  */
 Server::~Server() {}
+
+struct args {
+    vector<pthread_t> threadsList;
+    int serverSock;
+    CommandsManager* commandsManager;
+};
 
 /**
  * starts the server.
@@ -52,25 +51,46 @@ void Server::start() {
         return;
     }
     //listening
-    if (listen(sock, 2) < 0) {
+    if (listen(sock, MAX_NUM_OF_GAMES) < 0) {
         cout << "Error listening to socket." << endl;
         return;
     }
     //endless loop so that the server is always waiting for new clients to connect
     pthread_t main;
-    //sleep(5);
-    int mainThread = pthread_create(&main, NULL, handleClient, (void*) sock);
+    args threadArgs;
+    threadArgs.threadsList = threadList;
+    threadArgs.serverSock = sock;
+    threadArgs.commandsManager = manager;
+    int mainThread = pthread_create(&main, NULL, handleClient, &threadArgs);
     if (mainThread) {
         cout << "Error: unable to create thread, " << mainThread << endl;
+        exit(-1);
     }
-    pthread_exit(NULL);
-    //ThreadList::getInstance()->add(mainThread);
+    threadList.push_back(main);
+    string exitCommand;
+    cin >> exitCommand;
+    if (strcmp(exitCommand.c_str(), "exit") == 0) {
+        close();
+    }
+    //pthread_exit(NULL);
 }
 
-void* Server::handleClient(void* sock) {
-    ServerListener* listener = new ServerListener((long) sock);
+void* Server::handleClient(void* threadArgs) {
+    args *newInfo = (args*) threadArgs;
+    vector<pthread_t> &threadList = newInfo->threadsList;
+    int sock = newInfo->serverSock;
+    CommandsManager* manager = newInfo->commandsManager;
+    ServerListener* listener = new ServerListener(sock, threadList, manager);
     listener->listeningLoop();
     delete listener;
+}
+
+void Server::close() {
+    pthread_cancel(threadList[0]);
+    for (int i = 1; i < threadList.size() - 1; i++) {
+        pthread_cancel(threadList[i]);
+    }
+    manager->closeSockets();
 }
 
 

@@ -37,3 +37,7 @@ int GameID::getFirstSock() {
     return this->player1Sock;
 }
 
+int GameID::getSecondSock() {
+    return this->player2Sock;
+}
+

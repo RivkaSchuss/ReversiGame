@@ -33,7 +33,7 @@ Client::~Client() {
  * connects the client to the server.
  */
 void Client::connectToServer() {
-    char turn[2];
+    char turn[4096];
     //creating a socket
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     //checking if the socket is valid
@@ -60,22 +60,56 @@ void Client::connectToServer() {
         throw "Error connecting to server.";
     }
     cout << "Connected to server." << endl;
-    string command, name;
+    string command, name, send;
     char buffer[4096];
-    cout << "Please enter your command followed by the game name: " << endl;
-    cin >> command >> name;
-    string send = command + ' ' + name;
-    strcpy(buffer, send.c_str());
-    int command_toSend  = write(clientSocket, buffer, sizeof(buffer));
-    if (command_toSend < 0) {
-        cout << "Error writing to the server." << endl;
+    char yet[4096] = "yet";
+    int bytes_received;
+    while (strcmp(turn, "1") != 0 && strcmp(turn, "2") != 0) {
+        cout << "Please enter your command:" << endl;
+        cin >> command;
+        if (strcmp(command.c_str(), "list_games") != 0) {
+            cin >> name;
+            send = command + ' ' + name;
+        } else {
+            send = command;
+        }
+        strcpy(buffer, send.c_str());
+        int command_toSend = write(clientSocket, buffer, sizeof(buffer));
+        if (command_toSend < 0) {
+            cout << "Error writing to the server." << endl;
+            exit(-1);
+        }
+        //reading from the server
+        bytes_received = read(clientSocket, turn, sizeof(turn));
+        if (bytes_received < 0) {
+            cout << "Error reading from server." << endl;
+            exit(-1);
+        }
+        if (strcmp(turn, "1") != 0 && strcmp(turn, "2") != 0 && strcmp(turn, "-1") != 0 && strcmp(turn, "-2") != 0) {
+            cout << turn << endl;
+            int command_toSend = write(clientSocket, yet, sizeof(yet));
+            if (command_toSend < 0) {
+                cout << "Error writing to the server." << endl;
+                exit(-1);
+            }
+        }
+        if (strcmp(turn, "-1") == 0) {
+            cout << "That name is already taken." << endl;
+            int command_toSend = write(clientSocket, yet, sizeof(yet));
+            if (command_toSend < 0) {
+                cout << "Error writing to the server." << endl;
+                exit(-1);
+            }
+        }
+        if (strcmp(turn, "-2") == 0) {
+            cout << "That game is full." << endl;
+            int command_toSend = write(clientSocket, yet, sizeof(yet));
+            if (command_toSend < 0) {
+                cout << "Error writing to the server." << endl;
+                exit(-1);
+            }
+        }
     }
-    //reading from the server
-    int bytes_received = read(clientSocket, turn, sizeof(turn));
-    if (bytes_received < 0) {
-        cout << "Error reading from server." << endl;
-    }
-    //cout << turn<< endl;
     //assigning the client type according to the number we've read from the server.
     if (strcmp(turn, "1") == 0) {
         cout << "Waiting for the other player to join..." << endl;
@@ -83,6 +117,7 @@ void Client::connectToServer() {
         bytes_received = read(clientSocket, turn, sizeof(turn));
         if (bytes_received < 0) {
             cout << "Error reading from server." << endl;
+            exit(-1);
         }
         if (strcmp(turn, "2") == 0) {
             type = first;
