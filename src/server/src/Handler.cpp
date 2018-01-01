@@ -2,7 +2,7 @@
 // Created by Rivka Schuss on 27/12/2017.
 //
 
-#include "Handler.h"
+#include "../include/Handler.h"
 
 /**
  * handles the client, parses the command received and builds the arguments.
@@ -12,11 +12,12 @@
 void Handler::handleClient(CommandsManager* manager, int clientSock) {
     //initializing the flag.
     char buffer[4096] = "flag";
-    int expected_data_len = sizeof(buffer);
+    //int expected_data_len = sizeof();
     //checking that the flag received is still in place.
     while (strcmp(buffer,"flag") == 0) {
         //reading from the client.
-        int read_bytes = read(clientSock, buffer, expected_data_len);
+        char received[4096];
+        int read_bytes  = read(clientSock, received, sizeof(received));
         if (read_bytes < 0) {
             cout << "Error reading from the socket." << endl;
             exit(-1);
@@ -27,26 +28,38 @@ void Handler::handleClient(CommandsManager* manager, int clientSock) {
         }
         //creating the vector of commands.
         vector<string> commands;
-        string input(buffer);
+        string input(received);
         size_t spaceIndex = input.find(" ");
         //splitting the command.
         string command = input.substr(0, spaceIndex);
         string name = input.substr(spaceIndex + 1, input.length() - 1);
-        //creating the vector of args
-        vector<string> args;
-        args.push_back(name);
-        string sSock = intToString(clientSock);
-        args.push_back(sSock);
-        manager->executeCommand(command, args);
-        //reading
-        read_bytes = read(clientSock, buffer, expected_data_len);
-        if (read_bytes == 0) {
-            cout << "Connection is closed." << endl;
-            exit(0);
-        }
-        if (read_bytes < 0) {
-            cout << "Error reading from the server." << endl;
-            return;
+        if (strcmp(command.c_str(),"start") != 0 && strcmp(command.c_str(),"list_games") != 0
+            && strcmp(command.c_str(),"join") != 0) {
+            strcpy(buffer,"-5");
+            int sent_bytes = write(clientSock, buffer, sizeof(buffer));
+            if (sent_bytes < 0) {
+                cout << "Error sending to client." << endl;
+                return;
+            }
+            strcpy(buffer,"flag");
+        } else {
+            //creating the vector of args
+            vector<string> args;
+            args.push_back(name);
+            string sSock = intToString(clientSock);
+            args.push_back(sSock);
+            manager->executeCommand(command, args);
+            //reading
+            read_bytes = read(clientSock, buffer, sizeof(buffer));
+            if (read_bytes == 0) {
+                cout << "Connection is closed." << endl;
+                exit(0);
+            }
+            if (read_bytes < 0) {
+                cout << "Error reading from the server." << endl;
+                return;
+            }
+
         }
         
     }

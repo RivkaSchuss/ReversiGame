@@ -1,9 +1,9 @@
-# schussr1
-# 340903129
-
 server.out: compileAll
 	g++ *.o -pthread
 	rm -f *.o
 
-compileAll: *.h *.cpp
-	g++ -c *.cpp
+compileAll: include/*.h src/*.cpp
+	g++ -Iinclude/ -c src/*.cpp
+run:
+	./a.out
+

@@ -2,17 +2,18 @@
 // Created by Rivka Schuss on 25/12/2017.
 //
 
-#include "CommandsManager.h"
-#include "Join.h"
-#include "Start.h"
-#include "ListGames.h"
+#include "../include/CommandsManager.h"
+#include "../include/Join.h"
+#include "../include/Start.h"
+#include "../include/ListGames.h"
 
 /**
  * constructor that builds the map of commands.
  * @param sock the server socket.
  * @param threadList a reference to the list of threads.
  */
-CommandsManager::CommandsManager(int sock, vector<pthread_t> &threadList) : sock(sock) , threadList(threadList) {
+CommandsManager::CommandsManager(int sock, vector<pthread_t> &threadList) : sock(sock) ,
+                                                                            threadList(threadList) {
     commandsMap["join"] = new Join(gameList, threadList);
     commandsMap["start"] = new Start(gameList);
     commandsMap["list_games"] = new ListGames(gameList);
@@ -42,10 +43,26 @@ void CommandsManager::executeCommand(string command, vector<string> args) {
  * closes all of the sockets within the game list.
  */
 void CommandsManager::closeSockets() {
+    char buffer[4096] = "end";
     for (int i = 0; i < gameList.size(); i++) {
+        int write_bytes = write(gameList[i]->getFirstSock(), buffer, sizeof(buffer));
+        if (write_bytes < 0) {
+            cout << "Error writing to the client." << endl;
+            exit(-1);
+        }
+        int write_bytes2 = write(gameList[i]->getSecondSock(), buffer, sizeof(buffer));
+        if (write_bytes2 < 0) {
+            cout << "Error writing to the client." << endl;
+            exit(-1);
+        }
         close(gameList[i]->getFirstSock());
         close(gameList[i]->getSecondSock());
         delete gameList[i];
     }
     gameList.clear();
+}
+
+
+void CommandsManager::setThreadList(vector<pthread_t> &list) {
+    this->threadList = list;
 }

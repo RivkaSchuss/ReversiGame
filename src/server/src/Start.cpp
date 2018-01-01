@@ -2,7 +2,7 @@
 // Created by Rivka Schuss on 25/12/2017.
 //
 
-#include "Start.h"
+#include "../include/Start.h"
 
 pthread_mutex_t gamesMutex;
 

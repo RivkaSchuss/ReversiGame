@@ -2,7 +2,7 @@
 // Created by Rivka Schuss on 25/12/2017.
 //
 
-#include "GameID.h"
+#include "../include/GameID.h"
 
 /**
  * constructor

@@ -24,6 +24,7 @@ public:
     GameManager(GameID* game);
     void startGame();
     void handlePlayer(int playerSock);
+    void setExit(bool change);
     void manage(int playerSock, int otherSock);
     ~GameManager();
 private:

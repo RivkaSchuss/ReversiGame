@@ -55,16 +55,18 @@ void Client::connectToServer() {
     cout << "Connected to server." << endl;
     string command, name, send;
     char buffer[4096];
-    char yet[4096] = "yet";
+    char flag[4096] = "flag";
     int bytes_received;
     while (strcmp(turn, "1") != 0 && strcmp(turn, "2") != 0) {
         cout << "Please enter your command:" << endl;
         cin >> command;
-        if (strcmp(command.c_str(), "list_games") != 0) {
+        if (strcmp(command.c_str(), "start") == 0 || strcmp(command.c_str(), "join") == 0 ) {
             cin >> name;
             send = command + ' ' + name;
         } else {
             send = command;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         strcpy(buffer, send.c_str());
         int command_toSend = write(clientSocket, buffer, sizeof(buffer));
@@ -111,10 +113,18 @@ void Client::connectToServer() {
                 stringToSend = "That game doesn't exist.";
                 sendErrors(stringToSend);
                 break;
+            case -4:
+                stringToSend = "There are no games yet!";
+                sendErrors(stringToSend);
+                break;
+            case -5:
+                stringToSend = "That is not a valid command.";
+                sendErrors(stringToSend);
+                break;
             default:
                 cout << turn << endl;
-                int command_toSend = write(clientSocket, yet, sizeof(yet));
-                if (command_toSend < 0) {
+                int command_toSend2 = write(clientSocket, flag, sizeof(flag));
+                if (command_toSend2 < 0) {
                     cout << "Error writing to the server." << endl;
                     exit(-1);
                 }
@@ -158,9 +168,11 @@ int Client::getSocket() {
 void Client::sendErrors(string stringToPrint) {
     char flag[4096] = "flag";
     cout << stringToPrint << endl;
-    int command_toSend = write(clientSocket, flag, sizeof(flag));
-    if (command_toSend < 0) {
-        cout << "Error writing to the server." << endl;
-        exit(-1);
+    if (strcmp(stringToPrint.c_str(),"That is not a valid command.") != 0) {
+        int command_toSend = write(clientSocket, flag, sizeof(flag));
+        if (command_toSend < 0) {
+            cout << "Error writing to the server." << endl;
+            exit(-1);
+        }
     }
 }

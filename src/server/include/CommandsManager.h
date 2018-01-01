@@ -16,6 +16,7 @@ public:
     ~CommandsManager();
     void executeCommand(string command, vector<string> args);
     void closeSockets();
+    void setThreadList(vector<pthread_t> &list);
 private:
     map<string, Command*> commandsMap;
     vector<GameID*> gameList;

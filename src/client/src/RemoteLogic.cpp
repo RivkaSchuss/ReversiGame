@@ -28,6 +28,7 @@ RemoteLogic::RemoteLogic(Player* secondPlayer, Client* client) : DefaultGameLogi
     } else {
         turn = white;
     }
+    flag = false;
 }
 
 /**
@@ -53,11 +54,11 @@ void RemoteLogic::playOneTurn(Board *board) {
         opponent = black;
     }
     //if we can play with the client.
+    vector<Location> moves;
     if (client->getAvailable()) {
         cout << endl;
         board->print();
         bool moveCompleted = false;
-        vector<Location> moves;
         while (!moveCompleted) {
             l = 0;
             moves = getPossibleMoves(board->getTable(), board->getSize());
@@ -66,7 +67,7 @@ void RemoteLogic::playOneTurn(Board *board) {
                 if (client->getType() == first) {
                     cout << "X: You have no possible moves!" << endl;
                     //if the game is over, we send the server "end"
-                    if (running == 0) {
+                    if (running == 0 || flag) {
                         char nomove[4096] = "End";
                         write(client->getSocket(), nomove, sizeof(nomove));
                     } else {
@@ -77,7 +78,7 @@ void RemoteLogic::playOneTurn(Board *board) {
                     return;
                 } else {
                     cout << "O: You have no possible moves!" << endl;
-                    if (running == 0) {
+                    if (running == 0 || flag) {
                         char nomove[4096] = "End";
                         write(client->getSocket(), nomove, sizeof(nomove));
                     } else {
@@ -99,7 +100,7 @@ void RemoteLogic::playOneTurn(Board *board) {
                 l++;
             }
             cout << endl;
-            cout << "Please enter your move row,col:" << endl;
+            cout << "Please enter your move: play row,col:" << endl;
             char dummy[20];
             cin >> dummy >> row >> col;
             l = 0;
@@ -141,7 +142,6 @@ void RemoteLogic::playOneTurn(Board *board) {
             cout << "Error writing to client." << endl;
             return;
         }
-
     } else {
         cout << "Waiting for other player's move..." << endl;
         char buffer[4096];
@@ -150,6 +150,14 @@ void RemoteLogic::playOneTurn(Board *board) {
         if (read_bytes < 0) {
             cout << "Error reading from server." << endl;
             return;
+        }
+        if (strcmp(buffer, "end") == 0) {
+            flag = true;
+            moves.clear();
+            running = 0;
+            //exit(0);
+            //char nomove[4096] = "End";
+            //write(client->getSocket(), nomove, sizeof(nomove));
         }
         //converting the strings to ints.
         int iRow = (int) buffer[10] - ASCII_DIFF;

@@ -39,21 +39,27 @@ set(SOURCE_FILES
 add_executable(client ${SOURCE_FILES} src/client/src/main.cpp)
 
 set(SERVER_FILES
-        src/server/main.cpp
-        src/server/Server.cpp
-        src/server/Server.h
-        src/server/Command.h
-        src/server/Start.cpp
-        src/server/Start.h
-        src/server/Join.cpp
-        src/server/Join.h
-        src/server/ListGames.cpp
-        src/server/ListGames.h
-        src/server/CommandsManager.cpp
-        src/server/CommandsManager.h
-        src/server/GameID.cpp
-        src/server/GameID.h src/server/GameManager.cpp src/server/GameManager.h src/server/Handler.cpp src/server/Handler.h src/server/ServerListener.cpp src/server/ServerListener.h src/server/ThreadManager.h)
-add_executable(server ${SERVER_FILES} src/server/main.cpp)
+        src/server/src/main.cpp
+        src/server/src/Server.cpp
+        src/server/include/Server.h
+        src/server/include/Command.h
+        src/server/src/Start.cpp
+        src/server/include/Start.h
+        src/server/src/Join.cpp
+        src/server/include/Join.h
+        src/server/src/ListGames.cpp
+        src/server/include/ListGames.h
+        src/server/src/CommandsManager.cpp
+        src/server/include/CommandsManager.h
+        src/server/src/GameID.cpp
+        src/server/include/GameID.h
+        src/server/src/GameManager.cpp
+        src/server/include/GameManager.h
+        src/server/src/Handler.cpp
+        src/server/include/Handler.h
+        src/server/src/ServerListener.cpp
+        src/server/include/ServerListener.h)
+add_executable(server ${SERVER_FILES} src/server/src/main.cpp)
 
 set(SOURCE_FILES_TEST
         src/client/Tests/test_main.cpp

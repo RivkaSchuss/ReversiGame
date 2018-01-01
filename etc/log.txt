@@ -1,3 +1,34 @@
+commit bad4fda22d22cddc740ed72dbf5a93b73d1aed7e
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Jan 1 13:07:29 2018 +0200
+
+    final changes
+
+commit c6503f8201d4127b1876a44d648a8f39fac970bb
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Thu Dec 28 20:16:49 2017 +0200
+
+    checking threads
+
+commit e3a69917a2cbc6677ba356822c6d0b4a06c31cf1
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Wed Dec 27 22:57:57 2017 +0200
+
+    adding threads
+
+commit bbb20127d396d4c9f7e114de807ef0b8878a25bd
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Tue Dec 26 21:34:24 2017 +0200
+
+    adding singleton
+
+commit b3a6e0f6fd73697d9bc476b2b5cbacddd6fdcb48
+Author: Rivka Schuss <rschuss123@gmail.com>
+Date:   Mon Dec 25 20:37:16 2017 +0200
+
+    adding commands
+
+
 commit cd1c66e478b752598c80f34d6f351aa19d781959
 Author: Rivka Schuss <rschuss123@gmail.com>
 Date:   Sun Dec 10 17:55:27 2017 +0200

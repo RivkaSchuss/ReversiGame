@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#include "Server.h"
+#include "../include/Server.h"
 #include <fstream>
 
 /**
@@ -22,5 +22,6 @@ int main() {
     sscanf(sPort.c_str(), "%d", &port);
     Server server(port);
     server.start();
+    //server.closeProcesses();
     return 0;
 }

@@ -2,7 +2,7 @@
 // Created by Rivka Schuss on 27/12/2017.
 //
 
-#include "ServerListener.h"
+#include "../include/ServerListener.h"
 
 /**
  * constructor.
@@ -10,7 +10,7 @@
  * @param threadList reference to the list of threads.
  * @param manager the commands manager.
  */
-ServerListener::ServerListener(int sock, vector<pthread_t> &threadList, CommandsManager* manager) : sock(sock), 
+ServerListener::ServerListener(int sock, vector<pthread_t> threadList, CommandsManager* manager) : sock(sock),
                                                                      threadList(threadList), manager(manager)  {
 }
 
@@ -43,8 +43,16 @@ void ServerListener::listeningLoop() {
         toSend.cSock = clientSock;
         //creates a new thread for each accept from the client.
         pthread_t threadHandler;
-        threadList.push_back(threadHandler);
+        cout << threadList.size();
+        cout << " listener before" << endl;
         int handleThread = pthread_create(&threadHandler, NULL, sendToHandler, &toSend);
+        pthread_mutex_t lockThreads;
+        pthread_mutex_lock(&lockThreads);
+        threadList.push_back(threadHandler);
+        pthread_mutex_unlock(&lockThreads);
+        manager->setThreadList(threadList);
+        cout << threadList.size();
+        cout << " listener after" << endl;
         if (handleThread) {
             cout << "Error: unable to create thread, " << handleThread << endl;
             exit(-1);

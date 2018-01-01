@@ -2,14 +2,15 @@
 // Created by Rivka Schuss on 25/12/2017.
 //
 
-#include "Join.h"
+#include "../include/Join.h"
 
 /**
  * constructor.
  * @param gameList reference to the list of games.
  * @param threadList reference to the list of threads.
  */
-Join::Join(vector<GameID*> &gameList, vector<pthread_t> &threadList) :  gameList(gameList), threadList(threadList) {
+Join::Join(vector<GameID*> &gameList, vector<pthread_t> &threadList) :
+        gameList(gameList), threadList(threadList)  {
 
 }
 
@@ -46,9 +47,15 @@ void Join::execute(vector<string> args) {
                 }
                 cout << "Client 2 connected." << endl;
                 //creating a new thread to run the game.
+                cout << threadList.size();
+                cout << " join before" << endl;
                 pthread_t gameRunner;
-                threadList.push_back(gameRunner);
                 int gameThread = pthread_create(&gameRunner, NULL, sendToGameManager, gameList.at(i));
+                pthread_mutex_t lockThreads;
+                pthread_mutex_lock(&lockThreads);
+                threadList.push_back(gameRunner);
+                pthread_mutex_unlock(&lockThreads);cout << threadList.size();
+                cout << " join after" << endl;
                 if (gameThread) {
                     cout << "Error: unable to create thread, " << gameThread << endl;
                     exit(-1);
@@ -66,7 +73,7 @@ void Join::execute(vector<string> args) {
             }
         }
     }
-    //if the game was full, send an error to the client.
+    //if the game was
     int sent_bytes2 = write(sockSecond, error2, sizeof(error2));
     if (sent_bytes2 < 0) {
         cout << "Error sending to client." << endl;

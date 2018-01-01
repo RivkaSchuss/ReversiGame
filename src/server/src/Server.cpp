@@ -3,7 +3,7 @@
 //
 
 
-#include "Server.h"
+#include "../include/Server.h"
 
 
 #define MAX_NUM_OF_CLIENTS 10
@@ -24,7 +24,8 @@ Server::Server(int portNum) : portNum(portNum) {
 Server::~Server() {}
 
 struct args {
-    vector<pthread_t> threadsList;
+    //vector<pthread_t> threadsList;
+    Server* server;
     int serverSock;
     CommandsManager* commandsManager;
 };
@@ -54,14 +55,17 @@ void Server::start() {
     }
     //endless loop so that the server is always waiting for new clients to connect
     pthread_t main;
-    threadList.push_back(main);
     //setting the arguments for the thread function.
     args threadArgs;
-    threadArgs.threadsList = threadList;
+    //threadArgs.threadsList = &threadList;
+    threadArgs.server = this;
     threadArgs.serverSock = sock;
     threadArgs.commandsManager = manager;
     //creating the main thread for the server.
     int mainThread = pthread_create(&main, NULL, handleClient, &threadArgs);
+    threadList.push_back(main);
+    cout << threadList.size();
+    cout << " main" << endl;
     if (mainThread) {
         cout << "Error: unable to create thread, " << mainThread << endl;
         exit(-1);
@@ -70,9 +74,23 @@ void Server::start() {
     string exitCommand;
     cin >> exitCommand;
     if (strcmp(exitCommand.c_str(), "exit") == 0) {
+        cout << threadList.size();
+        cout << " done" << endl;
         closeProcesses();
         delete manager;
     }
+    while(strcmp(exitCommand.c_str(), "exit") != 0) {
+        if (strcmp(exitCommand.c_str(), "exit") == 0) {
+            closeProcesses();
+            delete manager;
+        } else {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "If you want to exit, please enter: exit" << endl;
+            cin >> exitCommand;
+        }
+    }
+
     //pthread_exit(NULL);
 }
 
@@ -84,9 +102,10 @@ void Server::start() {
 void* Server::handleClient(void* threadArgs) {
     //casting the arguments received through the thread.
     args *newInfo = (args*) threadArgs;
-    vector<pthread_t> &threadList = newInfo->threadsList;
+    vector<pthread_t> &threadList = newInfo->server->threadList;
     int sock = newInfo->serverSock;
     CommandsManager* manager = newInfo->commandsManager;
+    //vector<pthread_t> &threadList = manager->getThreadList();
     //creating a server listener.
     ServerListener* listener = new ServerListener(sock, threadList, manager);
     listener->listeningLoop();
@@ -97,15 +116,18 @@ void* Server::handleClient(void* threadArgs) {
  * cancels the threads and closes all the sockets.
  */
 void Server::closeProcesses() {
+    cout << threadList.size();
+    cout << " final size" << endl;
     //canceling all the threads in the list of threads.
-    for (int i = 1; i < threadList.size(); i++) {
+    for (int i = 0; i < threadList.size(); i++) {
         pthread_cancel(threadList[i]);
+        pthread_join(threadList[i], NULL);
         //delete threadList[i];
     }
-    //canceling the main thread.
-    pthread_cancel(threadList[0]);
+    //pthread_cancel(mainThread);
     //calling the function to close all of the sockets.
     manager->closeSockets();
+    close(sock);
     threadList.clear();
     //close(sock);
 }

@@ -20,6 +20,7 @@ private:
     Player* secondPlayer;
     Client* client;
     int notFirstTurn;
+    bool flag;
 };
 
 

@@ -2,7 +2,7 @@
 // Created by Rivka Schuss on 26/12/2017.
 //
 
-#include "GameManager.h"
+#include "../include/GameManager.h"
 
 /**
  * constructor.
@@ -64,12 +64,12 @@ void GameManager::manage(int playerSock, int otherSock) {
         exit = true;
         return;
     } else if (read_bytes < 0) {
-        cout << "Error reading." << endl;
+        //cout << "Error reading." << endl;
         return;
     } else {
         //if the read has returned the string "NoMove", there are no more moves
         if (strcmp(buffer, "NoMove") == 0) {
-            char noChange[4096] = "X played: 0, 0";
+            char noChange[4096] = "There are no more moves!";
             //writing
             int sent_bytes = write(otherSock, noChange, read_bytes);
             if (sent_bytes < 0) {
@@ -86,3 +86,4 @@ void GameManager::manage(int playerSock, int otherSock) {
         }
     }
 }
+
