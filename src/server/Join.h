@@ -8,6 +8,14 @@
 
 #include "Command.h"
 #include "GameID.h"
+#include "GameManager.h"
+#include <iostream>
+#include <string>
+#include <string.h>
+#include <stdio.h>
+#include <unistd.h>
+
+using namespace std;
 
 class Join: public Command {
 public:

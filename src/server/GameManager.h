@@ -6,6 +6,8 @@
 #define REVERSIGAME_GAMEMANAGER_H
 
 #include <iostream>
+#include <string.h>
+#include <string>
 #include <pthread.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

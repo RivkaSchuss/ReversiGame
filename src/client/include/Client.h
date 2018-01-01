@@ -5,6 +5,18 @@
 #ifndef REVERSIGAME_CLIENT_H
 #define REVERSIGAME_CLIENT_H
 
+#include <iostream>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <string.h>
+#include <cstdlib>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/socket.h>
+
+using namespace std;
+
 enum ClientType {first, second};
 
 class Client {
@@ -12,6 +24,7 @@ public:
     Client(const char *serverIP, int serverPort);
     ~Client();
     void connectToServer();
+    void sendErrors(string stringToPrint);
     ClientType getType();
     bool getAvailable();
     void updateTurn(bool update);

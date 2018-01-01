@@ -16,7 +16,6 @@ public:
     ~CommandsManager();
     void executeCommand(string command, vector<string> args);
     void closeSockets();
-    int getSock();
 private:
     map<string, Command*> commandsMap;
     vector<GameID*> gameList;

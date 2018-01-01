@@ -2,14 +2,11 @@
 // Created by yarin on 06/12/17.
 //
 
-#include <iostream>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+
 #include "Server.h"
 
 
-#define MAX_NUM_OF_GAMES 10
+#define MAX_NUM_OF_CLIENTS 10
 using namespace std;
 
 /**
@@ -51,46 +48,66 @@ void Server::start() {
         return;
     }
     //listening
-    if (listen(sock, MAX_NUM_OF_GAMES) < 0) {
+    if (listen(sock, MAX_NUM_OF_CLIENTS) < 0) {
         cout << "Error listening to socket." << endl;
         return;
     }
     //endless loop so that the server is always waiting for new clients to connect
     pthread_t main;
+    threadList.push_back(main);
+    //setting the arguments for the thread function.
     args threadArgs;
     threadArgs.threadsList = threadList;
     threadArgs.serverSock = sock;
     threadArgs.commandsManager = manager;
+    //creating the main thread for the server.
     int mainThread = pthread_create(&main, NULL, handleClient, &threadArgs);
     if (mainThread) {
         cout << "Error: unable to create thread, " << mainThread << endl;
         exit(-1);
     }
-    threadList.push_back(main);
+    //receiving "exit" through the server, and closing all processes.
     string exitCommand;
     cin >> exitCommand;
     if (strcmp(exitCommand.c_str(), "exit") == 0) {
-        close();
+        closeProcesses();
+        delete manager;
     }
     //pthread_exit(NULL);
 }
 
+/**
+ * handles the client.
+ * @param threadArgs the arguments to send.
+ * @return nothing.
+ */
 void* Server::handleClient(void* threadArgs) {
+    //casting the arguments received through the thread.
     args *newInfo = (args*) threadArgs;
     vector<pthread_t> &threadList = newInfo->threadsList;
     int sock = newInfo->serverSock;
     CommandsManager* manager = newInfo->commandsManager;
+    //creating a server listener.
     ServerListener* listener = new ServerListener(sock, threadList, manager);
     listener->listeningLoop();
     delete listener;
 }
 
-void Server::close() {
-    pthread_cancel(threadList[0]);
-    for (int i = 1; i < threadList.size() - 1; i++) {
+/**
+ * cancels the threads and closes all the sockets.
+ */
+void Server::closeProcesses() {
+    //canceling all the threads in the list of threads.
+    for (int i = 1; i < threadList.size(); i++) {
         pthread_cancel(threadList[i]);
+        //delete threadList[i];
     }
+    //canceling the main thread.
+    pthread_cancel(threadList[0]);
+    //calling the function to close all of the sockets.
     manager->closeSockets();
+    threadList.clear();
+    //close(sock);
 }
 
 

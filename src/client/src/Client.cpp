@@ -1,16 +1,9 @@
 //
 // Created by Rivka Schuss on 05/12/2017.
 //
-#include <iostream>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/socket.h>
+
 #include "../include/Client.h"
 
-using namespace std;
 
 /**
  * constructor.
@@ -85,47 +78,48 @@ void Client::connectToServer() {
             cout << "Error reading from server." << endl;
             exit(-1);
         }
-        if (strcmp(turn, "1") != 0 && strcmp(turn, "2") != 0 && strcmp(turn, "-1") != 0 && strcmp(turn, "-2") != 0) {
-            cout << turn << endl;
-            int command_toSend = write(clientSocket, yet, sizeof(yet));
-            if (command_toSend < 0) {
-                cout << "Error writing to the server." << endl;
-                exit(-1);
-            }
+        int turnInt;
+        sscanf(turn, "%d", &turnInt);
+        string stringToSend;
+        switch(turnInt) {
+            case 1:
+                cout << "Waiting for the other player to join..." << endl;
+                //reading
+                bytes_received = read(clientSocket, turn, sizeof(turn));
+                if (bytes_received < 0) {
+                    cout << "Error reading from server." << endl;
+                    exit(-1);
+                }
+                if (strcmp(turn, "2") == 0) {
+                    type = first;
+                    available = true;
+                }
+                break;
+            case 2:
+                type = second;
+                available = false;
+                break;
+            case -1:
+                stringToSend = "That name is already taken.";
+                sendErrors(stringToSend);
+                break;
+            case -2:
+                stringToSend = "That game is full.";
+                sendErrors(stringToSend);
+                break;
+            case -3:
+                stringToSend = "That game doesn't exist.";
+                sendErrors(stringToSend);
+                break;
+            default:
+                cout << turn << endl;
+                int command_toSend = write(clientSocket, yet, sizeof(yet));
+                if (command_toSend < 0) {
+                    cout << "Error writing to the server." << endl;
+                    exit(-1);
+                }
+                break;
         }
-        if (strcmp(turn, "-1") == 0) {
-            cout << "That name is already taken." << endl;
-            int command_toSend = write(clientSocket, yet, sizeof(yet));
-            if (command_toSend < 0) {
-                cout << "Error writing to the server." << endl;
-                exit(-1);
-            }
-        }
-        if (strcmp(turn, "-2") == 0) {
-            cout << "That game is full." << endl;
-            int command_toSend = write(clientSocket, yet, sizeof(yet));
-            if (command_toSend < 0) {
-                cout << "Error writing to the server." << endl;
-                exit(-1);
-            }
-        }
-    }
-    //assigning the client type according to the number we've read from the server.
-    if (strcmp(turn, "1") == 0) {
-        cout << "Waiting for the other player to join..." << endl;
-        //reading
-        bytes_received = read(clientSocket, turn, sizeof(turn));
-        if (bytes_received < 0) {
-            cout << "Error reading from server." << endl;
-            exit(-1);
-        }
-        if (strcmp(turn, "2") == 0) {
-            type = first;
-            available = true;
-        }
-    } else if (strcmp(turn, "2") == 0){
-        type = second;
-        available = false;
     }
 }
 
@@ -159,4 +153,14 @@ void Client::updateTurn(bool update) {
  */
 int Client::getSocket() {
     return this->clientSocket;
+}
+
+void Client::sendErrors(string stringToPrint) {
+    char flag[4096] = "flag";
+    cout << stringToPrint << endl;
+    int command_toSend = write(clientSocket, flag, sizeof(flag));
+    if (command_toSend < 0) {
+        cout << "Error writing to the server." << endl;
+        exit(-1);
+    }
 }

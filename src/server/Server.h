@@ -6,7 +6,15 @@
 #define REVERSIGAME_SERVER_H
 
 #include <pthread.h>
+#include <iostream>
 #include <vector>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string>
+#include <string.h>
 #include "GameID.h"
 #include "GameManager.h"
 #include "CommandsManager.h"
@@ -19,7 +27,7 @@ public:
     Server(int portNum);
     ~Server();
     void start();
-    void close();
+    void closeProcesses();
     static void* handleClient(void* threadArgs);
 private:
     CommandsManager* manager;

@@ -9,11 +9,9 @@
 #include <unistd.h>
 #include <string>
 #include <sstream>
-//#include "string.h
-//#include <string.h>
-#include <cstring>
-#include <limits>
 #include "../include/RemoteLogic.h"
+
+#define ASCII_DIFF 48
 
 using namespace std;
 
@@ -134,13 +132,16 @@ void RemoteLogic::playOneTurn(Board *board) {
         }
         //we write to the other client what we've played
         int send_bytes = write(client->getSocket(), player, sizeof(player));
+        
         if (notFirstTurn  == 1) {
             send_bytes = write(client->getSocket(), player, sizeof(player));
         }
-        if (send_bytes < 0) { 
+        
+        if (send_bytes < 0) {
             cout << "Error writing to client." << endl;
             return;
         }
+
     } else {
         cout << "Waiting for other player's move..." << endl;
         char buffer[4096];
@@ -151,10 +152,10 @@ void RemoteLogic::playOneTurn(Board *board) {
             return;
         }
         //converting the strings to ints.
-        int iRow = (int) buffer[10] - 48;
-        int iCol = (int) buffer[13] - 48;
+        int iRow = (int) buffer[10] - ASCII_DIFF;
+        int iCol = (int) buffer[13] - ASCII_DIFF;
         //cout << iRow << " " << iCol << endl;
-        if (iRow != 0) {
+        if (iRow != 0 - ASCII_DIFF) {
             //we print the other player's move
             cout << buffer << endl;
             //update the status of the move played
