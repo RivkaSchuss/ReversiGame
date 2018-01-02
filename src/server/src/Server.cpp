@@ -25,7 +25,6 @@ Server::Server(int portNum) : portNum(portNum) {
 Server::~Server() {}
 
 struct args {
-    //vector<pthread_t> threadsList;
     Server* server;
     int serverSock;
     CommandsManager* commandsManager;
@@ -58,7 +57,6 @@ void Server::start() {
     pthread_t main;
     //setting the arguments for the thread function.
     args threadArgs;
-    //threadArgs.threadsList = &threadList;
     threadArgs.server = this;
     threadArgs.serverSock = sock;
     threadArgs.commandsManager = manager;
@@ -91,8 +89,6 @@ void Server::start() {
             cin >> exitCommand;
         }
     }
-
-    //pthread_exit(NULL);
 }
 
 /**
@@ -106,7 +102,6 @@ void* Server::handleClient(void* threadArgs) {
     vector<pthread_t> &threadList = newInfo->server->threadList;
     int sock = newInfo->serverSock;
     CommandsManager* manager = newInfo->commandsManager;
-    //vector<pthread_t> &threadList = manager->getThreadList();
     //creating a server listener.
     ServerListener* listener = new ServerListener(sock, threadList, manager);
     listener->listeningLoop();
@@ -118,20 +113,15 @@ void* Server::handleClient(void* threadArgs) {
  * cancels the threads and closes all the sockets.
  */
 void Server::closeProcesses() {
-    cout << threadList.size();
-    cout << " final size" << endl;
     //canceling all the threads in the list of threads.
     for (int i = 0; i < threadList.size(); i++) {
         pthread_cancel(threadList[i]);
         pthread_join(threadList[i], NULL);
-        //delete threadList[i];
     }
-    //pthread_cancel(mainThread);
     //calling the function to close all of the sockets.
     manager->closeSockets();
     close(sock);
     threadList.clear();
-    //close(sock);
 }
 
 bool Server::getFlag() {

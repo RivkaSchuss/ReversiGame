@@ -6,6 +6,7 @@
 #define REVERSIGAME_CLIENT_H
 
 #include <iostream>
+#include <limits>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>

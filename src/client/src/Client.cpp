@@ -66,7 +66,7 @@ void Client::connectToServer() {
         } else {
             send = command;
             cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
         strcpy(buffer, send.c_str());
         int command_toSend = write(clientSocket, buffer, sizeof(buffer));

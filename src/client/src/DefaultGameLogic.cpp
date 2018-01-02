@@ -73,7 +73,7 @@ void DefaultGameLogic::playOneTurn(Board* board) {
             //validating the input.
             while (!cin) {
                 cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Input isn't valid. Please enter your move row,col:" << endl;
                 cin >> row >> col;
             }
