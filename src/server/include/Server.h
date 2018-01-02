@@ -29,11 +29,13 @@ public:
     void start();
     void closeProcesses();
     static void* handleClient(void* threadArgs);
+    bool getFlag();
 private:
     CommandsManager* manager;
     vector<pthread_t> threadList;
     int portNum;
     int sock;
+    bool flag;
 };
 
 

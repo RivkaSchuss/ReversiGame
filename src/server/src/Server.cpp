@@ -16,6 +16,7 @@ using namespace std;
 Server::Server(int portNum) : portNum(portNum) {
     sock = socket(AF_INET, SOCK_STREAM, 0);
     manager = new CommandsManager(sock, threadList);
+    flag = false;
 }
 
 /**
@@ -64,8 +65,6 @@ void Server::start() {
     //creating the main thread for the server.
     int mainThread = pthread_create(&main, NULL, handleClient, &threadArgs);
     threadList.push_back(main);
-    cout << threadList.size();
-    cout << " main" << endl;
     if (mainThread) {
         cout << "Error: unable to create thread, " << mainThread << endl;
         exit(-1);
@@ -77,12 +76,14 @@ void Server::start() {
         cout << threadList.size();
         cout << " done" << endl;
         closeProcesses();
+        flag = true;
         delete manager;
     }
     while(strcmp(exitCommand.c_str(), "exit") != 0) {
         if (strcmp(exitCommand.c_str(), "exit") == 0) {
             closeProcesses();
             delete manager;
+            flag = true;
         } else {
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -110,6 +111,7 @@ void* Server::handleClient(void* threadArgs) {
     ServerListener* listener = new ServerListener(sock, threadList, manager);
     listener->listeningLoop();
     delete listener;
+    return NULL;
 }
 
 /**
@@ -130,6 +132,10 @@ void Server::closeProcesses() {
     close(sock);
     threadList.clear();
     //close(sock);
+}
+
+bool Server::getFlag() {
+    return this->flag;
 }
 
 

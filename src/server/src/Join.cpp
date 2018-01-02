@@ -47,15 +47,12 @@ void Join::execute(vector<string> args) {
                 }
                 cout << "Client 2 connected." << endl;
                 //creating a new thread to run the game.
-                cout << threadList.size();
-                cout << " join before" << endl;
                 pthread_t gameRunner;
                 int gameThread = pthread_create(&gameRunner, NULL, sendToGameManager, gameList.at(i));
                 pthread_mutex_t lockThreads;
                 pthread_mutex_lock(&lockThreads);
                 threadList.push_back(gameRunner);
-                pthread_mutex_unlock(&lockThreads);cout << threadList.size();
-                cout << " join after" << endl;
+                pthread_mutex_unlock(&lockThreads);
                 if (gameThread) {
                     cout << "Error: unable to create thread, " << gameThread << endl;
                     exit(-1);
@@ -89,6 +86,7 @@ void *Join::sendToGameManager(void* game) {
     //starts the game.
     manager->startGame();
     delete manager;
+    return NULL;
 }
 
 

@@ -43,16 +43,12 @@ void ServerListener::listeningLoop() {
         toSend.cSock = clientSock;
         //creates a new thread for each accept from the client.
         pthread_t threadHandler;
-        cout << threadList.size();
-        cout << " listener before" << endl;
         int handleThread = pthread_create(&threadHandler, NULL, sendToHandler, &toSend);
         pthread_mutex_t lockThreads;
         pthread_mutex_lock(&lockThreads);
         threadList.push_back(threadHandler);
         pthread_mutex_unlock(&lockThreads);
         manager->setThreadList(threadList);
-        cout << threadList.size();
-        cout << " listener after" << endl;
         if (handleThread) {
             cout << "Error: unable to create thread, " << handleThread << endl;
             exit(-1);
@@ -74,6 +70,7 @@ void *ServerListener::sendToHandler(void* info) {
     Handler* handler = new Handler();
     handler->handleClient(manager1, sock);
     delete handler;
+    return NULL;
 }
 
 

@@ -22,6 +22,8 @@ int main() {
     sscanf(sPort.c_str(), "%d", &port);
     Server server(port);
     server.start();
-    //server.closeProcesses();
+    if (!server.getFlag()) {
+        server.closeProcesses();
+    }
     return 0;
 }
