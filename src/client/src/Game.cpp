@@ -34,10 +34,11 @@ Game::~Game() {
 void Game::runMenu() {
     int choice, choiceSize;
     cout << "Welcome to Reversi!" << endl;
-    cout << "Please choose your board size: 4 or 8." << endl;
-    cin >> choiceSize;
-    Board* board;
+    //cout << "Please choose your board size: 4 or 8." << endl;
+    //cin >> choiceSize;
+    Board* board = new Board(8);
     //choosing the board size.
+    /*
     switch(choiceSize) {
         case 4:
             board = new Board(4);
@@ -49,6 +50,7 @@ void Game::runMenu() {
             cout << "Not an option." << endl;
             break;
     }
+     */
     Player* whitePlayer;
     GameLogic* logic;
     int chosen = 0;

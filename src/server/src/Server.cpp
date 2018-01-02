@@ -71,8 +71,6 @@ void Server::start() {
     string exitCommand;
     cin >> exitCommand;
     if (strcmp(exitCommand.c_str(), "exit") == 0) {
-        cout << threadList.size();
-        cout << " done" << endl;
         closeProcesses();
         flag = true;
         delete manager;
