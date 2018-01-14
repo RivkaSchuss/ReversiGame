@@ -81,7 +81,6 @@ vector<Location> AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
     vector<Location> subOptions;
     //ultimately will store all of the options for moves.
     vector<Location> options;
-    //int k = 0, l = 0;
     for (int i = 0; i <= size; i++) {
         for (int j = 0; j <= size + 1; j++) {
             if (table[i][j].getStatus() == turn + 1) {
@@ -91,10 +90,7 @@ vector<Location> AbstractGameLogic::getPossibleMoves(Cell** table, int size) {
                     for (int l = 0; l < subOptions.size(); l++) {
                         if (!moveExist(options, subOptions[l])) {
                             options.push_back(subOptions[l]);
-                            //options[k] = subOptions[l];
-                            //k++;
                         }
-                        //l++;
                     }
                 }
                 //delete subOptions;
