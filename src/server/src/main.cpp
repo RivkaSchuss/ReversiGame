@@ -1,19 +1,25 @@
 #include <iostream>
 
-using namespace std;
+
 
 #include "../include/Server.h"
-#include "ThreadPool.h"
+#include "../include/ThreadPool.h"
+#include <unistd.h>
 #include <fstream>
+#include <pthread.h>
 
-#define THREADS_NUM 5
-#define TASKS_NUM 3
+#define THREADS_NUM 3
+#define TASKS_NUM 5
+
+using namespace std;
 
 void* print(void* taskId);
+pthread_mutex_t printLock;
 /**
  * the main for the server.
  **/
 int main() {
+
     string sPort, line;
     int port = 0;
     ifstream file;
@@ -50,9 +56,12 @@ int main() {
 }
 
 void* print(void* taskId) {
+
     long id = (long) taskId;
     for (int i = 1; i <= 3; i++) {
+        pthread_mutex_lock(&printLock);
         cout << "Task " << id << " prints: " << i << endl;
+        pthread_mutex_unlock(&printLock);
         sleep(1);
     }
     return NULL;

@@ -2,7 +2,7 @@
 // Created by Rivka Schuss on 14/01/2018.
 //
 
-#include "ThreadPool.h"
+#include "../include/ThreadPool.h"
 #include <unistd.h>
 #include <pthread.h>
 

@@ -58,7 +58,7 @@ set(SERVER_FILES
         src/server/src/Handler.cpp
         src/server/include/Handler.h
         src/server/src/ServerListener.cpp
-        src/server/include/ServerListener.h src/server/src/ThreadPool.cpp src/server/src/ThreadPool.h src/server/include/Task.h)
+        src/server/include/ServerListener.h src/server/src/ThreadPool.cpp src/server/include/ThreadPool.h src/server/include/Task.h)
 add_executable(server ${SERVER_FILES} src/server/src/main.cpp)
 
 set(SOURCE_FILES_TEST

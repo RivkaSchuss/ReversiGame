@@ -6,7 +6,7 @@
 #define REVERSIGAME_THREADPOOL_H
 
 
-#include "../include/Task.h"
+#include "Task.h"
 #include <queue>
 #include <iostream>
 #include <pthread.h>
