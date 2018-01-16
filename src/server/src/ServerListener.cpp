@@ -3,6 +3,11 @@
 //
 
 #include "../include/ServerListener.h"
+#include "../include/ThreadPool.h"
+#include "../include/Task.h"
+
+
+#define THREADS_NUM 5
 
 /**
  * constructor.
@@ -10,8 +15,8 @@
  * @param threadList reference to the list of threads.
  * @param manager the commands manager.
  */
-ServerListener::ServerListener(int sock, vector<pthread_t> threadList, CommandsManager* manager) : sock(sock),
-                                                                     threadList(threadList), manager(manager)  {
+ServerListener::ServerListener(int sock, ThreadPool* threadPool, CommandsManager* manager) : sock(sock),
+                                                                     threadPool(threadPool), manager(manager)  {
 }
 
 /**
@@ -42,9 +47,11 @@ void ServerListener::listeningLoop() {
         toSend.cManager = manager;
         toSend.cSock = clientSock;
         //creates a new thread for each accept from the client.
-        pthread_t threadHandler;
+        Task* task = new Task(sendToHandler,&toSend);
+        threadPool->addTask(task);
+        /*
         int handleThread = pthread_create(&threadHandler, NULL, sendToHandler, &toSend);
-        pthread_mutex_t lockThreads;
+
         pthread_mutex_lock(&lockThreads);
         threadList.push_back(threadHandler);
         pthread_mutex_unlock(&lockThreads);
@@ -53,13 +60,14 @@ void ServerListener::listeningLoop() {
             cout << "Error: unable to create thread, " << handleThread << endl;
             exit(-1);
         }
+         */
     }
 }
 
 /**
  *
  * @param info
- * @return
+ * @return NULL.
  */
 void *ServerListener::sendToHandler(void* info) {
     //casts the arguments to send.

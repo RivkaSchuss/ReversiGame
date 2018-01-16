@@ -20,6 +20,7 @@
 #include "GameManager.h"
 #include "CommandsManager.h"
 #include "ServerListener.h"
+#include "ThreadPool.h"
 
 using namespace std;
 
@@ -33,7 +34,8 @@ public:
     bool getFlag();
 private:
     CommandsManager* manager;
-    vector<pthread_t> threadList;
+    ThreadPool* threadPool;
+    pthread_t main;
     int portNum;
     int sock;
     bool flag;

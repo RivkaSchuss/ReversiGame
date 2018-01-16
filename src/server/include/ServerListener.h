@@ -18,11 +18,11 @@ using namespace std;
 
 class ServerListener {
 public:
-    ServerListener(int sock, vector<pthread_t> threadList, CommandsManager* manager);
+    ServerListener(int sock, ThreadPool* threadPool, CommandsManager* manager);
     void listeningLoop();
     static void *sendToHandler(void *manager);
 private:
-    vector<pthread_t> threadList;
+    ThreadPool* threadPool;
     CommandsManager* manager;
     int sock;
 };

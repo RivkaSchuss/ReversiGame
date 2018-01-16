@@ -36,7 +36,7 @@ void Game::runMenu() {
     cout << "Welcome to Reversi!" << endl;
     //cout << "Please choose your board size: 4 or 8." << endl;
     //cin >> choiceSize;
-    Board* board = new Board(8);
+    Board* board = new Board(4);
     //choosing the board size.
     /*
     switch(choiceSize) {

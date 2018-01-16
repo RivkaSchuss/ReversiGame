@@ -3,10 +3,6 @@ project(ReversiGame)
 
 set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98 -pthread")
-add_subdirectory(src/client/lib/googletest)
-include_directories(src/client/lib/googletest/googletest/include)
-include_directories(src/client/lib/googletest/googlemock/include)
-include_directories(src/client/Tests)
 
 set(SOURCE_FILES
         src/client/src/Board.cpp

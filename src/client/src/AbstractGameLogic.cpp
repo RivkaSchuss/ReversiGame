@@ -148,6 +148,7 @@ void AbstractGameLogic::flipDeadCell(int row, int col, Board* board) {
                         tempCol += colDirection;
                         if (tempRow >= 0 && tempRow <= board->getSize() && tempCol >= 0 && tempCol <= board->getSize()) {
                             if (board->getTable()[tempRow][tempCol].getStatus() == player1) {
+
                                 flipChosenCell(tempRow, tempCol, row, col, (-1) * rowDirection, (-1) * colDirection,
                                                player1, board);
                                 flag = false;
