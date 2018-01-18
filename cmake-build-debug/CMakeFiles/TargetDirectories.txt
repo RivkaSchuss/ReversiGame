@@ -1,0 +1,5 @@
+/Users/rivkaschuss/CLionProjects/ReversiGame/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/rivkaschuss/CLionProjects/ReversiGame/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/rivkaschuss/CLionProjects/ReversiGame/cmake-build-debug/CMakeFiles/ReversiTest.dir
+/Users/rivkaschuss/CLionProjects/ReversiGame/cmake-build-debug/CMakeFiles/server.dir
+/Users/rivkaschuss/CLionProjects/ReversiGame/cmake-build-debug/CMakeFiles/client.dir

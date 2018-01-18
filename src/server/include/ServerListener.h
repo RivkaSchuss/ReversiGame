@@ -13,18 +13,20 @@
 #include <pthread.h>
 #include "Handler.h"
 #include "CommandsManager.h"
+#include "ThreadPool.h"
 
 using namespace std;
 
 class ServerListener {
 public:
-    ServerListener(int sock, ThreadPool* threadPool, CommandsManager* manager);
+    ServerListener(int sock, vector<pthread_t> threadList, CommandsManager* manager, ThreadPool* threadPool);
     void listeningLoop();
     static void *sendToHandler(void *manager);
 private:
-    ThreadPool* threadPool;
+    vector<pthread_t> threadList;
     CommandsManager* manager;
     int sock;
+    ThreadPool* threadPool;
 };
 
 

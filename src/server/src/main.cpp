@@ -1,23 +1,14 @@
 #include <iostream>
 
-
+using namespace std;
 
 #include "../include/Server.h"
-#include "../include/ThreadPool.h"
-#include <unistd.h>
 #include <fstream>
-#include <pthread.h>
-
-#define THREADS_NUM 5
-#define TASKS_NUM 5
-
-using namespace std;
 
 /**
  * the main for the server.
  **/
 int main() {
-
     string sPort, line;
     int port = 0;
     ifstream file;

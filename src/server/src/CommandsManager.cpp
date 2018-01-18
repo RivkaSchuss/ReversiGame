@@ -12,9 +12,9 @@
  * @param sock the server socket.
  * @param threadList a reference to the list of threads.
  */
-CommandsManager::CommandsManager(int sock, ThreadPool* threadPool) : sock(sock) ,
-                                                                            threadPool(threadPool) {
-    commandsMap["join"] = new Join(gameList, threadPool);
+CommandsManager::CommandsManager(int sock, vector<pthread_t> &threadList) : sock(sock) ,
+                                                                            threadList(threadList) {
+    commandsMap["join"] = new Join(gameList, threadList);
     commandsMap["start"] = new Start(gameList);
     commandsMap["list_games"] = new ListGames(gameList);
 }
@@ -62,3 +62,7 @@ void CommandsManager::closeSockets() {
     gameList.clear();
 }
 
+
+void CommandsManager::setThreadList(vector<pthread_t> &list) {
+    this->threadList = list;
+}

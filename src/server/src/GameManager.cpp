@@ -60,6 +60,13 @@ void GameManager::manage(int playerSock, int otherSock) {
         return;
         //if the read has returned the string "end", the game ends
     } else if (strcmp(buffer, "End") == 0) {
+        char end[4096] = "end";
+        //writing
+        int sent_bytes = write(otherSock, end, sizeof(end));
+        if (sent_bytes < 0) {
+            cout << "Error sending to client." << endl;
+            return;
+        }
         handlePlayer(otherSock);
         exit = true;
         return;
@@ -79,11 +86,13 @@ void GameManager::manage(int playerSock, int otherSock) {
             return;
         }
         //writing to the client dependent on what was read.
+
         int sent_bytes = write(otherSock, buffer, read_bytes);
         if (sent_bytes < 0) {
             cout << "Error sending to client." << endl;
             return;
         }
+
     }
 }
 

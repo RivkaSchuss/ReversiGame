@@ -16,8 +16,8 @@ using namespace std;
  */
 Server::Server(int portNum) : portNum(portNum) {
     sock = socket(AF_INET, SOCK_STREAM, 0);
+    manager = new CommandsManager(sock, threadList);
     threadPool = new ThreadPool(THREADS_NUM);
-    manager = new CommandsManager(sock, threadPool);
     flag = false;
 }
 
@@ -56,6 +56,7 @@ void Server::start() {
         return;
     }
     //endless loop so that the server is always waiting for new clients to connect
+    pthread_t main;
     //setting the arguments for the thread function.
     args threadArgs;
     threadArgs.server = this;
@@ -63,7 +64,7 @@ void Server::start() {
     threadArgs.commandsManager = manager;
     //creating the main thread for the server.
     int mainThread = pthread_create(&main, NULL, handleClient, &threadArgs);
-    //threadList.push_back(main);
+    threadList.push_back(main);
     if (mainThread) {
         cout << "Error: unable to create thread, " << mainThread << endl;
         exit(-1);
@@ -98,11 +99,12 @@ void Server::start() {
 void* Server::handleClient(void* threadArgs) {
     //casting the arguments received through the thread.
     args *newInfo = (args*) threadArgs;
+    vector<pthread_t> &threadList = newInfo->server->threadList;
     ThreadPool* threadPool = newInfo->server->threadPool;
     int sock = newInfo->serverSock;
     CommandsManager* manager = newInfo->commandsManager;
     //creating a server listener.
-    ServerListener* listener = new ServerListener(sock, threadPool, manager);
+    ServerListener* listener = new ServerListener(sock, threadList, manager, threadPool);
     listener->listeningLoop();
     delete listener;
     return NULL;
@@ -112,20 +114,17 @@ void* Server::handleClient(void* threadArgs) {
  * cancels the threads and closes all the sockets.
  */
 void Server::closeProcesses() {
-
-    /*
     //canceling all the threads in the list of threads.
     for (int i = 0; i < threadList.size(); i++) {
         pthread_cancel(threadList[i]);
         pthread_join(threadList[i], NULL);
     }
-     */
     //calling the function to close all of the sockets.
     manager->closeSockets();
     threadPool->terminate();
-    pthread_cancel(main);
-    delete threadPool;
     close(sock);
+    threadList.clear();
+    delete threadPool;
 }
 
 bool Server::getFlag() {

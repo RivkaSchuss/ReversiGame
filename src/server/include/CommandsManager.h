@@ -9,18 +9,18 @@
 #include <map>
 #include "Command.h"
 #include "GameID.h"
-#include "ThreadPool.h"
 
 class CommandsManager {
 public:
-    CommandsManager(int sock, ThreadPool* threadPool);
+    CommandsManager(int sock, vector<pthread_t> &threadList);
     ~CommandsManager();
     void executeCommand(string command, vector<string> args);
     void closeSockets();
+    void setThreadList(vector<pthread_t> &list);
 private:
     map<string, Command*> commandsMap;
     vector<GameID*> gameList;
-    ThreadPool* threadPool;
+    vector<pthread_t> &threadList;
     int sock;
 };
 

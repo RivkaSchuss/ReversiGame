@@ -74,6 +74,7 @@ void RemoteLogic::playOneTurn(Board *board) {
                         //if there are no more moves, we send the server "NoMove"
                         char nomove[4096] = "NoMove";
                         write(client->getSocket(), nomove, sizeof(nomove));
+                        client->updateTurn(false);
                     }
                     return;
                 } else {
@@ -84,6 +85,7 @@ void RemoteLogic::playOneTurn(Board *board) {
                     } else {
                         char nomove[4096] = "NoMove";
                         write(client->getSocket(), nomove, sizeof(nomove));
+                        client->updateTurn(false);
                     }
                     return;
                 }
@@ -158,25 +160,28 @@ void RemoteLogic::playOneTurn(Board *board) {
             //exit(0);
             //char nomove[4096] = "End";
             //write(client->getSocket(), nomove, sizeof(nomove));
-        }
-        //converting the strings to ints.
-        int iRow = (int) buffer[10] - ASCII_DIFF;
-        int iCol = (int) buffer[13] - ASCII_DIFF;
-        //cout << iRow << " " << iCol << endl;
-        if (iRow != 0 - ASCII_DIFF) {
-            //we print the other player's move
-            cout << buffer << endl;
-            //update the status of the move played
-            board->getTable()[iRow][iCol].updateStatus(opponent + 1);
-            if (status == black) {
-                turn = white;
-            } else {
-                turn = black;
+        } else if (strcmp("There are no more moves!", buffer) == 0) {
+            client->updateTurn(true);
+        } else {
+            //converting the strings to ints.
+            int iRow = (int) buffer[10] - ASCII_DIFF;
+            int iCol = (int) buffer[13] - ASCII_DIFF;
+            //cout << iRow << " " << iCol << endl;
+            if (iRow != 0 - ASCII_DIFF) {
+                //we print the other player's move
+                cout << buffer << endl;
+                //update the status of the move played
+                board->getTable()[iRow][iCol].updateStatus(opponent + 1);
+                if (status == black) {
+                    turn = white;
+                } else {
+                    turn = black;
+                }
+                //flip the board according to what has been played
+                flipDeadCell(iRow, iCol, board);
             }
-            //flip the board according to what has been played
-            flipDeadCell(iRow, iCol, board);
+            client->updateTurn(true);
         }
-        client->updateTurn(true);
     }
 }
 

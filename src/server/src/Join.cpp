@@ -3,16 +3,14 @@
 //
 
 #include "../include/Join.h"
-#include "../include/Task.h"
-#include "../include/ThreadPool.h"
 
 /**
  * constructor.
  * @param gameList reference to the list of games.
  * @param threadList reference to the list of threads.
  */
-Join::Join(vector<GameID*> &gameList, ThreadPool* threadPool) :
-        gameList(gameList), threadPool(threadPool)  {
+Join::Join(vector<GameID*> &gameList, vector<pthread_t> &threadList) :
+        gameList(gameList), threadList(threadList)  {
 
 }
 
@@ -49,9 +47,6 @@ void Join::execute(vector<string> args) {
                 }
                 cout << "Client 2 connected." << endl;
                 //creating a new thread to run the game.
-                Task* task = new Task(sendToGameManager, gameList.at(i));
-                threadPool->addTask(task);
-                /*
                 pthread_t gameRunner;
                 int gameThread = pthread_create(&gameRunner, NULL, sendToGameManager, gameList.at(i));
                 pthread_mutex_t lockThreads;
@@ -62,7 +57,6 @@ void Join::execute(vector<string> args) {
                     cout << "Error: unable to create thread, " << gameThread << endl;
                     exit(-1);
                 }
-                 */
                 return;
             }
                 //if the game was full, send an error to the client

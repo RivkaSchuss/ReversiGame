@@ -34,8 +34,8 @@ public:
     bool getFlag();
 private:
     CommandsManager* manager;
+    vector<pthread_t> threadList;
     ThreadPool* threadPool;
-    pthread_t main;
     int portNum;
     int sock;
     bool flag;
