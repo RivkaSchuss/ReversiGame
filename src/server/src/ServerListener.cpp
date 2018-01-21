@@ -45,7 +45,9 @@ void ServerListener::listeningLoop() {
         args toSend;
         toSend.cManager = manager;
         toSend.cSock = clientSock;
+        //creates a new task for the accept task, and calls the function
         Task* task = new Task(sendToHandler, &toSend);
+        //adds the task to the thread pool
         threadPool->addTask(task);
     }
 }

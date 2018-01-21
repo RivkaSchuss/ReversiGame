@@ -121,6 +121,7 @@ void Server::closeProcesses() {
     }
     //calling the function to close all of the sockets.
     manager->closeSockets();
+    //terminates the thread pool
     threadPool->terminate();
     close(sock);
     threadList.clear();
