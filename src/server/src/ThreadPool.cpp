@@ -10,7 +10,7 @@
  * constructor. creates the number of threads sent.
  * @param threadsNum the number of threads to create.
  */
-ThreadPool::ThreadPool(int threadsNum) : stopped(false) {
+ThreadPool::ThreadPool(int threadsNum) : stopped(false), threadsNum(threadsNum) {
     threads = new pthread_t[threadsNum];
     for (int i = 0; i < threadsNum; i++) {
         pthread_create(threads + i, NULL, execute, this);
@@ -62,9 +62,17 @@ void ThreadPool::executeTasks() {
 void ThreadPool::terminate() {
     //destroys the mutex
     pthread_mutex_destroy(&lock);
+    for (int i = 0; i < threadsNum; i++) {
+        pthread_cancel(threads[i]);
+    }
     stopped = true;
 }
 
 ThreadPool::~ThreadPool() {
+    while(!tasksQueue.empty()) {
+        Task* task = tasksQueue.front();
+        delete task;
+        tasksQueue.pop();
+    }
     delete[] threads;
 }

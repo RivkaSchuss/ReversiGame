@@ -115,14 +115,12 @@ void* Server::handleClient(void* threadArgs) {
  */
 void Server::closeProcesses() {
     //canceling all the threads in the list of threads.
+    threadPool->terminate();
     for (int i = 0; i < threadList.size(); i++) {
         pthread_cancel(threadList[i]);
         pthread_join(threadList[i], NULL);
     }
-    //calling the function to close all of the sockets.
     manager->closeSockets();
-    //terminates the thread pool
-    threadPool->terminate();
     close(sock);
     threadList.clear();
     delete threadPool;

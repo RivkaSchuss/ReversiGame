@@ -15,7 +15,7 @@
  */
 ServerListener::ServerListener(int sock, vector<pthread_t> threadList, CommandsManager* manager, 
                                ThreadPool* threadPool) : sock(sock), threadList(threadList),
-                                                         manager(manager), threadPool(threadPool)  {
+                                                         manager(manager), threadPool(threadPool) {
 }
 
 /**

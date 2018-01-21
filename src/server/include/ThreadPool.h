@@ -25,6 +25,7 @@ private:
     void executeTasks();
     bool stopped;
     pthread_mutex_t lock;
+    int threadsNum;
 
     static void* execute(void* arg);
 };

@@ -3,7 +3,7 @@ server.out: compileAll
 	rm -f *.o
 
 compileAll: include/*.h src/*.cpp
-	g++ -Iinclude/ -c src/*.cpp
+	g++ -Iinclude/ -c src/*.cpp -g
 run:
 	./a.out
 
